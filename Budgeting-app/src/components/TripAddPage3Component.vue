@@ -10,15 +10,15 @@
       <div class="button-group">
         <button
           class="choice-button"
-          :class="{ selected: selected === '혼자' }"
-          @click="select('혼자')"
+          :class="{ selected: selected === 'alone' }"
+          @click="select('alone')"
         >
           혼자 여행
         </button>
         <button
           class="choice-button"
-          :class="{ selected: selected === '그룹' }"
-          @click="select('그룹')"
+          :class="{ selected: selected === 'group' }"
+          @click="select('group')"
         >
           함께 여행
         </button>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="footer">
-      <button class="next-button" :disabled="!selected" @click="store.nextStep">
+      <button class="next-button" :disabled="!selected" @click="goNextStep">
         다음
       </button>
     </div>
@@ -43,6 +43,11 @@ const store = useTripAddStore();
 
 function select(option) {
   selected.value = option
+}
+
+function goNextStep() {
+  store.tripData.companion = selected.value; // 반드시 추가
+  store.nextStep()
 }
 
 </script>
@@ -67,12 +72,12 @@ function select(option) {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 10vh;
+  margin-top: 15vh;
 }
 
 .question {
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .button-group {
@@ -84,6 +89,7 @@ function select(option) {
 
 .choice-button {
   padding: 14px 20px;
+  margin-bottom: 10px;
   font-size: 16px;
   border-radius: 12px;
   border: 1px solid #ddd;

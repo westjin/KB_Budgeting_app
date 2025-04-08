@@ -4,9 +4,9 @@
     <span class="header-title">여행 일정 추가</span>
     <div class="dots">
       <span
-        v-for="n in 4"
+        v-for="n in totalDots"
         :key="n"
-        :class="['dot', { active: n <= store.currentStep }]"
+        :class="['dot', { active: n <= activeDotCount }]"
       ></span>
     </div>
   </div>
@@ -15,12 +15,32 @@
 <script setup>
 import backIcon from '@/assets/icons/back-icon.png'
 import { useTripAddStore } from '@/stores/tripAddStore'
+import { computed } from 'vue'
 
 const store = useTripAddStore()
 
 function goBack() {
   store.prevStep()
 }
+
+// 항상 dot 4개 고정
+const totalDots = 4
+
+const activeDotCount = computed(() => {
+  const step = store.currentStep
+  const isGroup = store.tripData.companion === 'group'
+
+  // 예산 입력단계(혼자든 그룹이든 마지막 단계)
+  if ((isGroup && step >= 6) || (!isGroup && step === 4)) {
+    return 4
+  }
+
+  // 그룹이면 최대 3개까지만 칠함
+  if (isGroup) return Math.min(step, 3)
+
+  // 혼자면 현재 단계 그대로
+  return step
+})
 </script>
 
 <style scoped>

@@ -14,8 +14,8 @@
         />
         <select class="currency-select">
           <option value="KRW">KRW</option>
-          <option value="USD">$</option>
-          <option value="JPY">¥</option>
+          <option value="USD">USD</option>
+          <option value="JPY">JPY</option>
         </select>
       </div>
     </div>
@@ -48,16 +48,12 @@ const store = useTripAddStore()
 }
 
 .main-content {
-  /* flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; */
   flex: 1;
   padding-left: 25px;
-display: flex;
-flex-direction: column;
-justify-content: flex-start; /* 가운데 정렬 → 위쪽 정렬로 변경 */
-margin-top: calc(100vh / 6); /* 화면의 1/6 정도 내려오게 (1/3 아래보단 위 느낌) */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 가운데 정렬 → 위쪽 정렬로 변경 */
+  margin-top: calc(100vh / 6); /* 화면의 1/6 정도 내려오게 (1/3 아래보단 위 느낌) */
 }
 
 .question {
