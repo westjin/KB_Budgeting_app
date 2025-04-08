@@ -54,14 +54,14 @@ function prevSlide() {
           <!-- 왼쪽 화살표 -->
           <button @click="prevSlide" class="text-gray-500">
             <img
-              src="@/assets/icons/arrow-left.png"
+              src="@/assets/icons/arrow-left.svg"
               alt="prev"
               class="w-5 h-5"
             />
           </button>
 
           <!-- 중앙 환율 정보 -->
-          <div class="flex items-center space-x-3 ml-2">
+          <div class="flex items-center space-x-3">
             <span class="text-3xl">{{ exchangeRates[currentSlide].flag }}</span>
             <div class="flex flex-col justify-center leading-none">
               <p class="font-semibold text-base">
@@ -74,13 +74,13 @@ function prevSlide() {
           </div>
 
           <!-- 오른쪽 환율 + 화살표 -->
-          <div class="flex items-center space-x-2 mr-2">
+          <div class="flex items-center space-x-2">
             <p class="text-lg font-bold">
               {{ exchangeRates[currentSlide].value.toLocaleString() }}₩
             </p>
             <button @click="nextSlide" class="text-gray-500">
               <img
-                src="@/assets/icons/arrow-right.png"
+                src="@/assets/icons/arrow-right.svg"
                 alt="next"
                 class="w-5 h-5"
               />

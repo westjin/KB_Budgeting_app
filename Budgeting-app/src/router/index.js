@@ -32,6 +32,16 @@ const router = createRouter({
       name: 'transactionDetail',
       component: () => import('@/pages/TransactionDetail.vue'),
     },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/pages/Homepage.vue'),
+    },
+    {
+      path: '/exchangeDetail',
+      name: 'exchangeDetail',
+      component: () => import('@/pages/ExchangeDetail.vue'),
+    },
   ],
 });
 
