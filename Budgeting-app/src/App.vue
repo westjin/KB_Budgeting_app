@@ -1,4 +1,5 @@
 <script setup>
+<<<<<<< Updated upstream
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
