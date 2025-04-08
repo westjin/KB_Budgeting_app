@@ -1,10 +1,7 @@
 <script setup>
-<<<<<<< Updated upstream
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
-  <RouterView />
+  <HomePage />
 </template>
-
-<style scoped></style>
