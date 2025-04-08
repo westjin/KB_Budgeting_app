@@ -11,9 +11,6 @@ const payMethod = ref('');
 const date = ref('');
 const category = ref('음식');
 
-// 거래 내역 목록
-const transactionList = ref([]);
-
 // 통화 심볼 계산
 const currencySymbol = computed(() => {
   switch (currency.value) {
@@ -40,7 +37,7 @@ function onAmountInput(e) {
 }
 
 // 저장
-function saveTransaction() {
+async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
   const newTransaction = {
@@ -52,22 +49,29 @@ function saveTransaction() {
     category: category.value,
   };
 
-  transactionList.value.push(newTransaction);
+  const res = await fetch('http://localhost:3000/transactions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newTransaction),
+  });
 
-  // 초기화
-  usage.value = '';
-  amount.value = '';
-  currency.value = 'KRW';
-  payMethod.value = '';
-  date.value = '';
-  category.value = '음식';
+  if (res.ok) {
+    showSuccess.value = true;
 
-  console.log('저장된 내역:', transactionList.value);
+    // 입력 초기화
+    usage.value = '';
+    amount.value = '';
+    currency.value = 'KRW';
+    payMethod.value = '';
+    date.value = '';
+    category.value = '음식';
 
-  showSuccess.value = true;
-  setTimeout(() => {
-    showSuccess.value = false;
-  }, 2000);
+    setTimeout(() => {
+      showSuccess.value = false;
+    }, 2000);
+  } else {
+    alert('저장 실패! 😢');
+  }
 }
 </script>
 
@@ -184,3 +188,5 @@ function saveTransaction() {
     </div>
   </div>
 </template>
+
+<style scoped></style>

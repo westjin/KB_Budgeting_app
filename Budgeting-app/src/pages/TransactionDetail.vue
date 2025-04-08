@@ -1,35 +1,48 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
 
-// route.params로부터 데이터 받기 (임시로 하드코딩된 예시)
-const transaction = ref({
-  usage: route.query.usage || '하이디라오',
-  amount: route.query.amount || '110000',
-  currency: route.query.currency || 'KRW',
-  payMethod: route.query.payMethod || '카드',
-  date: route.query.date || '2025-04-12',
-  category: route.query.category || '음식',
-});
-
+const transaction = ref(null);
 const currencySymbol = {
   KRW: '₩',
   USD: '$',
   JPY: '¥',
 };
 
-function deleteTransaction() {
-  // 실제로는 store나 API를 통해 삭제 처리
-  alert('삭제되었습니다!');
-  router.push('/transactionList');
+// id 가져와서 API 호출
+onMounted(async () => {
+  const id = route.params.id;
+  const res = await fetch(`http://localhost:3000/transactions/${id}`);
+  if (res.ok) {
+    transaction.value = await res.json();
+  } else {
+    alert('거래 내역을 불러오는 데 실패했습니다.');
+    router.push('/transactionList');
+  }
+});
+
+async function deleteTransaction() {
+  const id = route.params.id;
+  const res = await fetch(`http://localhost:3000/transactions/${id}`, {
+    method: 'DELETE',
+  });
+  if (res.ok) {
+    alert('삭제되었습니다!');
+    router.push('/transactionList');
+  } else {
+    alert('삭제에 실패했습니다.');
+  }
 }
 </script>
 
 <template>
-  <div class="w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pb-24">
+  <div
+    class="w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pb-24"
+    v-if="transaction"
+  >
     <!-- 상단 아이콘 및 타이틀 -->
     <div class="flex flex-col items-center mb-6">
       <img
