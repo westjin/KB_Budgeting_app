@@ -44,9 +44,15 @@ async function deleteTransaction() {
     v-if="transaction"
   >
     <!-- 상단 아이콘 및 타이틀 -->
-    <div class="flex flex-col items-center mb-6">
+    <div class="header-container mb-6">
       <img
-        src="../assets/icons/YSJ_Wallet.png"
+        src="@/assets/icons/back-icon.png"
+        alt="뒤로가기"
+        class="back-icon"
+        @click="router.back()"
+      />
+      <img
+        src="@/assets/icons/YSJ_Wallet.png"
         alt="지갑"
         class="w-20 h-20 mb-2"
       />
@@ -125,4 +131,20 @@ async function deleteTransaction() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.back-icon {
+  position: absolute;
+  left: 16px;
+  top: 24px;
+  width: 10px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+</style>

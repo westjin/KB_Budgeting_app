@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const showSuccess = ref(false);
 
 // 입력값 상태
@@ -77,16 +79,26 @@ async function saveTransaction() {
 
 <template>
   <div
-    class="flex flex-col w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pb-24"
+    class="flex flex-col w-[393px] h-[852px] mx-auto bg-[#F8F8F8] px-6 pt-6 pb-24"
   >
-    <!-- 상단 아이콘 -->
-    <div class="flex justify-center mb-4">
-      <img src="../assets/icons/YSJ_Wallet.png" alt="지갑" class="w-20 h-20" />
+    <!-- 상단 헤더 -->
+    <div class="header-container">
+      <img
+        src="../assets/icons/back-icon.png"
+        alt="뒤로가기"
+        class="back-icon"
+        @click="router.back()"
+      />
+      <img
+        src="../assets/icons/YSJ_Wallet.png"
+        alt="지갑"
+        class="w-20 h-20 mb-2"
+      />
+      <h1 class="text-xl font-bold">거래내역 추가</h1>
     </div>
-    <h1 class="text-center text-xl font-bold mb-6">거래내역 추가</h1>
 
+    <!-- 입력 폼 -->
     <form class="space-y-4">
-      <!-- 사용 내역 -->
       <div>
         <label class="block text-sm font-medium">사용 내역</label>
         <input
@@ -96,7 +108,6 @@ async function saveTransaction() {
         />
       </div>
 
-      <!-- 금액 -->
       <div>
         <label class="block text-sm font-medium">금액</label>
         <div class="relative">
@@ -115,7 +126,6 @@ async function saveTransaction() {
         </div>
       </div>
 
-      <!-- 결제 통화 -->
       <div>
         <label class="block text-sm font-medium">결제 통화</label>
         <select
@@ -128,7 +138,6 @@ async function saveTransaction() {
         </select>
       </div>
 
-      <!-- 결제 수단 -->
       <div>
         <label class="block text-sm font-medium mb-1">결제 수단</label>
         <div class="flex space-x-4">
@@ -143,7 +152,6 @@ async function saveTransaction() {
         </div>
       </div>
 
-      <!-- 날짜 -->
       <div>
         <label class="block text-sm font-medium">날짜</label>
         <input
@@ -153,7 +161,6 @@ async function saveTransaction() {
         />
       </div>
 
-      <!-- 카테고리 -->
       <div>
         <label class="block text-sm font-medium">카테고리</label>
         <select
@@ -170,16 +177,17 @@ async function saveTransaction() {
       </div>
     </form>
 
-    <!-- 버튼 -->
+    <!-- 추가 버튼 -->
     <div class="mt-8">
       <button
-        class="w-full py-3 rounded bg-yellow-400 text-white font-bold"
         @click.prevent="saveTransaction"
+        class="w-full py-3 rounded bg-yellow-400 text-white font-bold"
       >
         사용 내역 추가
       </button>
     </div>
 
+    <!-- 저장 완료 메시지 -->
     <div
       v-if="showSuccess"
       class="mt-4 text-center text-green-600 font-semibold bg-green-100 py-2 rounded transition-all duration-300"
@@ -189,4 +197,24 @@ async function saveTransaction() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+  padding-bottom: 12px;
+  background-color: #f8f8f8;
+  position: relative;
+  z-index: 10;
+}
+
+.back-icon {
+  position: absolute;
+  left: 16px;
+  top: 24px;
+  width: 10px;
+  height: 15px;
+  cursor: pointer;
+}
+</style>

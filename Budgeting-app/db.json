@@ -28,7 +28,7 @@
   },
   "transactions": [
     {
-      "id": 1,
+      "id": "1",
       "usage": "마라탕",
       "amount": 9000,
       "currency": "KRW",
@@ -37,7 +37,7 @@
       "category": "음식"
     },
     {
-      "id": 2,
+      "id": "2",
       "usage": "택시",
       "amount": 12000,
       "currency": "KRW",
@@ -46,7 +46,7 @@
       "category": "교통수단"
     },
     {
-      "id": 3,
+      "id": "3",
       "usage": "택시비",
       "amount": 15000,
       "currency": "KRW",
