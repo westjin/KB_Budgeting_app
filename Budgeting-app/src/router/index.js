@@ -22,6 +22,16 @@ const router = createRouter({
       name: 'transaction',
       component: () => import('@/pages/TransactionAdd.vue'),
     },
+    {
+      path: '/transactionList',
+      name: 'transactionList',
+      component: () => import('@/pages/TransactionList.vue'),
+    },
+    {
+      path: '/transactionDetail',
+      name: 'transactionDetail',
+      component: () => import('@/pages/TransactionDetail.vue'),
+    },
   ],
 });
 

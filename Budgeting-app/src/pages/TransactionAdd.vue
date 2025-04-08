@@ -72,7 +72,9 @@ function saveTransaction() {
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen bg-white px-6 pt-6 pb-24">
+  <div
+    class="flex flex-col w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pb-24"
+  >
     <!-- 상단 아이콘 -->
     <div class="flex justify-center mb-4">
       <img src="../assets/icons/YSJ_Wallet.png" alt="지갑" class="w-20 h-20" />
@@ -155,9 +157,11 @@ function saveTransaction() {
           class="w-full border border-gray-300 rounded px-3 py-2"
         >
           <option>음식</option>
-          <option>교통</option>
+          <option>교통수단</option>
           <option>숙소</option>
           <option>쇼핑</option>
+          <option>항공</option>
+          <option>기타</option>
         </select>
       </div>
     </form>

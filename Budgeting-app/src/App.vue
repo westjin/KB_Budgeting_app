@@ -5,6 +5,5 @@ import TransactionAdd from './pages/TransactionAdd.vue';
 </script>
 
 <template>
-  <!-- <router-view /> -->
-  <TransactionAdd />
+  <router-view />
 </template>
