@@ -61,6 +61,8 @@
 
 input[type='date'] {
   padding: 12px;
+  padding-right: 10px;
+  width: 90%;
   font-size: 16px;
   border-radius: 12px;
   border: 1px solid #ccc;
@@ -76,17 +78,6 @@ input[type='date'] {
     font-size: 18px;
     margin-bottom: 20px;
 }
-  
-.region-input {
-    width: 100%;
-    margin-top: 14px;
-    padding: 12px 16px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    outline: none;
-    background-color: white;
-  }
   
   .footer {
     display: flex;

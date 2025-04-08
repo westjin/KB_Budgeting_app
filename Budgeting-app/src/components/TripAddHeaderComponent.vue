@@ -35,14 +35,6 @@ function goBack() {
   z-index: 10;
 }
 
-/* .back-icon {
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  width: 10px;
-  cursor: pointer;
-} */
-
 .back-icon {
   position: absolute;
   left: 16px;
