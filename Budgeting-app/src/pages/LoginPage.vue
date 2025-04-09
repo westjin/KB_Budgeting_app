@@ -99,9 +99,11 @@ async function login() {
 
     if (matchedUser) {
       userStore.login(matchedUser);
+      localStorage.setItem('auth', matchedUser.userId);
       alert('로그인 성공');
       console.log('✅ 로그인 성공:', matchedUser);
-      router.push('/'); // 로그인 성공시 홈 화면으로 이동
+      // router.push('/'); // 로그인 성공시 홈 화면으로 이동
+      router.push('/profile');
     } else {
       alert('로그인 실패');
       error.value = '이메일 또는 비밀번호가 틀렸습니다.';
