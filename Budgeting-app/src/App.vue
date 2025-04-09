@@ -5,5 +5,7 @@ import TransactionAdd from './pages/TransactionAdd.vue';
 </script>
 
 <template>
-   <RouterView />
+
+  <RouterView />
+
 </template>
