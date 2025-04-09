@@ -5,7 +5,7 @@
       "email": "test@naver.com",
       "username": "test",
       "password": "test123",
-      "currency": "KRW"
+      "currency": "USD"
     }
   ],
 
@@ -14,15 +14,17 @@
       "groupId": "1",
       "groupName": "grouptest",
       "groupUser": ["test@naver.com", "test2@naver.com"],
-      "travelCountry": "USA",
-      "travelPeriod": "2025-04-01 ~ 2025-04-10"
+      "place": "USA",
+      "travelPeriod": "2025-04-01 ~ 2025-04-10",
+      "budget": 1000000,
+      "currency": "KRW"
     }
   ],
 
   "GroupBudgetData": [
     {
-      "groupBudgetDataId": 1,
-      "groupId": 1,
+      "groupBudgetDataId": "1",
+      "groupId": "1",
       "usedAt": "마라탕",
       "cost": 90000,
       "currency": "KRW",
@@ -31,18 +33,18 @@
       "category": "food"
     },
     {
-      "groupBudgetDataId": 2,
-      "groupId": 1,
-      "usedAt": "비행기 값",
+      "groupBudgetDataId": "2",
+      "groupId": "1",
+      "usedAt": "항공료",
       "cost": 100,
       "currency": "USD",
       "결제수단": "card",
       "usedDate": "2025-04-06",
-      "category": "transport"
+      "category": "flights"
     },
     {
-      "groupBudgetDataId": 3,
-      "groupId": 1,
+      "groupBudgetDataId": "3",
+      "groupId": "1",
       "usedAt": "숙소",
       "cost": 3000,
       "currency": "JPY",
@@ -51,8 +53,8 @@
       "category": "accommodation"
     },
     {
-      "groupBudgetDataId": 4,
-      "groupId": 1,
+      "groupBudgetDataId": "4",
+      "groupId": "1",
       "usedAt": "옷",
       "cost": 32000,
       "currency": "KRW",
@@ -61,24 +63,24 @@
       "category": "shopping"
     },
     {
-      "groupBudgetDataId": 5,
-      "groupId": 1,
+      "groupBudgetDataId": "5",
+      "groupId": "1",
       "usedAt": "버스비",
       "cost": 20000,
       "currency": "KRW",
       "결제수단": "cash",
       "usedDate": "2025-04-07",
-      "category": "traffic"
+      "category": "transportation"
     },
     {
-      "groupBudgetDataId": 6,
-      "groupId": 1,
+      "groupBudgetDataId": "6",
+      "groupId": "1",
       "usedAt": "기타",
-      "cost": 20000,
+      "cost": 5000,
       "currency": "KRW",
       "결제수단": "cash",
       "usedDate": "2025-04-09",
-      "category": "etc"
+      "category": "others"
     }
   ]
 }
