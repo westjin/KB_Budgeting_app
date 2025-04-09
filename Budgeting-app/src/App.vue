@@ -6,7 +6,6 @@ import TransactionAdd from './pages/TransactionAdd.vue';
 </script>
 
 <template>
-  <router-view />
-    <Profile />
-
+   <RouterView />
+   <Profile />
 </template>
