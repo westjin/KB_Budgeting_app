@@ -59,7 +59,7 @@
       "usage": "택시비",
       "amount": 15000,
       "currency": "KRW",
-      "payMethod": "카드",
+      "payMethod": "card",
       "date": "2025-04-08",
       "category": "교통수단"
     },
@@ -68,9 +68,20 @@
       "usage": "adsdsdsd",
       "amount": 131212121,
       "currency": "JPY",
-      "payMethod": "카드",
+      "payMethod": "card",
       "date": "2025-04-10",
       "category": "쇼핑"
+    }
+  ],
+  "Group": [
+    {
+      "groupId": "1",
+      "groupName": "grouptest",
+      "groupUser": ["test@naver.com", "test2@naver.com"],
+      "place": "USA",
+      "travelPeriod": "2025-04-01 ~ 2025-04-10",
+      "budget": 10000,
+      "currency": "KRW"
     }
   ]
 }
