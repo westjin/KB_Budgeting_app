@@ -1,13 +1,127 @@
 {
-  "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
+  "User": [
+    {
+      "userId": "1",
+      "email": "test@naver.com",
+      "username": "test",
+      "password": "test123",
+      "currency": "KRW"
+    },
+    {
+      "id": "7f90",
+      "userId": "1744164834201",
+      "email": "hhhㅎㅎ@naver.com",
+      "username": "ㅎㅎㅎ",
+      "password": "hhh123",
+      "currency": "USD"
+    },
+    {
+      "id": "000c",
+      "userId": "1744166639967",
+      "email": "test1@naver.com",
+      "username": "ㄴㅇㄹ",
+      "password": "123",
+      "currency": "KRW"
+    },
+    {
+      "id": "7928",
+      "userId": "1744180586651",
+      "email": "xyz@aaa.bbb",
+      "username": "테스트용123",
+      "password": "111",
+      "currency": "USD"
+    },
+    {
+      "id": "7fba",
+      "userId": "1744180970841",
+      "email": "test2@naver.com",
+      "username": "kkk",
+      "password": "111",
+      "currency": "KRW"
+    },
+    {
+      "id": "b089",
+      "userId": "1744183041637",
+      "email": "test333333@naver.com",
+      "username": "test3333333",
+      "password": "QQQ",
+      "currency": "JPY"
+    }
   ],
-  "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+  "Group": [
+    {
+      "id": "1111",
+      "groupId": "1",
+      "groupName": "grouptest",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "place": "USA",
+      "travelPeriod": "2025-04-01 ~ 2025-04-10",
+      "budget": 10000,
+      "currency": "KRW"
+    }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "GroupBudgetData": [
+    {
+      "groupBudgetDataId": "1",
+      "groupId": "1",
+      "usedAt": "마라탕",
+      "cost": 90000,
+      "currency": "KRW",
+      "결제수단": "card",
+      "usedDate": "2025-04-06",
+      "category": "food"
+    },
+    {
+      "groupBudgetDataId": "2",
+      "groupId": "1",
+      "usedAt": "비행기 값",
+      "cost": 100,
+      "currency": "USD",
+      "결제수단": "card",
+      "usedDate": "2025-04-06",
+      "category": "flights"
+    },
+    {
+      "groupBudgetDataId": "3",
+      "groupId": "1",
+      "usedAt": "숙소",
+      "cost": 3000,
+      "currency": "JPY",
+      "결제수단": "card",
+      "usedDate": "2025-04-07",
+      "category": "accommodation"
+    },
+    {
+      "groupBudgetDataId": "4",
+      "groupId": "1",
+      "usedAt": "옷",
+      "cost": 32000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-07",
+      "category": "shopping"
+    },
+    {
+      "groupBudgetDataId": "5",
+      "groupId": "1",
+      "usedAt": "버스비",
+      "cost": 20000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-07",
+      "category": "transportation"
+    },
+    {
+      "groupBudgetDataId": "6",
+      "groupId": "1",
+      "usedAt": "기타",
+      "cost": 20000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-09",
+      "category": "others"
+    }
+  ]
 }

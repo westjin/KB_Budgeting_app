@@ -182,7 +182,7 @@ async function submit() {
 
   try {
     const newUser = {
-      userId: Date.now().toString(),
+      userId: String(Date.now()),
       email: form.email.trim(),
       username: form.name.trim(),
       password: form.password,
