@@ -10,7 +10,7 @@
       </div>
   
       <div class="footer">
-        <button class="next-button" @click="store.nextStep">완료</button>
+        <button class="next-button" @click="goToHome">완료</button>
       </div>
     </div>
   </template>
@@ -19,9 +19,14 @@
   import finishIcon from '@/assets/icons/finish-icon.png'
   import { useTripAddStore } from '@/stores/tripAddStore'
   import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
+  import { useRouter } from 'vue-router' 
 
   const store = useTripAddStore()
+  const router = useRouter()
 
+  function goToHome() {
+    router.push('/') // ✅ 홈으로 이동
+  }
   </script>
   
   <style scoped>
