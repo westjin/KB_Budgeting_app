@@ -1,26 +1,62 @@
 {
-    "User": [
-      {
-        "userId": "1",
-        "email": "test@naver.com",
-        "username": "test",
-        "password": "test123",
-        "currency": "USD"
-      }
-    ],
-  
-    "Group": [
-      {
-        "groupId": "1",
-        "groupName": "grouptest",
-        "groupUser": ["test@naver.com", "test2@naver.com"],
-        "place": "USA",
-        "travelPeriod": "2025-04-01 ~ 2025-04-10",
-        "budget": 1000000,
-        "currency": "KRW"
-      }
-    ],
-  
+  "User": [
+    {
+      "id": "7f90",
+      "userId": "1744164834201",
+      "email": "hhhㅎㅎ@naver.com",
+      "username": "ㅎㅎㅎ",
+      "password": "hhh123",
+      "currency": "USD"
+    },
+    {
+      "id": "000c",
+      "userId": "1744166639967",
+      "email": "test1@naver.com",
+      "username": "ㄴㅇㄹ",
+      "password": "123",
+      "currency": "KRW"
+    },
+    {
+      "id": "7928",
+      "userId": "1744180586651",
+      "email": "xyz@aaa.bbb",
+      "username": "테스트용123",
+      "password": "111",
+      "currency": "USD"
+    },
+    {
+      "id": "7fba",
+      "userId": "1744180970841",
+      "email": "test2@naver.com",
+      "username": "kkk",
+      "password": "111",
+      "currency": "KRW"
+    },
+    {
+      "id": "b089",
+      "userId": "1744183041637",
+      "email": "test333333@naver.com",
+      "username": "test3333333",
+      "password": "QQQ",
+      "currency": "JPY"
+    }
+  ],
+  "Group": [
+    {
+      "id": "1111",
+      "groupId": "1",
+      "groupName": "grouptest",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "place": "USA",
+      "travelPeriod": "2025-04-01 ~ 2025-04-10",
+      "budget": 10000,
+      "currency": "KRW"
+    }
+  ],
+ 
+}
     "GroupBudgetData": [
       {
         "groupBudgetDataId": "1",
@@ -83,11 +119,7 @@
         "category": "others"
       }
     ],
-    "profile": [ 
-      {
-        "name": "typicode"
-      }
-    ],
+ 
     "transactions": [
       {
         "id": "2",
