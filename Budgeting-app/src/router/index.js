@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/Homepage.vue';
+import TransactionCheckList from '@/pages/TransactionCheckList.vue';
+import TransactionCalendar from '@/pages/TransactionCalendar.vue';
+import TransactionSummary from '@/pages/TransactionSummary.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +19,22 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../pages/AboutPage.vue'),
+    },
+    {
+      path: '/TransactionCheckList',
+      name: 'TransactionCheckList',
+      component: TransactionCheckList,
+    },
+    {
+      path: '/TransactionCalendar',
+      name: 'TransactionCalendar',
+      component: TransactionCalendar,
+    },
+
+    {
+      path: '/TransactionSummary',
+      name: 'TransactionSummary',
+      component: TransactionSummary,
     },
   ],
 });

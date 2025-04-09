@@ -1,9 +1,8 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
+import TransactionList from './pages/TransactionCheckList.vue';
 </script>
 
 <template>
   <RouterView />
 </template>
-
-<style scoped></style>
