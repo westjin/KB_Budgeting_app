@@ -17,6 +17,31 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../pages/AboutPage.vue'),
     },
+    {
+      path: '/transaction',
+      name: 'transaction',
+      component: () => import('@/pages/TransactionAdd.vue'),
+    },
+    {
+      path: '/transactionList',
+      name: 'transactionList',
+      component: () => import('@/pages/TransactionList.vue'),
+    },
+    {
+      path: '/transactionDetail/:id',
+      name: 'transactionDetail',
+      component: () => import('@/pages/TransactionDetail.vue'),
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/pages/Homepage.vue'),
+    },
+    {
+      path: '/exchangeDetail',
+      name: 'exchangeDetail',
+      component: () => import('@/pages/ExchangeDetail.vue'),
+    },
   ],
 });
 
