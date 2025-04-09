@@ -96,7 +96,12 @@
               <div class="text-xs text-gray-500">{{ group.travelPeriod }}</div>
             </div>
           </div>
-          <span class="text-lg text-gray-400">➔</span>
+          <span
+            class="text-lg text-gray-400 cursor-pointer"
+            @click="goToGroupDetail(group.groupId)"
+          >
+            ➔
+          </span>
         </div>
       </div>
 
@@ -155,6 +160,9 @@ function goToAddTrip() {
 }
 function goToProfile() {
   router.push('/profile');
+}
+function goToGroupDetail(groupId) {
+  router.push(`/groupDetail/${groupId}`);
 }
 
 onMounted(async () => {
