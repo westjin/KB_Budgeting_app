@@ -14,8 +14,14 @@
     </div>
 
     <div class="mt-8">
+      <div
+        v-if="exchangeStore.rates.length === 0"
+        class="text-center text-gray-500"
+      >
+        환율 정보를 불러오는 중...
+      </div>
       <!-- 환율 타이틀 + 상세보기 -->
-      <div class="flex justify-between items-center mb-3">
+      <div v-else class="flex justify-between items-center mb-3">
         <span class="text-base font-semibold text-gray-800">
           환율 한눈에 보기
         </span>
@@ -98,9 +104,9 @@ import { useExchangeStore } from '@/stores/exchangeStore';
 const router = useRouter();
 const exchangeStore = useExchangeStore();
 
-onMounted(() => {
+onMounted(async () => {
   if (exchangeStore.rates.length === 0) {
-    exchangeStore.fetchRates(); // 최초 1회만 fetch
+    await exchangeStore.fetchRates();
   }
 });
 
