@@ -7,5 +7,5 @@ import TransactionAdd from './pages/TransactionAdd.vue';
 
 <template>
   <router-view />
-  <BottomNav />
+  <!-- dsjkldjsaklnbnjkkjgkj -->
 </template>
