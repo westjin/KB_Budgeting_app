@@ -12,13 +12,15 @@
     </div>
 
     <!-- 로딩 / 에러 처리 -->
-    <div v-if="loading" class="text-center text-gray-500">불러오는 중...</div>
-    <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
+    <div v-if="store.rates.length === 0" class="text-center text-gray-500">
+      불러오는 중...
+      <pre>{{ store.rates }}</pre>
+    </div>
 
     <!-- 환율 목록 -->
     <div v-else class="space-y-4">
       <div
-        v-for="(rate, index) in exchangeRates"
+        v-for="(rate, index) in store.rates"
         :key="index"
         class="border rounded-xl px-4 py-3 flex justify-between items-center shadow-sm"
       >
@@ -26,14 +28,14 @@
           <span class="text-2xl">{{ rate.flag }}</span>
           <div>
             <p class="font-semibold">{{ rate.name }}</p>
-            <p class="text-xs text-gray-500">
-              {{ rate.baseUnit }}{{ rate.symbol }}
-            </p>
+            <p class="text-xs text-gray-500">1{{ rate.symbol }}</p>
           </div>
         </div>
         <p class="text-base font-bold">
           {{
-            rate.value.toLocaleString(undefined, { maximumFractionDigits: 3 })
+            rate.value.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })
           }}₩
         </p>
       </div>
@@ -42,74 +44,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+import { useExchangeStore } from '@/stores/exchangeStore';
 
 const router = useRouter();
-const exchangeRates = ref([]);
-const loading = ref(true);
-const error = ref(null);
+const store = useExchangeStore();
 
-// 🔑 CurrencyFreaks API Key
-const API_KEY = 'f5e4204e10914c9bad64b9a1560238b8';
+const CACHE_DURATION = 1000 * 60 * 60; // 1시간
 
-// 통화 정보 (기본 통화는 USD 기준)
-const currencyInfo = {
-  USD: { name: 'US Dollar', symbol: '$', flag: '🇺🇸', baseUnit: 1 },
-  JPY: { name: 'Japanese Yen', symbol: '¥', flag: '🇯🇵', baseUnit: 100 },
-  EUR: { name: 'Euro', symbol: '€', flag: '🇪🇺', baseUnit: 1 },
-};
+onMounted(async () => {
+  const now = Date.now();
+  const lastFetched = localStorage.getItem('exchangeFetchedAt');
 
-async function fetchExchangeRates() {
-  try {
-    const response = await axios.get(
-      `https://api.currencyfreaks.com/latest?apikey=${API_KEY}&symbols=KRW,JPY,EUR`
-    );
-
-    const data = response.data.rates;
-    const usdToKrw = parseFloat(data.KRW);
-    const usdToJpy = parseFloat(data.JPY);
-    const usdToEur = parseFloat(data.EUR);
-
-    exchangeRates.value = [
-      {
-        country: 'USD',
-        name: currencyInfo.USD.name,
-        symbol: currencyInfo.USD.symbol,
-        flag: currencyInfo.USD.flag,
-        baseUnit: 1,
-        value: usdToKrw,
-      },
-      {
-        country: 'JPY',
-        name: currencyInfo.JPY.name,
-        symbol: currencyInfo.JPY.symbol,
-        flag: currencyInfo.JPY.flag,
-        baseUnit: 100,
-        value: (usdToKrw / usdToJpy) * 100,
-      },
-      {
-        country: 'EUR',
-        name: currencyInfo.EUR.name,
-        symbol: currencyInfo.EUR.symbol,
-        flag: currencyInfo.EUR.flag,
-        baseUnit: 1,
-        value: usdToKrw / usdToEur,
-      },
-    ];
-  } catch (err) {
-    error.value = '환율 정보를 불러오는 데 실패했습니다.';
-  } finally {
-    loading.value = false;
+  if (
+    store.rates.length > 0 &&
+    lastFetched &&
+    now - new Date(lastFetched).getTime() < CACHE_DURATION
+  ) {
+    return;
   }
-}
 
-onMounted(() => {
-  fetchExchangeRates();
+  const cached = localStorage.getItem('exchangeRates');
+  if (
+    cached &&
+    lastFetched &&
+    now - new Date(lastFetched).getTime() < CACHE_DURATION
+  ) {
+    store.rates = JSON.parse(cached);
+  } else {
+    await store.fetchRates();
+  }
 });
 </script>
 
 <style scoped>
-/* 필요시 커스텀 스타일 작성 */
+/* 필요 시 커스텀 스타일 작성 */
 </style>
