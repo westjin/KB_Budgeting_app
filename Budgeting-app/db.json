@@ -43,21 +43,59 @@
   ],
   "Group": [
     {
-      "id": "1111",
       "groupId": "1",
       "groupName": "grouptest",
       "groupUser": [
-        "test@naver.com"
+        "test@naver.com",
+        "test2@naver.com"
       ],
       "place": "USA",
       "travelPeriod": "2025-04-01 ~ 2025-04-10",
-      "budget": 10000,
+      "budget": 1000000,
+      "currency": "KRW",
+      "id": "c8fa"
+    },
+    {
+      "id": "3374",
+      "groupName": "testGroup",
+      "place": "US",
+      "travelPeriod": "2025-04-10 ~ 2025-04-24",
+      "groupUser": [
+        "test1@naver.com",
+        "test2@naver.com"
+      ],
+      "budget": 100000,
+      "currency": "KRW"
+    },
+    {
+      "id": "82db",
+      "groupName": "",
+      "place": "AU",
+      "travelPeriod": "2025-04-16 ~ 2025-04-23",
+      "groupUser": [],
+      "budget": 14253,
+      "currency": "KRW"
+    },
+    {
+      "id": "bbde",
+      "groupName": "",
+      "place": "GB",
+      "travelPeriod": "2025-04-09 ~ 2025-04-18",
+      "groupUser": [],
+      "budget": 1111,
+      "currency": "JPY"
+    },
+    {
+      "id": "06a5",
+      "groupName": "",
+      "place": "AU",
+      "travelPeriod": "2025-04-16 ~ 2025-04-25",
+      "groupUser": [],
+      "budget": 11111,
       "currency": "KRW"
     }
   ],
- 
-}
-    "GroupBudgetData": [
+  "GroupBudgetData": [
       {
         "groupBudgetDataId": "1",
         "groupId": "1",
