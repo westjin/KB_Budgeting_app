@@ -1,10 +1,10 @@
 <template>
   <div
-    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] font-[Inter] text-black overflow-x-hidden"
+    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] text-black overflow-x-hidden pt-[44px]"
   >
     <header class="flex items-center justify-between p-4 text-xl font-bold">
       <div>
-        <span class="border-b-4 border-[#ffcc00]">Expenses</span>
+        <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
       </div>
       <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
     </header>
@@ -22,8 +22,8 @@
       <button @click="changeMonth(1)">›</button>
     </div>
 
-    <!-- 캘린더 표시 -->
-    <div class="bg-white m-4 p-4 rounded-xl shadow">
+    <!-- 캘린더 -->
+    <div class="bg-white m-4 p-4 rounded-xl border-1 border-gray-300">
       <div class="grid grid-cols-7 gap-2 text-center text-sm">
         <div v-for="(day, idx) in days" :key="idx" class="text-gray-500">
           {{ day }}
@@ -43,10 +43,10 @@
       </div>
     </div>
 
-    <!-- 선택된 날짜 지출 표시 -->
+    <!-- 선택된 날짜 지출 내역 리스트-->
     <div
       v-if="selectedData.length"
-      class="bg-white mx-4 mb-6 p-4 rounded-xl shadow"
+      class="bg-white mx-4 mb-6 p-4 rounded-xl border-1 border-gray-300"
     >
       <div class="text-md font-semibold mb-2">
         {{ formatDate(selectedDate) }}
@@ -69,25 +69,18 @@
         class="bg-[#ffcc00] text-black py-1 px-8 rounded-full font-semibold shadow"
         @click="goToAdd"
       >
-        ADD
+        추가
       </button>
     </div>
-
-    <nav
-      class="fixed bottom-0 w-[393px] h-16 bg-white border-t border-gray-300 flex justify-around items-center"
-    >
-      <h1>네비게이션바</h1>
-    </nav>
   </div>
 </template>
 
 <script>
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-import { ref, reactive, computed, onMounted } from 'vue';
 
 export default {
   setup() {
-    // 임시!!
     const email = ref('test@naver.com');
     const groupId = ref(null);
     const budgetData = ref([]);
@@ -101,9 +94,10 @@ export default {
     const groupedData = computed(() => {
       const group = {};
       budgetData.value.forEach((item) => {
-        if (item.groupId === groupId.value) {
-          if (!group[item.usedDate]) group[item.usedDate] = [];
-          group[item.usedDate].push(item);
+        if (parseInt(item.groupId) === groupId.value) {
+          const dateStr = new Date(item.usedDate).toISOString().split('T')[0];
+          if (!group[dateStr]) group[dateStr] = [];
+          group[dateStr].push(item);
         }
       });
       return group;
@@ -115,8 +109,9 @@ export default {
       const startDay = firstDay.getDay();
       const dates = [];
 
-      for (let i = 0; i < startDay; i++)
+      for (let i = 0; i < startDay; i++) {
         dates.push({ date: '', displayDate: '', hasExpense: false });
+      }
 
       for (let i = 1; i <= daysInMonth; i++) {
         const date = new Date(year.value, month.value, i);
@@ -128,6 +123,7 @@ export default {
           hasExpense: !!groupedData.value[dateStr],
         });
       }
+
       return dates;
     });
 
@@ -151,11 +147,9 @@ export default {
     const fetchBudgetData = async () => {
       try {
         const res = await axios.get('http://localhost:3000/GroupBudgetData');
-        budgetData.value = res.data.filter(
-          (item) => item.groupId == groupId.value
-        );
+        budgetData.value = res.data;
       } catch (error) {
-        console.error('데이터를 불러오는 데 실패했습니다:', error);
+        console.error('데이터 로딩 실패:', error);
       }
     };
 
@@ -175,15 +169,9 @@ export default {
       return map[currency] || '';
     };
 
-    const goToList = () => {
-      window.location.href = '/TransactionCheckList';
-    };
-    const goToSummary = () => {
-      window.location.href = '/TransactionSummary';
-    };
-    const goToAdd = () => {
-      window.location.href = '/TransactionAdd.vue';
-    };
+    const goToList = () => (window.location.href = '/TransactionCheckList');
+    const goToSummary = () => (window.location.href = '/TransactionSummary');
+    const goToAdd = () => (window.location.href = '/TransactionAdd.vue');
 
     const changeMonth = (offset) => {
       const newDate = new Date(year.value, month.value + offset);
@@ -195,9 +183,7 @@ export default {
       if (date) selectedDate.value = date;
     };
 
-    onMounted(() => {
-      fetchGroupId();
-    });
+    onMounted(fetchGroupId);
 
     return {
       email,
@@ -207,7 +193,6 @@ export default {
       year,
       month,
       days,
-      groupedData,
       calendarDates,
       selectedData,
       formatDate,
