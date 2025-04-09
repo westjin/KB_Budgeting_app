@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/trip/add',
       name: 'trip/add',
-      component: () => import('@/pages/TripAddPage.vue')
+      component: () => import('@/pages/TripAddPage.vue'),
     },
   ],
 });
