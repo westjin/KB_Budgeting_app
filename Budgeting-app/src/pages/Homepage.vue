@@ -86,10 +86,12 @@
           class="flex items-center justify-between bg-yellow-100 rounded-xl px-4 py-3 shadow"
         >
           <div class="flex items-center space-x-3">
-            <span class="text-2xl">🇦🇺</span>
+            <!-- 여기만 수정 -->
+            <span class="text-2xl">{{ getFlagEmoji(group.place) }}</span>
             <div class="text-left">
+              <!-- 선택: 국가코드 → 국가명 매핑 원하면 여기 -->
               <div class="font-bold text-sm">
-                {{ group.place.toUpperCase() }}
+                {{ countryNameMap[group.place] || group.place }}
               </div>
               <div class="text-xs text-gray-500">{{ group.travelPeriod }}</div>
             </div>
@@ -125,6 +127,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useExchangeStore } from '@/stores/exchangeStore';
 import { useGroupStore } from '@/stores/groupStore'; // 그룹 리스트 관리용
+import { getFlagEmoji, countryNameMap } from '@/utils/countryUtils';
 
 const router = useRouter();
 const exchangeStore = useExchangeStore();

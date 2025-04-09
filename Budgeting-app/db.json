@@ -78,7 +78,7 @@
       "groupId": "1",
       "groupName": "grouptest",
       "groupUser": ["test@naver.com", "test2@naver.com"],
-      "place": "USA",
+      "place": "US",
       "travelPeriod": "2025-04-01 ~ 2025-04-10",
       "budget": 10000,
       "currency": "KRW"
