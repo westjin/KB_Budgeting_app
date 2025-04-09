@@ -56,11 +56,11 @@ const formatDate = (dateStr) => {
 const getIcon = (category) => {
   const icons = {
     food: '/src/assets/icons/icon_food.png',
-    transport: '/src/assets/icons/icon_plane.png',
+    flights: '/src/assets/icons/icon_plane.png',
     shopping: '/src/assets/icons/icon_shopping.png',
     accommodation: '/src/assets/icons/icon_accommodation.png',
-    etc: 'src/assets/icons/icon_etc.png',
-    traffic: 'src/assets/icons/icon_traffic.png',
+    others: 'src/assets/icons/icon_etc.png',
+    transportation: 'src/assets/icons/icon_traffic.png',
   };
   return icons[category] || '/src/assets/icons/etc.png';
 };
@@ -85,57 +85,61 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] font-[Inter] text-black overflow-x-hidden"
+    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] text-black overflow-x-hidden shadow-lg border"
   >
-    <header class="flex items-center justify-between p-4 text-xl font-bold">
-      <div>
-        <span class="border-b-4 border-[#ffcc00]">Expenses</span>
-      </div>
-      <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
-    </header>
-
-    <div class="flex justify-around p-2 mb-2 font-bold">
-      <button class="bg-[#ffcc00] px-8 py-1 rounded-4xl">내역</button>
-      <button @click="goToCalendar" class="px-8 py-1">달력</button>
-      <button @click="goToSummary" class="px-8 py-1">요약</button>
-    </div>
-
-    <div v-for="(group, date) in groupedData" :key="date" class="px-4">
-      <h3 class="text-lg font-semibold mb-3">{{ formatDate(date) }}요일</h3>
-
-      <div
-        v-for="item in group"
-        :key="item.groupBudgetDataId"
-        class="bg-white border border-gray-300 rounded-xl px-4 py-3 mb-3 flex justify-between items-center"
+    <div class="h-full overflow-y-auto pt-[44px]">
+      <header
+        class="flex items-center justify-between p-4 text-xl font-semibold"
       >
-        <div class="flex items-center gap-3">
-          <img :src="getIcon(item.category)" alt="icon" class="w-6 h-6" />
-          <div>
-            <div class="font-semibold">{{ item.usedAt }}</div>
-            <div class="text-xs text-gray-500">{{ item.usedDate }}</div>
+        <div>
+          <span class="border-b-4 border-[#ffcc00] text-2xl font-bold"
+            >Expenses</span
+          >
+        </div>
+        <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
+      </header>
+
+      <div class="flex justify-around p-2 mb-2 font-bold">
+        <button class="bg-[#ffcc00] px-8 py-1 rounded-4xl">내역</button>
+        <button @click="goToCalendar" class="px-8 py-1">달력</button>
+        <button @click="goToSummary" class="px-8 py-1">요약</button>
+      </div>
+
+      <div v-for="(group, date) in groupedData" :key="date" class="px-4">
+        <h3 class="text-lg font-semibold mb-3">{{ formatDate(date) }}요일</h3>
+
+        <div
+          v-for="item in group"
+          :key="item.groupBudgetDataId"
+          class="bg-white border-1 border-gray-300 rounded-xl px-4 py-3 mb-3 flex justify-between items-center"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              :src="getIcon(item.category)"
+              alt="icon"
+              class="w-8 h-8 bg-[#ffcc00] rounded-md p-1"
+            />
+            <div>
+              <div class="font-semibold">{{ item.usedAt }}</div>
+              <div class="text-xs text-gray-500">{{ item.usedDate }}</div>
+            </div>
+          </div>
+          <div class="font-semibold">
+            {{ getCurrencySymbol(item.currency) }}
+            {{ item.cost.toLocaleString() }}
           </div>
         </div>
-        <div class="font-bold">
-          {{ getCurrencySymbol(item.currency) }}
-          {{ item.cost.toLocaleString() }}
-        </div>
+      </div>
+
+      <div class="text-center mt-6 mb-20">
+        <button
+          class="bg-[#ffcc00] text-black py-1 px-8 rounded-full font-semibold shadow"
+          @click="goToAdd"
+        >
+          추가
+        </button>
       </div>
     </div>
-
-    <div class="text-center mt-6 mb-20">
-      <button
-        class="bg-[#ffcc00] text-black py-1 px-8 rounded-full font-semibold shadow"
-        @click="goToAdd"
-      >
-        ADD
-      </button>
-    </div>
-
-    <nav
-      class="fixed bottom-0 w-[393px] h-16 bg-white border-t border-gray-300 flex justify-around items-center"
-    >
-      <h1>네비게이션바</h1>
-    </nav>
   </div>
 </template>
 
