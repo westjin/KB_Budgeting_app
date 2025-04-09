@@ -7,53 +7,57 @@ import {
   Chart as ChartJS,
   Title,
   Tooltip,
-  Legend,
   ArcElement,
   CategoryScale,
 } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+ChartJS.register(ChartDataLabels);
+ChartJS.register(Title, Tooltip, ArcElement, CategoryScale);
 
 const router = useRouter();
-
 const email = ref('test@naver.com');
 const groupId = ref(null);
 const userCurrency = ref('KRW');
 const exchangeRates = ref({});
 const budgetData = ref([]);
+const totalBudget = ref(0);
 const travelPeriod = ref({ start: '', end: '' });
 
-const validCategories = [
-  'food',
-  'transport',
-  'accommodation',
-  'shopping',
-  'traffic',
-  'etc',
-];
+const categoryMap = {
+  food: '식비',
+  transportation: '교통수단',
+  accommodation: '숙소',
+  shopping: '쇼핑',
+  flights: '항공',
+  others: '기타',
+};
+
+const categoryColors = {
+  food: '#ff6b6b',
+  transportation: '#ffcc00',
+  accommodation: '#ffa94d',
+  shopping: '#69db7c',
+  flights: '#a5d8ff',
+  others: '#b197fc',
+};
+
+const validCategories = Object.keys(categoryMap);
 
 const fetchUserCurrency = async () => {
-  try {
-    const res = await axios.get('http://localhost:3000/User');
-    const user = res.data.find((u) => u.email === email.value);
-    if (user) userCurrency.value = user.currency;
-  } catch (err) {
-    console.error('유저 통화 정보 불러오기 실패:', err);
-  }
+  const res = await axios.get('http://localhost:3000/User');
+  const user = res.data.find((u) => u.email === email.value);
+  if (user) userCurrency.value = user.currency;
 };
 
 const fetchExchangeRates = async () => {
-  try {
-    const res = await axios.get(
-      `https://open.er-api.com/v6/latest/${userCurrency.value}`
-    );
-    if (res.data && res.data.rates) {
-      exchangeRates.value = res.data.rates;
-    } else {
-      console.error('환율 정보가 응답에 없습니다:', res.data);
-    }
-  } catch (error) {
-    console.error('환율 데이터 로딩 실패:', error);
+  const res = await axios.get(
+    `https://open.er-api.com/v6/latest/${userCurrency.value}`
+  );
+  if (res.data && res.data.rates) {
+    exchangeRates.value = res.data.rates;
+  } else {
+    console.error('환율 정보가 응답에 없습니다:', res.data);
   }
 };
 
@@ -66,22 +70,36 @@ const convertToUserCurrency = (amount, fromCurrency) => {
     return amount;
 
   const fromRate = exchangeRates.value[fromCurrency];
-  if (!fromRate) {
-    console.warn('환율 없음:', fromCurrency);
-    return 0;
-  }
-
-  return Math.round(amount / fromRate);
+  return fromRate ? parseFloat((amount / fromRate).toFixed(2)) : 0;
 };
 
-const fetchGroupId = async () => {
+const userCurrencySymbol = computed(() => {
+  const symbols = {
+    KRW: '₩',
+    USD: '$',
+    JPY: '￥',
+  };
+  return symbols[userCurrency.value] || userCurrency.value;
+});
+
+const fetchGroupInfo = async () => {
   try {
     const res = await axios.get('http://localhost:3000/Group');
     const group = res.data.find((g) => g.groupUser.includes(email.value));
     if (group) {
       groupId.value = parseInt(group.groupId);
+
+      if (group.currency && group.currency !== userCurrency.value) {
+        totalBudget.value = convertToUserCurrency(group.budget, group.currency);
+      } else {
+        totalBudget.value = group.budget;
+      }
+
       const [start, end] = group.travelPeriod.split(' ~ ');
-      travelPeriod.value = { start: new Date(start), end: new Date(end) };
+      travelPeriod.value = {
+        start: new Date(start),
+        end: new Date(end),
+      };
     }
   } catch (err) {
     console.error('그룹 정보 로딩 실패:', err);
@@ -89,32 +107,35 @@ const fetchGroupId = async () => {
 };
 
 const loadBudgetData = async () => {
-  try {
-    const res = await axios.get('http://localhost:3000/GroupBudgetData');
-    const filtered = res.data.filter((item) => {
-      const usedDate = new Date(item.usedDate);
-      return (
-        parseInt(item.groupId) === groupId.value &&
-        !isNaN(usedDate) &&
-        usedDate >= travelPeriod.value.start &&
-        usedDate <= travelPeriod.value.end
-      );
-    });
+  const res = await axios.get('http://localhost:3000/GroupBudgetData');
+  const filtered = res.data.filter((item) => {
+    const usedDate = new Date(item.usedDate);
+    return (
+      parseInt(item.groupId) === groupId.value &&
+      !isNaN(usedDate) &&
+      usedDate >= travelPeriod.value.start &&
+      usedDate <= travelPeriod.value.end
+    );
+  });
 
-    budgetData.value = filtered.map((item) => ({
-      ...item,
-      cost: convertToUserCurrency(item.cost, item.currency),
-    }));
-  } catch (err) {
-    console.error('예산 데이터 로딩 실패:', err);
-  }
+  budgetData.value = filtered.map((item) => ({
+    ...item,
+    cost: convertToUserCurrency(item.cost, item.currency),
+  }));
 };
 
 watch([exchangeRates, groupId], ([rates, gid]) => {
-  if (rates && gid !== null && Object.keys(rates).length) loadBudgetData();
+  if (rates && gid !== null && Object.keys(rates).length) {
+    loadBudgetData();
+  }
 });
 
-const categoryTotals = computed(() => {
+const totalUsed = computed(() =>
+  budgetData.value.reduce((a, b) => a + b.cost, 0)
+);
+const remainingBudget = computed(() => totalBudget.value - totalUsed.value);
+
+const sortedCategoryData = computed(() => {
   const totals = {};
   validCategories.forEach((cat) => (totals[cat] = 0));
   budgetData.value.forEach((item) => {
@@ -122,114 +143,147 @@ const categoryTotals = computed(() => {
       totals[item.category] += item.cost;
     }
   });
-  return totals;
+
+  const total = Object.values(totals).reduce((a, b) => a + b, 0);
+
+  return Object.entries(totals)
+    .map(([key, value]) => ({
+      key,
+      label: categoryMap[key],
+      value,
+      percentage: total > 0 ? ((value / total) * 100).toFixed(1) : '0.0',
+      color: categoryColors[key],
+    }))
+    .sort((a, b) => b.value - a.value);
 });
 
 const chartData = computed(() => {
-  const labels = Object.keys(categoryTotals.value);
-  const data = Object.values(categoryTotals.value);
-  const total = data.reduce((a, b) => a + b, 0);
   return {
-    labels,
+    labels: sortedCategoryData.value.map((item) => item.label),
     datasets: [
       {
-        data,
-        backgroundColor: [
-          '#ff6b6b',
-          '#ffcc00',
-          '#ffa94d',
-          '#69db7c',
-          '#a5d8ff',
-          '#b197fc',
-        ],
+        data: sortedCategoryData.value.map((item) => item.value),
+        backgroundColor: sortedCategoryData.value.map((item) => item.color),
       },
     ],
-    percentages: labels.map((_, i) => ((data[i] / total) * 100).toFixed(1)),
   };
 });
+
+const chartOptions = {
+  plugins: {
+    datalabels: {
+      color: '#000',
+      font: {
+        weight: 'bold',
+        size: 15,
+      },
+      anchor: 'center', // stay centered in slice
+      align: 'end', // shift closer to outer edge but stays inside
+      offset: 20, // fine-tune label position
+      padding: 2,
+      formatter: (value, context) => {
+        const total = context.chart.data.datasets[0].data.reduce(
+          (a, b) => a + b,
+          0
+        );
+        const percentage = (value / total) * 100;
+        if (percentage < 3) return ''; // too small slice, skip label
+        return context.chart.data.labels[context.dataIndex];
+      },
+    },
+    legend: {
+      display: false,
+    },
+  },
+};
 
 onMounted(async () => {
   await fetchUserCurrency();
   await fetchExchangeRates();
-  await fetchGroupId();
+  await fetchGroupInfo();
 });
-
-// Navigation
-const goToCalendar = () => router.push('/TransactionCalendar');
-const goToSummary = () => router.push('/TransactionSummary');
-const goToList = () => router.push('/TransactionCheckList');
-const goToAdd = () => router.push('/TransactionAdd.vue');
 </script>
 
 <template>
   <div
-    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] font-[Inter] text-black overflow-x-hidden"
+    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] text-black overflow-x-hidden overflow-y-auto shadow-lg border"
   >
+    <!-- 상단 여백 -->
+    <div style="height: 44px"></div>
+
     <header class="flex items-center justify-between p-4 text-xl font-bold">
-      <div><span class="border-b-4 border-[#ffcc00]">Expenses</span></div>
+      <div>
+        <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
+      </div>
       <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
     </header>
 
     <div class="flex justify-around p-2 font-bold">
-      <button @click="goToList" class="px-6 py-1">내역</button>
-      <button @click="goToCalendar" class="px-6 py-1">달력</button>
-      <button @click="goToSummary" class="bg-[#ffcc00] px-6 py-1 rounded-4xl">
-        요약
-      </button>
-    </div>
-
-    <div class="my-6 mx-4 bg-white p-4 rounded-xl shadow text-center">
-      <p class="text-lg font-semibold">Total Expenses</p>
-      <p class="text-xl font-bold">
-        {{ userCurrency }}
-        {{ budgetData.reduce((a, b) => a + b.cost, 0).toLocaleString() }}
-      </p>
-    </div>
-
-    <div class="px-4">
-      <Pie :data="chartData" />
-    </div>
-
-    <div class="mt-4 mx-6 text-sm">
-      <div
-        v-for="(label, index) in chartData.labels"
-        :key="label"
-        class="flex justify-between items-center py-1 border-b border-gray-200"
+      <button
+        @click="() => router.push('/TransactionCheckList')"
+        class="px-6 py-1"
       >
-        <span>{{ label }}</span>
-        <span>{{ chartData.percentages[index] }}%</span>
+        내역
+      </button>
+      <button
+        @click="() => router.push('/TransactionCalendar')"
+        class="px-6 py-1"
+      >
+        달력
+      </button>
+      <button class="bg-[#ffcc00] px-6 py-1 rounded-4xl">요약</button>
+    </div>
+
+    <!-- 예산 요약 -->
+    <div
+      class="my-6 mx-4 bg-white p-4 rounded-xl border-1 border-gray-300 text-center"
+    >
+      <p class="text-lg font-semibold">사용 금액</p>
+      <p class="text-xl font-bold">
+        {{ userCurrencySymbol }}
+        {{ Number(totalUsed.toFixed(2)).toLocaleString() }}
+      </p>
+
+      <div class="text-sm text-gray-600 mt-2">
+        남은 예산 {{ userCurrencySymbol }}
+        {{ Number(remainingBudget.toFixed(2)).toLocaleString() }}
       </div>
     </div>
 
+    <!-- 차트 -->
+    <div class="w-60 h-60 mx-auto">
+      <Pie :data="chartData" :options="chartOptions" />
+    </div>
+
+    <!-- 카테고리 요약 -->
+    <div
+      class="mt-4 mx-6 text-sm bg-white p-4 rounded-xl border-1 border-gray-300"
+    >
+      <div
+        v-for="(item, index) in sortedCategoryData"
+        :key="item.key"
+        class="flex justify-between items-center py-1"
+      >
+        <span class="flex items-center gap-2">
+          <span
+            class="inline-block w-3 h-3 rounded-full"
+            :style="{ backgroundColor: item.color }"
+          ></span>
+          {{ item.label }}
+        </span>
+        <span>{{ item.percentage }}%</span>
+      </div>
+    </div>
+
+    <!-- ADD 버튼 -->
     <div class="text-center mt-6 mb-20">
       <button
         class="bg-[#ffcc00] text-black py-1 px-8 rounded-full font-semibold shadow"
-        @click="goToAdd"
+        @click="() => router.push('/TransactionAdd.vue')"
       >
-        ADD
+        추가
       </button>
     </div>
-
-    <nav
-      class="fixed bottom-0 w-[393px] h-16 bg-white border-t border-gray-300 flex justify-around items-center"
-    >
-      <div class="flex flex-col items-center text-xs text-gray-700">
-        <i class="fas fa-home text-lg mb-1"></i>
-        <span>홈</span>
-      </div>
-      <div class="flex flex-col items-center text-xs text-gray-700">
-        <i class="fas fa-plus-circle text-lg mb-1"></i>
-        <span>내역 추가</span>
-      </div>
-      <div class="flex flex-col items-center text-xs text-gray-700">
-        <i class="fas fa-list text-lg mb-1"></i>
-        <span>내역 보기</span>
-      </div>
-      <div class="flex flex-col items-center text-xs text-gray-700">
-        <i class="fas fa-user text-lg mb-1"></i>
-        <span>마이페이지</span>
-      </div>
-    </nav>
   </div>
 </template>
 
