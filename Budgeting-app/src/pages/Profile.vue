@@ -60,13 +60,7 @@
     <div class="flex justify-center gap-4 mt-auto">
       <button
         class="bg-gray-200 text-black px-6 py-2 rounded-full"
-        @click="
-          () => {
-            localStorage.removeItem('auth');
-            userStore.logout();
-            router.push('/login');
-          }
-        "
+        @click="logout"
       >
         로그아웃
       </button>
@@ -130,5 +124,11 @@ onMounted(fetchUserAndGroups);
 
 const editProfile = () => {
   router.push('/profile/edit');
+};
+
+const logout = () => {
+  localStorage.removeItem('auth');
+  userStore.logout();
+  router.push('/login');
 };
 </script>

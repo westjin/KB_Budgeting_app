@@ -174,10 +174,11 @@ function goBack() {
   router.back();
 }
 
-function logout() {
-  userStore.logout();
-  router.push('/login');
-}
+const logout = () => {
+  localStorage.removeItem('auth'); // localStorage 초기화
+  userStore.logout(); // Pinia 유저 상태 초기화
+  router.push('/login'); // 로그인 페이지로 이동
+};
 
 const submit = async () => {
   const authId = localStorage.getItem('auth');
