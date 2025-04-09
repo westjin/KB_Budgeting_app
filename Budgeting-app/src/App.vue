@@ -1,7 +1,10 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
+import HomePage from './pages/Homepage.vue';
+import Profile from './pages/Profile.vue';=
 </script>
 
 <template>
-  <HomePage />
+  <!-- <HomePage /> -->
+  <Profile />
 </template>
