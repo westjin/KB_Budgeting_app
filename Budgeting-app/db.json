@@ -28,15 +28,6 @@
   },
   "transactions": [
     {
-      "id": "1",
-      "usage": "마라탕",
-      "amount": 9000,
-      "currency": "KRW",
-      "payMethod": "현금",
-      "date": "2025-04-06",
-      "category": "음식"
-    },
-    {
       "id": "2",
       "usage": "택시",
       "amount": 12000,
@@ -62,6 +53,24 @@
       "payMethod": "현금",
       "date": "2025-04-08",
       "category": "숙소"
+    },
+    {
+      "id": "ba40",
+      "usage": "택시비",
+      "amount": 15000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-08",
+      "category": "교통수단"
+    },
+    {
+      "id": "685e",
+      "usage": "adsdsdsd",
+      "amount": 131212121,
+      "currency": "JPY",
+      "payMethod": "카드",
+      "date": "2025-04-10",
+      "category": "쇼핑"
     }
   ]
 }

@@ -89,16 +89,20 @@ async function saveTransaction() {
         class="back-icon"
         @click="router.back()"
       />
-      <img
-        src="../assets/icons/YSJ_Wallet.png"
-        alt="지갑"
-        class="w-20 h-20 mb-2"
-      />
-      <h1 class="text-xl font-bold">거래내역 추가</h1>
+
+      <!-- 지갑 아이콘과 타이틀 묶음 (아래로 내림) -->
+      <div class="header-content">
+        <img
+          src="../assets/icons/YSJ_Wallet.png"
+          alt="지갑"
+          class="w-20 h-20 mb-2"
+        />
+        <h1 class="text-xl font-bold">거래내역 추가</h1>
+      </div>
     </div>
 
     <!-- 입력 폼 -->
-    <form class="space-y-4">
+    <form class="space-y-4 mt-4">
       <div>
         <label class="block text-sm font-medium">사용 내역</label>
         <input
@@ -142,11 +146,11 @@ async function saveTransaction() {
         <label class="block text-sm font-medium mb-1">결제 수단</label>
         <div class="flex space-x-4">
           <label class="flex items-center space-x-1">
-            <input type="radio" v-model="payMethod" value="카드" />
+            <input type="radio" v-model="payMethod" value="card" />
             <span>카드</span>
           </label>
           <label class="flex items-center space-x-1">
-            <input type="radio" v-model="payMethod" value="현금" />
+            <input type="radio" v-model="payMethod" value="cash" />
             <span>현금</span>
           </label>
         </div>
@@ -199,14 +203,10 @@ async function saveTransaction() {
 
 <style scoped>
 .header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
-  padding-bottom: 12px;
-  background-color: #f8f8f8;
   position: relative;
+  background-color: #f8f8f8;
   z-index: 10;
+  padding-bottom: 12px;
 }
 
 .back-icon {
@@ -216,5 +216,13 @@ async function saveTransaction() {
   width: 10px;
   height: 15px;
   cursor: pointer;
+}
+
+/* 👇 이 부분 추가 */
+.header-content {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

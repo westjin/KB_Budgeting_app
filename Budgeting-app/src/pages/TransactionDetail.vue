@@ -45,18 +45,23 @@ async function deleteTransaction() {
   >
     <!-- 상단 아이콘 및 타이틀 -->
     <div class="header-container mb-6">
+      <!-- 뒤로가기 아이콘 (고정 위치) -->
       <img
         src="@/assets/icons/back-icon.png"
         alt="뒤로가기"
         class="back-icon"
         @click="router.back()"
       />
-      <img
-        src="@/assets/icons/YSJ_Wallet.png"
-        alt="지갑"
-        class="w-20 h-20 mb-2"
-      />
-      <h1 class="text-xl font-bold">거래내역</h1>
+
+      <!-- 👇 아래로 내릴 요소들 -->
+      <div class="header-content">
+        <img
+          src="@/assets/icons/YSJ_Wallet.png"
+          alt="지갑"
+          class="w-20 h-20 mb-2"
+        />
+        <h1 class="text-xl font-bold">거래내역</h1>
+      </div>
     </div>
 
     <!-- 내용 표시 -->
@@ -146,5 +151,12 @@ async function deleteTransaction() {
   flex-direction: column;
   align-items: center;
   position: relative;
+}
+
+.header-content {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
