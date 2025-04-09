@@ -4,7 +4,9 @@
   >
     <!-- 뒤로가기 -->
     <div class="self-start">
-      <button class="text-2xl">&larr;</button>
+      <button @click="$router.push({ name: 'login' })" class="text-2xl">
+        &larr;
+      </button>
     </div>
 
     <!-- 로고 & 제목 -->
@@ -19,6 +21,12 @@
 
     <!-- 입력 폼 -->
     <div class="w-full flex flex-col gap-3">
+      <input
+        v-model="form.name"
+        type="text"
+        placeholder="이름을 입력하세요"
+        class="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400"
+      />
       <input
         v-model="form.email"
         type="email"
@@ -84,6 +92,12 @@
 
 <script setup>
 import { reactive, computed } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const form = reactive({
   email: '',
@@ -100,12 +114,30 @@ const isPasswordMatch = computed(() => {
   );
 });
 
-function submit() {
+async function submit() {
   if (!isPasswordMatch.value) {
     alert('비밀번호가 일치하지 않습니다!');
     return;
   }
-  console.log('회원가입 성공', form);
+
+  try {
+    const newUser = {
+      userId: Date.now().toString(),
+      email: form.email.trim(),
+      username: form.name.trim(),
+      password: form.password,
+      currency: 'KRW',
+    };
+
+    const res = await axios.post('http://localhost:3000/User', newUser);
+
+    // userStore.login(res.data); // 회원가입 후 자동 로그인
+    alert('회원가입 및 로그인 성공!');
+    router.push('/login'); // 로그인 후 로그인 이동
+  } catch (err) {
+    alert('회원가입 중 문제가 발생했습니다.');
+    console.error('회원가입 에러:', err);
+  }
 }
 </script>
 
