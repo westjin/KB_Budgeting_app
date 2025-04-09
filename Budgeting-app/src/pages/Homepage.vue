@@ -156,7 +156,7 @@ function goToDetails() {
   router.push('/exchangeDetail');
 }
 function goToAddTrip() {
-  router.push('/addTrip'); // 여행 추가 화면 라우팅 경로
+  router.push('/trip/add'); // 여행 추가 화면 라우팅 경로
 }
 function goToProfile() {
   router.push('/profile');
