@@ -30,8 +30,11 @@ const activeDotCount = computed(() => {
   const step = store.currentStep
   const isGroup = store.tripData.companion === 'group'
 
+  //완료 페이지에서는 항상 4개 다 색칠
+  if ((isGroup && step === 7) || (!isGroup && step === 5) )return 4
+
   // 예산 입력단계(혼자든 그룹이든 마지막 단계)
-  if ((isGroup && step >= 6) || (!isGroup && step === 4)) {
+  if ((isGroup && step === 6) || (!isGroup && step === 4)) {
     return 4
   }
 

@@ -10,21 +10,32 @@
           type="text"
           class="region-input"
           placeholder="여행지를 입력해주세요"
-          v-model="store.region"
+          v-model="store.tripData.place"
         />
+        <p v-if="showError" class="error-message">여행지를 입력해주세요.</p>
       </div>
   
       <div class="footer">
-        <button class="next-button" @click="store.nextStep">다음</button>
+        <button class="next-button" @click="handleNext">다음</button>
       </div>
     </div>
   </template>
   
   <script setup>
+  import { ref } from 'vue'
   import { useTripAddStore } from '@/stores/tripAddStore'
   import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
-  
+
+  const showError = ref(false)
   const store = useTripAddStore()
+  function handleNext() {
+  if (!store.tripData.place.trim()) {
+    showError.value = true
+    return
+  }
+  showError.value = false
+  store.nextStep()
+}
   </script>
   
   <style scoped>
@@ -42,10 +53,6 @@
   }
   
   .main-content {
-    /* flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; */
     flex: 1;
     padding-left: 25px;
   display: flex;
@@ -69,6 +76,12 @@
     outline: none;
     background-color: white;
   }
+
+  .error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+}
   
   .footer {
     display: flex;

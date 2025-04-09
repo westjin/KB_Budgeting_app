@@ -11,17 +11,19 @@
           type="text"
           class="budget-input"
           placeholder="예산을 입력해주세요"
+          v-model="store.tripData.budget"
         />
-        <select class="currency-select">
+        <select v-model="store.tripData.currency" class="currency-select">
           <option value="KRW">KRW</option>
           <option value="USD">USD</option>
           <option value="JPY">JPY</option>
         </select>
       </div>
+      <p v-if="showError" class="error-message">예산을 입력해주세요.</p>
     </div>
 
     <div class="footer">
-      <button class="next-button" @click="store.nextStep">완료</button>
+      <button class="next-button" @click="handleNext">다음</button>
     </div>
   </div>
 </template>
@@ -29,8 +31,19 @@
 <script setup>
 import { useTripAddStore } from '@/stores/tripAddStore'
 import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
+import { ref } from 'vue'
 
 const store = useTripAddStore()
+const showError = ref(false)
+
+function handleNext() {
+  if (!store.tripData.budget.trim()) {
+    showError.value = true
+    return
+  }
+  showError.value = false
+  store.nextStep()
+}
 </script>
 
 <style scoped>
@@ -86,6 +99,12 @@ const store = useTripAddStore()
   border-radius: 12px;
   background-color: white;
   height: 46px; /* ✅ input과 동일한 높이 */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 8px;
 }
 
 .footer {

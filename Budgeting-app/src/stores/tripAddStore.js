@@ -11,30 +11,21 @@ export const useTripAddStore = defineStore('tripAdd', {
       budget: '',
       currency: 'KRW',
       groupName: '',
-      invitedEmails: [] // 그룹일 경우 초대한 이메일 리스트
+      invitedEmails: [] // ✅ 이름 통일
     }
   }),
   actions: {
     nextStep() {
-      if (this.tripData.companion === '혼자') {
-        // 혼자인 경우는 4단계까지만 있음
-        if (this.currentStep < 4) {
-          this.currentStep++
-        }
-      } else if (this.tripData.companion === '그룹') {
-        // 그룹이면 6단계까지 있음
-        if (this.currentStep < 6) {
-          this.currentStep++
-        }
+      if (this.tripData.companion === 'alone') {
+        if (this.currentStep < 6) this.currentStep++
+      } else if (this.tripData.companion === 'group') {
+        if (this.currentStep < 7) this.currentStep++
       } else {
-        // 아직 동행 여부 선택 전 (1~3단계)
         this.currentStep++
       }
     },
     prevStep() {
-      if (this.currentStep > 1) {
-        this.currentStep--
-      }
+      if (this.currentStep > 1) this.currentStep--
     },
     resetSteps() {
       this.currentStep = 1
@@ -46,8 +37,16 @@ export const useTripAddStore = defineStore('tripAdd', {
         budget: '',
         currency: 'KRW',
         groupName: '',
-        invitedEmails: []
+        invitedEmails: [] // ✅ 유지
       }
+    },
+    addEmail(email) {
+      if (!this.tripData.invitedEmails.includes(email)) {
+        this.tripData.invitedEmails.push(email)
+      }
+    },
+    removeEmail(email) {
+      this.tripData.invitedEmails = this.tripData.invitedEmails.filter(e => e !== email)
     }
   }
 })

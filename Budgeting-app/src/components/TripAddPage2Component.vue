@@ -12,6 +12,8 @@
                 type="date"
                 v-model="store.tripData.startDate"
             />
+            <!-- ✅ 가는날 에러 메시지 -->
+            <p v-if="showStartError" class="error-message">가는 날을 선택해주세요.</p>
 
             <div class="arrow">↓</div>
 
@@ -21,19 +23,52 @@
                 type="date"
                 v-model="store.tripData.endDate"
             />
+            <!-- ✅ 오는날 에러 메시지 -->
+            <p v-if="showEndError" class="error-message">오는 날을 선택해주세요.</p>
+
+            <!-- ❗ 날짜 순서 오류 -->
+            <p v-if="showDateOrderError" class="error-message">
+              올바른 날짜를 선택해주세요.
+            </p>
         </div>
   
       <div class="footer">
-        <button class="next-button" @click="store.nextStep">다음</button>
+        <button class="next-button" @click="handleNext">다음</button>
       </div>
     </div>
   </template>
   
   <script setup>
+  import { ref } from 'vue'
   import { useTripAddStore } from '@/stores/tripAddStore'
   import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
-  
+
   const store = useTripAddStore()
+  // ✅ 에러 상태를 위한 ref 추가
+  const showStartError = ref(false)
+  const showEndError = ref(false)
+  const showDateOrderError = ref(false)
+
+  function handleNext() {
+    const { startDate, endDate } = store.tripData
+
+    showStartError.value = !startDate
+    showEndError.value = !endDate
+    showDateOrderError.value = false
+
+    if (!startDate || !endDate) return
+
+    // ❗ 날짜 순서 체크
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+
+    if (start > end) {
+      showDateOrderError.value = true
+      return
+  }
+
+  store.nextStep()
+}
   </script>
   
   <style scoped>
@@ -66,7 +101,14 @@ input[type='date'] {
   font-size: 16px;
   border-radius: 12px;
   border: 1px solid #ccc;
-  margin: 8px 0 16px;
+  margin: 8px 0 8px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 8px;
+  margin-left: 8px;
 }
 
 .arrow {
