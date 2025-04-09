@@ -4,7 +4,9 @@
   >
     <!-- 뒤로가기 -->
     <div class="self-start">
-      <button class="text-2xl">&larr;</button>
+      <button @click="$router.push({ name: 'login' })" class="text-2xl">
+        &larr;
+      </button>
     </div>
 
     <!-- 로고 & 제목 -->
@@ -20,11 +22,20 @@
     <!-- 입력 폼 -->
     <div class="w-full flex flex-col gap-3">
       <input
+        v-model="form.name"
+        type="text"
+        placeholder="이름을 입력하세요"
+        class="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400"
+      />
+      <input
         v-model="form.email"
         type="email"
         placeholder="이메일 주소를 입력하세요"
         class="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400"
       />
+      <p v-if="emailError" class="text-xs text-red-500 ml-1 -mt-2">
+        {{ emailError }}
+      </p>
       <input
         v-model="form.password"
         type="password"
@@ -71,6 +82,8 @@
     <div class="w-full mt-4">
       <button
         class="w-full bg-yellow-300 hover:bg-yellow-400 text-black font-semibold py-3 rounded-full"
+        :disabled="!isFormValid"
+        :class="{ 'opacity-50 cursor-not-allowed': !isFormValid }"
         @click="submit"
       >
         Sign up
@@ -83,8 +96,15 @@
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue';
+import { ref, reactive, computed, watch } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
 
+const router = useRouter();
+const userStore = useUserStore();
+
+// 폼 데이터
 const form = reactive({
   email: '',
   password: '',
@@ -92,20 +112,92 @@ const form = reactive({
   name: '',
 });
 
-const isPasswordMatch = computed(() => {
-  return (
+// 이메일 유효성 및 중복 검사 관련 상태
+const emailError = ref('');
+const isEmailDuplicate = ref(false);
+const isCheckingEmail = ref(false);
+
+// 이메일 유효성 검사 함수
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+// 이메일 변경될 때마다 유효성 + 중복 검사
+watch(
+  () => form.email,
+  async (newEmail) => {
+    emailError.value = '';
+    isEmailDuplicate.value = false;
+
+    const trimmed = newEmail.trim();
+
+    if (!trimmed) return;
+    if (!isValidEmail(trimmed)) {
+      emailError.value = '올바른 이메일 형식이 아닙니다.';
+      return;
+    }
+
+    isCheckingEmail.value = true;
+    try {
+      const res = await axios.get('http://localhost:3000/User', {
+        params: { email: trimmed },
+      });
+      if (res.data.length > 0) {
+        emailError.value = '이미 가입된 이메일입니다.';
+        isEmailDuplicate.value = true;
+      }
+    } catch (err) {
+      console.error('이메일 중복 체크 오류:', err);
+    } finally {
+      isCheckingEmail.value = false;
+    }
+  }
+);
+
+// 비밀번호 일치 여부
+const isPasswordMatch = computed(
+  () =>
     form.password &&
     form.passwordConfirm &&
     form.password === form.passwordConfirm
+);
+
+// 전체 폼 유효성 검사 (버튼 활성화 조건)
+const isFormValid = computed(() => {
+  return (
+    form.email.trim() &&
+    isValidEmail(form.email.trim()) &&
+    !emailError.value &&
+    form.password &&
+    form.passwordConfirm &&
+    isPasswordMatch.value &&
+    form.name.trim()
   );
 });
 
-function submit() {
-  if (!isPasswordMatch.value) {
-    alert('비밀번호가 일치하지 않습니다!');
-    return;
+// 회원가입 처리
+async function submit() {
+  if (!isFormValid.value) return;
+
+  try {
+    const newUser = {
+      userId: String(Date.now()),
+      email: form.email.trim(),
+      username: form.name.trim(),
+      password: form.password,
+      currency: 'KRW',
+    };
+
+    const res = await axios.post('http://localhost:3000/User', newUser);
+
+    // userStore.login(res.data); // 회원가입 후 자동 로그인
+    alert('회원가입 및 로그인 성공!');
+    router.push('/login'); // 회원가입 후 로그인 이동
+  } catch (err) {
+    alert('회원가입 중 문제가 발생했습니다.');
+    console.error('회원가입 에러:', err);
   }
-  console.log('회원가입 성공', form);
 }
 </script>
 
