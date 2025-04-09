@@ -1,13 +1,76 @@
 {
   "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
   ],
   "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
   ],
   "profile": {
     "name": "typicode"
-  }
+  },
+  "transactions": [
+    {
+      "id": "2",
+      "usage": "택시",
+      "amount": 12000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-06",
+      "category": "교통수단"
+    },
+    {
+      "id": "3",
+      "usage": "택시비",
+      "amount": 15000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-08",
+      "category": "교통수단"
+    },
+    {
+      "id": "2ff5",
+      "usage": "졸려",
+      "amount": 10000,
+      "currency": "KRW",
+      "payMethod": "현금",
+      "date": "2025-04-08",
+      "category": "숙소"
+    },
+    {
+      "id": "ba40",
+      "usage": "택시비",
+      "amount": 15000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-08",
+      "category": "교통수단"
+    },
+    {
+      "id": "685e",
+      "usage": "adsdsdsd",
+      "amount": 131212121,
+      "currency": "JPY",
+      "payMethod": "카드",
+      "date": "2025-04-10",
+      "category": "쇼핑"
+    }
+  ]
 }
