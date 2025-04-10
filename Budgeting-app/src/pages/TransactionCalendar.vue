@@ -1,3 +1,107 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const groupId = ref(null);
+const budgetData = ref([]);
+const selectedDate = ref(null);
+
+const today = new Date();
+const year = ref(today.getFullYear());
+const month = ref(today.getMonth());
+const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+const groupedData = computed(() => {
+  const group = {};
+  budgetData.value.forEach((item) => {
+    if (parseInt(item.groupId) === groupId.value) {
+      const dateStr = new Date(item.usedDate).toISOString().split('T')[0];
+      if (!group[dateStr]) group[dateStr] = [];
+      group[dateStr].push(item);
+    }
+  });
+  return group;
+});
+
+const calendarDates = computed(() => {
+  const firstDay = new Date(year.value, month.value, 1);
+  const daysInMonth = new Date(year.value, month.value + 1, 0).getDate();
+  const startDay = firstDay.getDay();
+  const dates = [];
+
+  for (let i = 0; i < startDay; i++) {
+    dates.push({ date: '', displayDate: '', hasExpense: false });
+  }
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    const date = new Date(year.value, month.value, i);
+    date.setHours(date.getHours() + 9); // timezone 보정
+    const dateStr = date.toISOString().split('T')[0];
+    dates.push({
+      date: dateStr,
+      displayDate: i,
+      hasExpense: !!groupedData.value[dateStr],
+    });
+  }
+
+  return dates;
+});
+
+const selectedData = computed(
+  () => groupedData.value[selectedDate.value] || []
+);
+
+const fetchGroupId = async () => {
+  const res = await axios.get('http://localhost:3000/Group');
+  const group = res.data.find((g) => g.groupUser.includes(userStore.email));
+  if (group) {
+    groupId.value = parseInt(group.groupId);
+    await fetchBudgetData();
+  }
+};
+
+const fetchBudgetData = async () => {
+  const res = await axios.get('http://localhost:3000/GroupBudgetData');
+  budgetData.value = res.data;
+};
+
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long',
+  });
+};
+
+const getCurrencySymbol = (currency) => {
+  const map = { KRW: '₩', USD: '$', JPY: '￥' };
+  return map[currency] || '';
+};
+
+const changeMonth = (offset) => {
+  const newDate = new Date(year.value, month.value + offset);
+  year.value = newDate.getFullYear();
+  month.value = newDate.getMonth();
+};
+
+const selectDate = (date) => {
+  if (date) selectedDate.value = date;
+};
+
+const goToList = () => router.push('/TransactionCheckList');
+const goToSummary = () => router.push('/TransactionSummary');
+const goToAdd = () => router.push('/transaction');
+const goToProfile = () => router.push('/Profile');
+
+onMounted(fetchGroupId);
+</script>
+
 <template>
   <div
     class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] text-black overflow-x-hidden pt-[44px]"
@@ -6,7 +110,12 @@
       <div>
         <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
       </div>
-      <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
+      <img
+        src="/src/assets/icons/character.png"
+        alt="icon"
+        class="w-9 h-9"
+        @click="goToProfile"
+      />
     </header>
 
     <div class="flex justify-around p-2 mb-2 font-bold">
@@ -74,138 +183,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
-
-export default {
-  setup() {
-    const email = ref('test@naver.com');
-    const groupId = ref(null);
-    const budgetData = ref([]);
-    const selectedDate = ref(null);
-
-    const today = new Date();
-    const year = ref(today.getFullYear());
-    const month = ref(today.getMonth());
-    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
-    const groupedData = computed(() => {
-      const group = {};
-      budgetData.value.forEach((item) => {
-        if (parseInt(item.groupId) === groupId.value) {
-          const dateStr = new Date(item.usedDate).toISOString().split('T')[0];
-          if (!group[dateStr]) group[dateStr] = [];
-          group[dateStr].push(item);
-        }
-      });
-      return group;
-    });
-
-    const calendarDates = computed(() => {
-      const firstDay = new Date(year.value, month.value, 1);
-      const daysInMonth = new Date(year.value, month.value + 1, 0).getDate();
-      const startDay = firstDay.getDay();
-      const dates = [];
-
-      for (let i = 0; i < startDay; i++) {
-        dates.push({ date: '', displayDate: '', hasExpense: false });
-      }
-
-      for (let i = 1; i <= daysInMonth; i++) {
-        const date = new Date(year.value, month.value, i);
-        date.setHours(date.getHours() + 9); // 날짜 보정
-        const dateStr = date.toISOString().split('T')[0];
-        dates.push({
-          date: dateStr,
-          displayDate: i,
-          hasExpense: !!groupedData.value[dateStr],
-        });
-      }
-
-      return dates;
-    });
-
-    const selectedData = computed(
-      () => groupedData.value[selectedDate.value] || []
-    );
-
-    const fetchGroupId = async () => {
-      try {
-        const res = await axios.get('http://localhost:3000/Group');
-        const group = res.data.find((g) => g.groupUser.includes(email.value));
-        if (group) {
-          groupId.value = parseInt(group.groupId);
-          await fetchBudgetData();
-        }
-      } catch (err) {
-        console.error('그룹 ID 가져오기 실패:', err);
-      }
-    };
-
-    const fetchBudgetData = async () => {
-      try {
-        const res = await axios.get('http://localhost:3000/GroupBudgetData');
-        budgetData.value = res.data;
-      } catch (error) {
-        console.error('데이터 로딩 실패:', error);
-      }
-    };
-
-    const formatDate = (dateStr) => {
-      const date = new Date(dateStr);
-      const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long',
-      };
-      return date.toLocaleDateString('ko-KR', options);
-    };
-
-    const getCurrencySymbol = (currency) => {
-      const map = { KRW: '₩', USD: '$', JPY: '￥' };
-      return map[currency] || '';
-    };
-
-    const goToList = () => (window.location.href = '/TransactionCheckList');
-    const goToSummary = () => (window.location.href = '/TransactionSummary');
-    const goToAdd = () => (window.location.href = '/TransactionAdd.vue');
-
-    const changeMonth = (offset) => {
-      const newDate = new Date(year.value, month.value + offset);
-      year.value = newDate.getFullYear();
-      month.value = newDate.getMonth();
-    };
-
-    const selectDate = (date) => {
-      if (date) selectedDate.value = date;
-    };
-
-    onMounted(fetchGroupId);
-
-    return {
-      email,
-      groupId,
-      budgetData,
-      selectedDate,
-      year,
-      month,
-      days,
-      calendarDates,
-      selectedData,
-      formatDate,
-      getCurrencySymbol,
-      goToList,
-      goToSummary,
-      goToAdd,
-      changeMonth,
-      selectDate,
-    };
-  },
-};
-</script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');

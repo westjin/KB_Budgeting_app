@@ -53,10 +53,7 @@
     {
       "groupId": "1",
       "groupName": "grouptest",
-      "groupUser": [
-        "test@naver.com",
-        "test2@naver.com"
-      ],
+      "groupUser": ["test@naver.com", "test2@naver.com"],
       "place": "USA",
       "travelPeriod": "2025-04-01 ~ 2025-04-10",
       "budget": 1000000,
@@ -95,10 +92,7 @@
       "groupName": "너무졸려요..",
       "place": "JP",
       "travelPeriod": "2025-04-08 ~ 2025-04-16",
-      "groupUser": [
-        "test1@naver.com",
-        "test2@naver.com"
-      ],
+      "groupUser": ["test1@naver.com", "test2@naver.com"],
       "budget": 123456,
       "currency": "KRW"
     },
@@ -107,10 +101,7 @@
       "groupName": "dd",
       "place": "JP",
       "travelPeriod": "2025-04-09 ~ 2025-05-02",
-      "groupUser": [
-        "test333333@naver.com",
-        "xyz@aaa.bbb"
-      ],
+      "groupUser": ["test333333@naver.com", "xyz@aaa.bbb"],
       "budget": 1234,
       "currency": "JPY"
     },

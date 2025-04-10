@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 
-const email = ref('test@naver.com');
-const groupId = ref(null);
+const groupId = ref(parseInt(route.params.groupId));
 const budgetData = ref([]);
 
 const groupedData = computed(() => {
@@ -20,37 +20,19 @@ const groupedData = computed(() => {
   return group;
 });
 
-const fetchGroupId = async () => {
-  try {
-    const res = await axios.get('http://localhost:3000/Group');
-    const group = res.data.find((g) => g.groupUser.includes(email.value));
-    if (group) {
-      groupId.value = parseInt(group.groupId);
-      fetchBudgetData();
-    }
-  } catch (err) {
-    console.error('그룹 ID 가져오기 실패:', err);
-  }
-};
-
 const fetchBudgetData = async () => {
-  try {
-    const res = await axios.get('http://localhost:3000/GroupBudgetData');
-    budgetData.value = res.data;
-  } catch (error) {
-    console.error('데이터를 불러오는 데 실패했습니다:', error);
-  }
+  const res = await axios.get('http://localhost:3000/GroupBudgetData');
+  budgetData.value = res.data;
 };
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
-  const options = {
+  return date.toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     weekday: 'short',
-  };
-  return date.toLocaleDateString('ko-KR', options);
+  });
 };
 
 const getIcon = (category) => {
@@ -66,37 +48,35 @@ const getIcon = (category) => {
 };
 
 const getCurrencySymbol = (currency) => {
-  const map = {
-    KRW: '₩',
-    USD: '$',
-    JPY: '￥',
-  };
+  const map = { KRW: '₩', USD: '$', JPY: '￥' };
   return map[currency] || '';
 };
 
 const goToCalendar = () => router.push('/TransactionCalendar');
 const goToSummary = () => router.push('/TransactionSummary');
-const goToAdd = () => router.push('/TransactionAdd.vue');
+const goToAdd = () => router.push('/transaction');
+const goToProfile = () => router.push('/Profile');
 
-onMounted(() => {
-  fetchGroupId();
-});
+onMounted(fetchBudgetData);
 </script>
 
 <template>
   <div
-    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] text-black overflow-x-hidden shadow-lg border"
+    class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] overflow-x-hidden shadow-lg border"
   >
     <div class="h-full overflow-y-auto pt-[44px]">
       <header
         class="flex items-center justify-between p-4 text-xl font-semibold"
       >
-        <div>
-          <span class="border-b-4 border-[#ffcc00] text-2xl font-bold"
-            >Expenses</span
-          >
-        </div>
-        <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
+        <span class="border-b-4 border-[#ffcc00] text-2xl font-bold"
+          >Expenses</span
+        >
+        <img
+          src="/src/assets/icons/character.png"
+          alt="icon"
+          class="w-9 h-9"
+          @click="goToProfile"
+        />
       </header>
 
       <div class="flex justify-around p-2 mb-2 font-bold">
@@ -111,7 +91,7 @@ onMounted(() => {
         <div
           v-for="item in group"
           :key="item.groupBudgetDataId"
-          class="bg-white border-1 border-gray-300 rounded-xl px-4 py-3 mb-3 flex justify-between items-center"
+          class="bg-white border border-gray-300 rounded-xl px-4 py-3 mb-3 flex justify-between items-center"
         >
           <div class="flex items-center gap-3">
             <img
