@@ -169,12 +169,12 @@ async function saveTransaction() {
           v-model="category"
           class="w-full border border-gray-300 rounded px-3 py-2"
         >
-          <option>음식</option>
-          <option>교통수단</option>
-          <option>숙소</option>
-          <option>쇼핑</option>
-          <option>항공</option>
-          <option>기타</option>
+          <option value="food">음식</option>
+          <option value="transportation">교통수단</option>
+          <option value="accommodation">숙소</option>
+          <option value="shopping">쇼핑</option>
+          <option value="flights">항공</option>
+          <option value="others">기타</option>
         </select>
       </div>
     </form>
