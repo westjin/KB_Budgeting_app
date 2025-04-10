@@ -278,10 +278,19 @@
       "groupName": "22",
       "place": "KR",
       "travelPeriod": "2025-04-04 ~ 2025-04-12",
+      "groupUser": [],
+      "budget": 11,
+      "currency": "KRW"
+    },
+    {
+      "id": "1fc0",
+      "groupName": "혼자 여행 (2025년 4월 10일)",
+      "place": "GB",
+      "travelPeriod": "2025-04-11 ~ 2025-04-12",
       "groupUser": [
         "seojin@naver.com"
       ],
-      "budget": 11,
+      "budget": 12345,
       "currency": "KRW"
     }
   ],
@@ -431,6 +440,16 @@
       "결제수단": "cash",
       "usedDate": "2025-04-30",
       "category": "food"
+    },
+    {
+      "id": "d584",
+      "groupId": "1fc0",
+      "usedAt": "집에 가고 시펑",
+      "cost": 12345,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "flights"
     }
   ],
   "transactions": [

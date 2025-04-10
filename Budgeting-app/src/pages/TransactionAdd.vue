@@ -39,6 +39,12 @@ function onAmountInput(e) {
 async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
+  // ✅ 유효성 검사
+  if (!usage.value || !numericAmount || !payMethod.value || !date.value) {
+    alert('모든 필드를 입력해주세요.');
+    return;
+  }
+
   const newTransaction = {
     groupId: groupId,
     usedAt: usage.value,
@@ -46,7 +52,7 @@ async function saveTransaction() {
     currency: currency.value,
     결제수단: payMethod.value,
     usedDate: date.value,
-    category: category.value || 'others', // ✅ 비어 있으면 'others'로 저장
+    category: category.value || 'others',
   };
 
   const res = await fetch('http://localhost:3000/GroupBudgetData', {
@@ -63,7 +69,7 @@ async function saveTransaction() {
     currency.value = 'KRW';
     payMethod.value = '';
     date.value = '';
-    category.value = 'food'; // 초기화는 다시 food
+    category.value = 'food';
 
     setTimeout(() => {
       showSuccess.value = false;
@@ -204,7 +210,6 @@ async function saveTransaction() {
   z-index: 10;
   padding-bottom: 12px;
 }
-
 .back-icon {
   position: absolute;
   left: 16px;
@@ -213,7 +218,6 @@ async function saveTransaction() {
   height: 15px;
   cursor: pointer;
 }
-
 .header-content {
   margin-top: 60px;
   display: flex;
