@@ -34,22 +34,39 @@
 </template>
 
 <script setup>
-import { useTripAddStore } from '@/stores/tripAddStore'
-import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
 import { ref } from 'vue';
+import { useTripAddStore } from '@/stores/tripAddStore';
+import { useUserStore } from '@/stores/userStore';
+import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue';
 
 const selected = ref(''); // 선택 상태 저장
 const store = useTripAddStore();
+const userStore = useUserStore();
 
 function select(option) {
-  selected.value = option
+  selected.value = option;
 }
 
 function goNextStep() {
   store.tripData.companion = selected.value; // 반드시 추가
-  store.nextStep()
-}
 
+  //  혼자 여행일 경우 현재 유저 이메일을 그룹 유저로 추가
+  if (selected.value === 'alone') {
+    store.tripData.invitedEmails = [userStore.user.email];
+
+    // 혼자 여행일 경우 기본 그룹 이름 설정
+    if (!store.tripData.groupName) {
+      const today = new Date().toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+      store.tripData.groupName = `혼자 여행 (${today})`;
+    }
+  }
+
+  store.nextStep();
+}
 </script>
 
 <style scoped>
