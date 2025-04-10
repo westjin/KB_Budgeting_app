@@ -13,7 +13,7 @@ const router = createRouter({
       component: () => import('../pages/AboutPage.vue'),
     },
     {
-      path: '/TransactionCheckList',
+      path: '/TransactionCheckList/:groupId',
       name: 'TransactionCheckList',
       component: TransactionCheckList,
     },
@@ -57,6 +57,26 @@ const router = createRouter({
       path: '/exchangeDetail',
       name: 'exchangeDetail',
       component: () => import('@/pages/ExchangeDetail.vue'),
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/pages/LoginPage.vue'),
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('@/pages/SignupPage.vue'),
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/pages/Profile.vue'),
+    },
+    {
+      path: '/profile/edit',
+      name: 'profileEdit',
+      component: () => import('@/pages/ProfileEdit.vue'),
     },
   ],
 });

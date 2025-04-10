@@ -24,11 +24,13 @@
     <!-- 로그인 폼 -->
     <div class="w-full flex flex-col gap-3">
       <input
+        v-model="email"
         type="email"
         placeholder="Email address"
         class="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400 focus:outline-none"
       />
       <input
+        v-model="password"
         type="password"
         placeholder="Password"
         class="w-full border border-gray-300 rounded-xl px-4 py-3 placeholder-gray-400 focus:outline-none"
@@ -39,13 +41,16 @@
     <!-- 로그인 버튼 -->
     <div class="w-full">
       <button
+        @click="login"
         class="w-full bg-yellow-300 hover:bg-yellow-400 text-black font-semibold py-3 rounded-full mt-4"
       >
         Login
       </button>
       <p class="text-center mt-2 text-sm text-gray-600">
         계정이 없으신가요?
-        <a href="#" class="text-blue-600 font-medium">회원가입</a>
+        <router-link to="/signup" class="text-blue-600 font-medium"
+          >회원가입</router-link
+        >
       </p>
     </div>
 
@@ -55,3 +60,58 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+
+const email = ref('');
+const password = ref('');
+const error = ref('');
+const router = useRouter();
+const userStore = useUserStore();
+
+async function login() {
+  const trimmedEmail = email.value.trim();
+  const trimmedPassword = password.value.trim();
+
+  if (!trimmedEmail || !trimmedPassword) {
+    error.value = '이메일과 비밀번호를 모두 입력해주세요.';
+    return;
+  }
+
+  try {
+    const res = await axios.get('http://localhost:3000/User', {
+      params: {
+        email: trimmedEmail,
+        password: trimmedPassword,
+      },
+    });
+
+    const matchedUser = res.data.find(
+      (user) => user.email === trimmedEmail && user.password === trimmedPassword
+    );
+
+    console.log('서버 응답:', res.data);
+    console.log('입력값:', trimmedEmail, trimmedPassword);
+
+    if (matchedUser) {
+      userStore.login(matchedUser);
+      localStorage.setItem('auth', matchedUser.userId);
+      alert('로그인 성공');
+      console.log('✅ 로그인 성공:', matchedUser);
+      // router.push('/'); // 로그인 성공시 홈 화면으로 이동
+      router.push('/profile');
+    } else {
+      alert('로그인 실패');
+      error.value = '이메일 또는 비밀번호가 틀렸습니다.';
+      console.warn('❌ 로그인 실패:', res.data);
+    }
+  } catch (err) {
+    error.value = '로그인 중 오류 발생';
+    console.error(err);
+  }
+}
+</script>

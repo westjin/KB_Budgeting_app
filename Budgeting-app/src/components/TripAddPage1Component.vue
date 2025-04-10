@@ -1,7 +1,7 @@
 <template>
   <div class="trip-wrapper">
     <div class="header">
-      <ScheduleHeaderComponent />
+      <ScheduleHeaderComponent :back-to-home="true" />
     </div>
 
     <div class="main-content">

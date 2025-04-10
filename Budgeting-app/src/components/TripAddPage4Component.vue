@@ -32,17 +32,35 @@
 import { useTripAddStore } from '@/stores/tripAddStore'
 import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
 import { ref } from 'vue'
+import axios from 'axios'
+
 
 const store = useTripAddStore()
 const showError = ref(false)
 
-function handleNext() {
+async function handleNext() {
   if (!store.tripData.budget.trim()) {
     showError.value = true
     return
   }
   showError.value = false
-  store.nextStep()
+
+  const groupData = {
+    groupName: store.tripData.groupName,
+    place: store.tripData.place,
+    travelPeriod: `${store.tripData.startDate} ~ ${store.tripData.endDate}`,
+    groupUser: store.tripData.invitedEmails,
+    budget: Number(store.tripData.budget),
+    currency: store.tripData.currency
+  }
+
+  try {
+    await axios.post('http://localhost:3000/Group', groupData)
+    store.nextStep()
+  } catch (error) {
+    console.error('그룹 생성 실패:', error)
+    alert('저장 중 오류가 발생했어요.')
+  }
 }
 </script>
 

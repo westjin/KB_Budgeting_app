@@ -1,12 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-import { useUserStore } from '@/stores/userStore';
+
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
-const userStore = useUserStore();
 
 const groupId = ref(null);
 const budgetData = ref([]);

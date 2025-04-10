@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
-import { useUserStore } from '@/stores/userStore';
+
 import { Pie } from 'vue-chartjs';
 import { useRouter } from 'vue-router';
 import {
@@ -16,8 +16,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(ChartDataLabels, Title, Tooltip, ArcElement, CategoryScale);
 
 const router = useRouter();
-
-const userStore = useUserStore();
 
 const groupId = ref(null);
 const userCurrency = ref('KRW');

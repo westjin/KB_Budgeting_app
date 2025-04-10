@@ -1,13 +1,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-import { useUserStore } from '@/stores/userStore';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
-const userStore = useUserStore();
+const route = useRoute();
 
-const groupId = ref(null);
+const groupId = ref(parseInt(route.params.groupId));
 const budgetData = ref([]);
 
 const groupedData = computed(() => {
@@ -21,20 +20,9 @@ const groupedData = computed(() => {
   return group;
 });
 
-const fetchGroupId = async () => {
-  const res = await axios.get('http://localhost:3000/Group');
-  const group = res.data.find((g) => g.groupUser.includes(userStore.email));
-
-  if (group) {
-    groupId.value = parseInt(group.groupId);
-    fetchBudgetData();
-  }
-};
-
 const fetchBudgetData = async () => {
   const res = await axios.get('http://localhost:3000/GroupBudgetData');
   budgetData.value = res.data;
-  console.log(budgetData.value);
 };
 
 const formatDate = (dateStr) => {
@@ -69,7 +57,7 @@ const goToSummary = () => router.push('/TransactionSummary');
 const goToAdd = () => router.push('/transaction');
 const goToProfile = () => router.push('/Profile');
 
-onMounted(fetchGroupId);
+onMounted(fetchBudgetData);
 </script>
 
 <template>
