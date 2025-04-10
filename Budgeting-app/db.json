@@ -373,16 +373,6 @@
       "category": "shopping"
     },
     {
-      "id": "75e6",
-      "groupId": "9b38",
-      "usedAt": "ㅇㅇ",
-      "cost": 1000,
-      "currency": "KRW",
-      "결제수단": "cash",
-      "usedDate": "2025-04-10",
-      "category": "food"
-    },
-    {
       "id": "9850",
       "groupId": "9b38",
       "usedAt": "ㅅㄳ",
@@ -421,6 +411,26 @@
       "결제수단": "cash",
       "usedDate": "2025-04-13",
       "category": "shopping"
+    },
+    {
+      "id": "aac0",
+      "groupId": "9b38",
+      "usedAt": "ㅍㄹ",
+      "cost": 100,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "accommodation"
+    },
+    {
+      "id": "f740",
+      "groupId": "9b38",
+      "usedAt": "ㅇㅇ",
+      "cost": 100,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-10",
+      "category": "accommodation"
     }
   ],
   "transactions": [
