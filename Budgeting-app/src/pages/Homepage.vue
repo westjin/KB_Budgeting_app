@@ -1,11 +1,14 @@
 <template>
-  <div class="w-[393px] h-[852px] mx-auto bg-white px-4 pt-8 pb-24">
+  <div class="w-[393px] h-[852px] mx-auto bg-white px-4 pt-[44px] pb-24">
     <!-- 상단 로고 및 프로필 -->
     <div class="flex justify-between items-center mb-6">
-      <div class="text-xl font-bold text-[#D4A016] flex items-center space-x-1">
-        <img src="@/assets/icons/airplane.png" alt="로고" class="w-5 h-5" />
-        <span>TripLog</span>
+      <div
+        class="text-3xl font-extrabold text-[#D4A016] flex items-center space-x-3"
+      >
+        <img src="@/assets/icons/airplane.png" alt="로고" class="w-10 h-10" />
+        <span class="text-[24px]">TravelPot</span>
       </div>
+
       <img
         src="@/assets/icons/profile-icon.png"
         alt="프로필"

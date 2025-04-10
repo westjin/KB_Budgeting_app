@@ -57,7 +57,7 @@ async function deleteTransaction() {
 <template>
   <div
     v-if="transaction"
-    class="w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pb-24"
+    class="w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pt-[44px] pb-24"
   >
     <!-- 상단 -->
     <div class="header-container mb-8">

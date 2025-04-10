@@ -450,6 +450,36 @@
       "결제수단": "cash",
       "usedDate": "2025-04-11",
       "category": "flights"
+    },
+    {
+      "id": "6900",
+      "groupId": "1fc0",
+      "usedAt": "진짜 제발 ",
+      "cost": 100,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-03",
+      "category": "food"
+    },
+    {
+      "id": "d26b",
+      "groupId": "1fc0",
+      "usedAt": "지빚비집지빚ㅂ짖빕집지",
+      "cost": 5000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-02",
+      "category": "food"
+    },
+    {
+      "id": "eb0b",
+      "groupId": "1fc0",
+      "usedAt": "진짜 마지막인데",
+      "cost": 500,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "food"
     }
   ],
   "transactions": [

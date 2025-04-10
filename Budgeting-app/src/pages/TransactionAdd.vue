@@ -1,18 +1,18 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
 const groupId = route.params.groupId || '';
 const showSuccess = ref(false);
-
 const usage = ref('');
 const amount = ref('');
 const currency = ref('KRW');
 const payMethod = ref('');
 const date = ref('');
 const category = ref('food'); // 기본값은 food
+const groupPeriod = ref('');
 
 const currencySymbol = computed(() => {
   switch (currency.value) {
@@ -36,12 +36,43 @@ function onAmountInput(e) {
   amount.value = e.target.value.replace(/[^\d]/g, '');
 }
 
+onMounted(async () => {
+  if (!groupId) return;
+  try {
+    const res = await fetch(`http://localhost:3000/Group?id=${groupId}`);
+    const data = await res.json();
+    if (data.length > 0) {
+      groupPeriod.value = data[0].travelPeriod;
+    }
+  } catch (e) {
+    console.error('그룹 정보를 불러오는 데 실패했습니다.', e);
+  }
+});
+
+function isWithinPeriod(inputDate, period) {
+  const [startStr, endStr] = period.split('~').map((str) => str.trim());
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+  const selected = new Date(inputDate);
+  return selected >= start && selected <= end;
+}
+
 async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
   // ✅ 유효성 검사
   if (!usage.value || !numericAmount || !payMethod.value || !date.value) {
     alert('모든 필드를 입력해주세요.');
+    return;
+  }
+
+  if (numericAmount < 500) {
+    alert('금액은 최소 500원 이상이어야 합니다.');
+    return;
+  }
+
+  if (groupPeriod.value && !isWithinPeriod(date.value, groupPeriod.value)) {
+    alert(`여행 기간 (${groupPeriod.value}) 내의 날짜를 선택해주세요.`);
     return;
   }
 
@@ -63,14 +94,12 @@ async function saveTransaction() {
 
   if (res.ok) {
     showSuccess.value = true;
-
     usage.value = '';
     amount.value = '';
     currency.value = 'KRW';
     payMethod.value = '';
     date.value = '';
     category.value = 'food';
-
     setTimeout(() => {
       showSuccess.value = false;
       router.push(`/TransactionCheckList/${groupId}`);
@@ -83,7 +112,7 @@ async function saveTransaction() {
 
 <template>
   <div
-    class="flex flex-col w-[393px] h-[852px] mx-auto bg-[#F8F8F8] px-6 pt-6 pb-24"
+    class="flex flex-col w-[393px] h-[852px] mx-auto bg-[#F8F8F8] px-6 pt-6 pt-[44px] pb-24"
   >
     <!-- 상단 헤더 -->
     <div class="header-container">
@@ -119,9 +148,8 @@ async function saveTransaction() {
         <div class="relative">
           <span
             class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
+            >{{ currencySymbol }}</span
           >
-            {{ currencySymbol }}
-          </span>
           <input
             type="text"
             :value="formattedAmount"
