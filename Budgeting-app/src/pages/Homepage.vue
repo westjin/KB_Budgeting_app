@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="text-lg font-bold text-gray-800">
-            {{ currentCard.value.toLocaleString() }}₩
+            {{ '₩ ' + currentCard.value.toLocaleString() }}
           </div>
         </div>
 
