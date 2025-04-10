@@ -169,7 +169,7 @@ const chartOptions = {
 
 const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
 const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
-const goToAdd = () => router.push('/transaction');
+const goToAdd = () => router.push(`/transaction/${groupId.value}`);
 const goToProfile = () => router.push('/Profile');
 
 onMounted(async () => {

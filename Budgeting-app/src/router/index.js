@@ -34,7 +34,7 @@ const router = createRouter({
       component: () => import('@/pages/TripAddPage.vue'),
     },
     {
-      path: '/transaction',
+      path: '/transaction/:groupId', // ✅ groupId를 URL 파라미터로 받도록 수정
       name: 'transaction',
       component: () => import('@/pages/TransactionAdd.vue'),
     },

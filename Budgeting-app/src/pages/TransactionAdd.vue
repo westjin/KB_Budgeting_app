@@ -1,11 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute(); // 현재 route 정보
+const groupId = route.params.groupId || ''; // 여기서 groupId 받아옴
 const showSuccess = ref(false);
 
-// 입력값 상태
 const usage = ref('');
 const amount = ref('');
 const currency = ref('KRW');
@@ -13,7 +14,6 @@ const payMethod = ref('');
 const date = ref('');
 const category = ref('음식');
 
-// 통화 심볼 계산
 const currencySymbol = computed(() => {
   switch (currency.value) {
     case 'KRW':
@@ -27,31 +27,29 @@ const currencySymbol = computed(() => {
   }
 });
 
-// 표시용: 3자리마다 콤마
 const formattedAmount = computed(() => {
   const raw = amount.value.replace(/[^\d]/g, '');
   return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 });
 
-// 입력 시 숫자만 반영
 function onAmountInput(e) {
   amount.value = e.target.value.replace(/[^\d]/g, '');
 }
 
-// 저장
 async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
   const newTransaction = {
-    usage: usage.value,
-    amount: numericAmount,
+    groupId: groupId, // ✅ 여기에 groupId 포함
+    usedAt: usage.value,
+    cost: numericAmount,
     currency: currency.value,
-    payMethod: payMethod.value,
-    date: date.value,
+    결제수단: payMethod.value,
+    usedDate: date.value,
     category: category.value,
   };
 
-  const res = await fetch('http://localhost:3000/transactions', {
+  const res = await fetch('http://localhost:3000/GroupBudgetData', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newTransaction),
@@ -60,7 +58,6 @@ async function saveTransaction() {
   if (res.ok) {
     showSuccess.value = true;
 
-    // 입력 초기화
     usage.value = '';
     amount.value = '';
     currency.value = 'KRW';
@@ -70,7 +67,8 @@ async function saveTransaction() {
 
     setTimeout(() => {
       showSuccess.value = false;
-    }, 2000);
+      router.push(`/TransactionCheckList/${groupId}`); // ✅ 저장 후 해당 그룹으로 이동
+    }, 1500);
   } else {
     alert('저장 실패! 😢');
   }

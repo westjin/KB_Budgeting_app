@@ -52,11 +52,9 @@ const getCurrencySymbol = (currency) => {
   return map[currency] || '';
 };
 
-// const goToCalendar = () => router.push('/TransactionCalendar');
 const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
-
 const goToSummary = () => router.push(`/TransactionSummary/${groupId.value}`);
-const goToAdd = () => router.push('/transaction');
+const goToAdd = () => router.push(`/transaction/${groupId.value}`);
 const goToProfile = () => router.push('/Profile');
 
 onMounted(fetchBudgetData);

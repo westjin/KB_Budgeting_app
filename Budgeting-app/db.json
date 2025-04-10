@@ -193,6 +193,56 @@
       "usedDate": "2025-04-09",
       "category": "others",
       "id": "ad1f"
+    },
+    {
+      "id": "539a",
+      "groupBudgetDataId": "1744258775368",
+      "usedAt": "23131",
+      "cost": 12345,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-18",
+      "category": "음식"
+    },
+    {
+      "id": "69fe",
+      "groupBudgetDataId": "1744258813084",
+      "usedAt": "1",
+      "cost": 12,
+      "currency": "JPY",
+      "결제수단": "card",
+      "usedDate": "2025-04-10",
+      "category": "음식"
+    },
+    {
+      "id": "fd48",
+      "groupId": "",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "USD",
+      "결제수단": "card",
+      "usedDate": "2025-04-18",
+      "category": "음식"
+    },
+    {
+      "id": "ea30",
+      "groupId": "",
+      "usedAt": "ㄴㄴㄴㄴ",
+      "cost": 3452347859437589000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-25",
+      "category": "음식"
+    },
+    {
+      "id": "b30f",
+      "groupId": "61",
+      "usedAt": "ㄴㅇㄴㅇ",
+      "cost": 0,
+      "currency": "USD",
+      "결제수단": "cash",
+      "usedDate": "2025-04-05",
+      "category": "음식"
     }
   ],
   "transactions": [
@@ -257,6 +307,15 @@
       "currency": "KRW",
       "payMethod": "card",
       "date": "2025-04-12",
+      "category": "음식"
+    },
+    {
+      "id": "9793",
+      "usage": "ㅍㅍㅍㅍ",
+      "amount": 12345,
+      "currency": "KRW",
+      "payMethod": "cash",
+      "date": "2025-04-18",
       "category": "음식"
     }
   ]

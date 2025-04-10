@@ -87,7 +87,7 @@ const selectDate = (date) => {
 
 const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
 const goToSummary = () => router.push(`/TransactionSummary/${groupId.value}`);
-const goToAdd = () => router.push('/transaction');
+const goToAdd = () => router.push(`/transaction/${groupId.value}`);
 const goToProfile = () => router.push('/Profile');
 
 onMounted(fetchBudgetData);
