@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import { Pie } from 'vue-chartjs';
 import {
@@ -12,12 +12,12 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(ChartDataLabels);
-ChartJS.register(Title, Tooltip, ArcElement, CategoryScale);
+ChartJS.register(ChartDataLabels, Title, Tooltip, ArcElement, CategoryScale);
 
 const router = useRouter();
-const email = ref('test@naver.com');
-const groupId = ref(null);
+const route = useRoute();
+const groupId = ref(route.params.groupId);
+
 const userCurrency = ref('KRW');
 const exchangeRates = ref({});
 const budgetData = ref([]);
@@ -26,7 +26,7 @@ const travelPeriod = ref({ start: '', end: '' });
 
 const categoryMap = {
   food: '식비',
-  transportation: '교통수단',
+  transportation: '교통',
   accommodation: '숙소',
   shopping: '쇼핑',
   flights: '항공',
@@ -46,9 +46,14 @@ const validCategories = Object.keys(categoryMap);
 
 const fetchUserCurrency = async () => {
   const res = await axios.get('http://localhost:3000/User');
-  const user = res.data.find((u) => u.email === email.value);
+  const user = res.data.find((u) => u);
   if (user) userCurrency.value = user.currency;
 };
+
+const userCurrencySymbol = computed(() => {
+  const map = { KRW: '₩', USD: '$', JPY: '￥' };
+  return map[userCurrency.value] || '';
+});
 
 const fetchExchangeRates = async () => {
   const res = await axios.get(
@@ -56,62 +61,41 @@ const fetchExchangeRates = async () => {
   );
   if (res.data && res.data.rates) {
     exchangeRates.value = res.data.rates;
-  } else {
-    console.error('환율 정보가 응답에 없습니다:', res.data);
   }
 };
 
 const convertToUserCurrency = (amount, fromCurrency) => {
-  if (
-    !exchangeRates.value ||
-    !fromCurrency ||
-    fromCurrency === userCurrency.value
-  )
+  if (!exchangeRates.value || fromCurrency === userCurrency.value)
     return amount;
-
-  const fromRate = exchangeRates.value[fromCurrency];
-  return fromRate ? parseFloat((amount / fromRate).toFixed(2)) : 0;
+  const rate = exchangeRates.value[fromCurrency];
+  return rate ? parseFloat((amount / rate).toFixed(2)) : 0;
 };
 
-const userCurrencySymbol = computed(() => {
-  const symbols = {
-    KRW: '₩',
-    USD: '$',
-    JPY: '￥',
-  };
-  return symbols[userCurrency.value] || userCurrency.value;
-});
-
 const fetchGroupInfo = async () => {
-  try {
-    const res = await axios.get('http://localhost:3000/Group');
-    const group = res.data.find((g) => g.groupUser.includes(email.value));
-    if (group) {
-      groupId.value = parseInt(group.groupId);
+  const res = await axios.get('http://localhost:3000/Group');
+  const group = res.data.find((g) => g.id === groupId.value);
 
-      if (group.currency && group.currency !== userCurrency.value) {
-        totalBudget.value = convertToUserCurrency(group.budget, group.currency);
-      } else {
-        totalBudget.value = group.budget;
-      }
+  if (group) {
+    totalBudget.value =
+      group.currency !== userCurrency.value
+        ? convertToUserCurrency(group.budget, group.currency)
+        : group.budget;
 
-      const [start, end] = group.travelPeriod.split(' ~ ');
-      travelPeriod.value = {
-        start: new Date(start),
-        end: new Date(end),
-      };
-    }
-  } catch (err) {
-    console.error('그룹 정보 로딩 실패:', err);
+    const [start, end] = group.travelPeriod.split(' ~ ');
+    travelPeriod.value = {
+      start: new Date(start),
+      end: new Date(end),
+    };
   }
 };
 
+// 5. 그룹 예산 데이터 불러오기
 const loadBudgetData = async () => {
   const res = await axios.get('http://localhost:3000/GroupBudgetData');
   const filtered = res.data.filter((item) => {
     const usedDate = new Date(item.usedDate);
     return (
-      parseInt(item.groupId) === groupId.value &&
+      item.groupId === groupId.value &&
       !isNaN(usedDate) &&
       usedDate >= travelPeriod.value.start &&
       usedDate <= travelPeriod.value.end
@@ -124,12 +108,7 @@ const loadBudgetData = async () => {
   }));
 };
 
-watch([exchangeRates, groupId], ([rates, gid]) => {
-  if (rates && gid !== null && Object.keys(rates).length) {
-    loadBudgetData();
-  }
-});
-
+// 6. 계산 관련
 const totalUsed = computed(() =>
   budgetData.value.reduce((a, b) => a + b.cost, 0)
 );
@@ -143,9 +122,7 @@ const sortedCategoryData = computed(() => {
       totals[item.category] += item.cost;
     }
   });
-
   const total = Object.values(totals).reduce((a, b) => a + b, 0);
-
   return Object.entries(totals)
     .map(([key, value]) => ({
       key,
@@ -157,29 +134,24 @@ const sortedCategoryData = computed(() => {
     .sort((a, b) => b.value - a.value);
 });
 
-const chartData = computed(() => {
-  return {
-    labels: sortedCategoryData.value.map((item) => item.label),
-    datasets: [
-      {
-        data: sortedCategoryData.value.map((item) => item.value),
-        backgroundColor: sortedCategoryData.value.map((item) => item.color),
-      },
-    ],
-  };
-});
+const chartData = computed(() => ({
+  labels: sortedCategoryData.value.map((item) => item.label),
+  datasets: [
+    {
+      data: sortedCategoryData.value.map((item) => item.value),
+      backgroundColor: sortedCategoryData.value.map((item) => item.color),
+    },
+  ],
+}));
 
 const chartOptions = {
   plugins: {
     datalabels: {
       color: '#000',
-      font: {
-        weight: 'bold',
-        size: 15,
-      },
-      anchor: 'center', // stay centered in slice
-      align: 'end', // shift closer to outer edge but stays inside
-      offset: 20, // fine-tune label position
+      font: { weight: 'bold', size: 15 },
+      anchor: 'center',
+      align: 'end',
+      offset: 20,
       padding: 2,
       formatter: (value, context) => {
         const total = context.chart.data.datasets[0].data.reduce(
@@ -187,20 +159,24 @@ const chartOptions = {
           0
         );
         const percentage = (value / total) * 100;
-        if (percentage < 3) return ''; // too small slice, skip label
+        if (percentage < 3) return '';
         return context.chart.data.labels[context.dataIndex];
       },
     },
-    legend: {
-      display: false,
-    },
+    legend: { display: false },
   },
 };
+
+const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
+const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
+const goToAdd = () => router.push('/transaction');
+const goToProfile = () => router.push('/Profile');
 
 onMounted(async () => {
   await fetchUserCurrency();
   await fetchExchangeRates();
   await fetchGroupInfo();
+  await loadBudgetData();
 });
 </script>
 
@@ -215,22 +191,17 @@ onMounted(async () => {
       <div>
         <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
       </div>
-      <img src="/src/assets/icons/character.png" alt="icon" class="w-9 h-9" />
+      <img
+        src="/src/assets/icons/profile-icon.png"
+        alt="icon"
+        class="w-10 h-10"
+        @click="goToProfile"
+      />
     </header>
 
     <div class="flex justify-around p-2 font-bold">
-      <button
-        @click="() => router.push('/TransactionCheckList')"
-        class="px-6 py-1"
-      >
-        내역
-      </button>
-      <button
-        @click="() => router.push('/TransactionCalendar')"
-        class="px-6 py-1"
-      >
-        달력
-      </button>
+      <button @click="goToList" class="px-6 py-1">내역</button>
+      <button @click="goToCalendar" class="px-6 py-1">달력</button>
       <button class="bg-[#ffcc00] px-6 py-1 rounded-4xl">요약</button>
     </div>
 
@@ -279,7 +250,7 @@ onMounted(async () => {
     <div class="text-center mt-6 mb-20">
       <button
         class="bg-[#ffcc00] text-black py-1 px-8 rounded-full font-semibold shadow"
-        @click="() => router.push('/TransactionAdd.vue')"
+        @click="goToAdd"
       >
         추가
       </button>
