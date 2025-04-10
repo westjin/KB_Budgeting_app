@@ -6,13 +6,13 @@ import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-const groupId = ref(parseInt(route.params.groupId));
+const groupId = ref(route.params.groupId);
 const budgetData = ref([]);
 
 const groupedData = computed(() => {
   const group = {};
   budgetData.value.forEach((item) => {
-    if (parseInt(item.groupId) === groupId.value) {
+    if (item.groupId === groupId.value) {
       if (!group[item.usedDate]) group[item.usedDate] = [];
       group[item.usedDate].push(item);
     }
@@ -37,12 +37,12 @@ const formatDate = (dateStr) => {
 
 const getIcon = (category) => {
   const icons = {
+    others: '/src/assets/icons/icon_etc.png',
+    transportation: '/src/assets/icons/icon_traffic.png',
     food: '/src/assets/icons/icon_food.png',
     flights: '/src/assets/icons/icon_plane.png',
     shopping: '/src/assets/icons/icon_shopping.png',
     accommodation: '/src/assets/icons/icon_accommodation.png',
-    others: 'src/assets/icons/icon_etc.png',
-    transportation: 'src/assets/icons/icon_traffic.png',
   };
   return icons[category] || '/src/assets/icons/etc.png';
 };
@@ -52,8 +52,10 @@ const getCurrencySymbol = (currency) => {
   return map[currency] || '';
 };
 
-const goToCalendar = () => router.push('/TransactionCalendar');
-const goToSummary = () => router.push('/TransactionSummary');
+// const goToCalendar = () => router.push('/TransactionCalendar');
+const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
+
+const goToSummary = () => router.push(`/TransactionSummary/${groupId.value}`);
 const goToAdd = () => router.push('/transaction');
 const goToProfile = () => router.push('/Profile');
 
@@ -72,16 +74,16 @@ onMounted(fetchBudgetData);
           >Expenses</span
         >
         <img
-          src="/src/assets/icons/character.png"
+          src="/src/assets/icons/profile-icon.png"
           alt="icon"
-          class="w-9 h-9"
+          class="w-10 h-10"
           @click="goToProfile"
         />
       </header>
 
       <div class="flex justify-around p-2 mb-2 font-bold">
         <button class="bg-[#ffcc00] px-8 py-1 rounded-4xl">내역</button>
-        <button @click="goToCalendar" class="px-8 py-1">달력</button>
+        <button @click="goToCalendar()" class="px-8 py-1">달력</button>
         <button @click="goToSummary" class="px-8 py-1">요약</button>
       </div>
 

@@ -6,7 +6,7 @@
       "email": "hhhㅎㅎ@naver.com",
       "username": "ㅎㅎㅎ",
       "password": "hhh123",
-      "currency": "USD"
+      "currency": "JPY"
     },
     {
       "id": "000c",
@@ -51,13 +51,16 @@
   ],
   "Group": [
     {
-      "groupId": "1",
       "groupName": "grouptest",
-      "groupUser": ["test@naver.com", "test2@naver.com"],
+      "groupUser": [
+        "test@naver.com",
+        "hhhㅎㅎ@naver.com",
+        "test2@naver.com"
+      ],
       "place": "USA",
       "travelPeriod": "2025-04-01 ~ 2025-04-10",
-      "budget": 1000000,
-      "currency": "KRW",
+      "budget": 100000,
+      "currency": "USD",
       "id": "c8fa"
     },
     {
@@ -92,7 +95,10 @@
       "groupName": "너무졸려요..",
       "place": "JP",
       "travelPeriod": "2025-04-08 ~ 2025-04-16",
-      "groupUser": ["test1@naver.com", "test2@naver.com"],
+      "groupUser": [
+        "test1@naver.com",
+        "test2@naver.com"
+      ],
       "budget": 123456,
       "currency": "KRW"
     },
@@ -101,7 +107,10 @@
       "groupName": "dd",
       "place": "JP",
       "travelPeriod": "2025-04-09 ~ 2025-05-02",
-      "groupUser": ["test333333@naver.com", "xyz@aaa.bbb"],
+      "groupUser": [
+        "test333333@naver.com",
+        "xyz@aaa.bbb"
+      ],
       "budget": 1234,
       "currency": "JPY"
     },
@@ -118,7 +127,7 @@
   "GroupBudgetData": [
     {
       "groupBudgetDataId": "1",
-      "groupId": "1",
+      "groupId": "c8fa",
       "usedAt": "마라탕",
       "cost": 90000,
       "currency": "KRW",
@@ -129,7 +138,7 @@
     },
     {
       "groupBudgetDataId": "2",
-      "groupId": "1",
+      "groupId": "c8fa",
       "usedAt": "항공료",
       "cost": 100,
       "currency": "USD",
@@ -140,7 +149,7 @@
     },
     {
       "groupBudgetDataId": "3",
-      "groupId": "1",
+      "groupId": "c8fa",
       "usedAt": "숙소",
       "cost": 3000,
       "currency": "JPY",
@@ -151,7 +160,7 @@
     },
     {
       "groupBudgetDataId": "4",
-      "groupId": "1",
+      "groupId": "c8fa",
       "usedAt": "옷",
       "cost": 32000,
       "currency": "KRW",
@@ -162,7 +171,7 @@
     },
     {
       "groupBudgetDataId": "5",
-      "groupId": "1",
+      "groupId": "c8fa",
       "usedAt": "버스비",
       "cost": 20000,
       "currency": "KRW",
@@ -173,7 +182,7 @@
     },
     {
       "groupBudgetDataId": "6",
-      "groupId": "1",
+      "groupId": "c8fa",
       "usedAt": "기타",
       "cost": 5000,
       "currency": "KRW",
@@ -237,6 +246,15 @@
       "payMethod": "cash",
       "date": "2025-04-10",
       "category": "항공"
+    },
+    {
+      "id": "8c01",
+      "usage": "쌀국수",
+      "amount": 5000,
+      "currency": "KRW",
+      "payMethod": "card",
+      "date": "2025-04-10",
+      "category": "음식"
     }
   ]
 }

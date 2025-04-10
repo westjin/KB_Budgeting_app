@@ -195,14 +195,8 @@ function goToAddTrip() {
 function goToProfile() {
   router.push('/profile');
 }
-<<<<<<< HEAD
 function goToGroupDetail(id) {
   router.push(`/TransactionCheckList/${id}`);
-=======
-
-function goToGroupDetail(groupId) {
-  router.push(`/TransactionCheckList/${groupId}`);
->>>>>>> c158011a48cce6ba9f16a4abc1753dc3cc2b1218
 }
 
 onMounted(async () => {
