@@ -161,8 +161,9 @@ function goToAddTrip() {
 function goToProfile() {
   router.push('/profile');
 }
+
 function goToGroupDetail(groupId) {
-  router.push(`/groupDetail/${groupId}`);
+  router.push(`/TransactionCheckList/${groupId}`);
 }
 
 onMounted(async () => {

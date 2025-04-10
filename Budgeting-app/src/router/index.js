@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/Homepage.vue';
+import TransactionCheckList from '@/pages/TransactionCheckList.vue';
+import TransactionCalendar from '@/pages/TransactionCalendar.vue';
+import TransactionSummary from '@/pages/TransactionSummary.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,10 +13,25 @@ const router = createRouter({
       component: () => import('../pages/AboutPage.vue'),
     },
     {
+      path: '/TransactionCheckList/:groupId',
+      name: 'TransactionCheckList',
+      component: TransactionCheckList,
+    },
+    {
+      path: '/TransactionCalendar',
+      name: 'TransactionCalendar',
+      component: TransactionCalendar,
+    },
+
+    {
+      path: '/TransactionSummary',
+      name: 'TransactionSummary',
+      component: TransactionSummary,
+    },
+    {
       path: '/trip/add',
       name: 'trip/add',
       component: () => import('@/pages/TripAddPage.vue'),
-
     },
     {
       path: '/transaction',
@@ -39,7 +57,6 @@ const router = createRouter({
       path: '/exchangeDetail',
       name: 'exchangeDetail',
       component: () => import('@/pages/ExchangeDetail.vue'),
-
     },
     {
       path: '/login',
