@@ -259,8 +259,21 @@
       "groupName": "22",
       "place": "KR",
       "travelPeriod": "2025-04-04 ~ 2025-04-12",
+
       "groupUser": ["seojin@naver.com"],
       "budget": 11,
+      "currency": "KRW"
+    },
+    {
+      "id": "1fc0",
+      "groupName": "혼자 여행 (2025년 4월 10일)",
+      "place": "GB",
+      "travelPeriod": "2025-04-11 ~ 2025-04-12",
+      "groupUser": [
+        "seojin@naver.com"
+      ],
+      "budget": 12345,
+
       "currency": "KRW"
     }
   ],
@@ -470,6 +483,46 @@
       "currency": "KRW",
       "결제수단": "cash",
       "usedDate": "2025-04-30",
+      "category": "food"
+    },
+    {
+      "id": "d584",
+      "groupId": "1fc0",
+      "usedAt": "집에 가고 시펑",
+      "cost": 12345,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "flights"
+    },
+    {
+      "id": "6900",
+      "groupId": "1fc0",
+      "usedAt": "진짜 제발 ",
+      "cost": 100,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-03",
+      "category": "food"
+    },
+    {
+      "id": "d26b",
+      "groupId": "1fc0",
+      "usedAt": "지빚비집지빚ㅂ짖빕집지",
+      "cost": 5000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-02",
+      "category": "food"
+    },
+    {
+      "id": "eb0b",
+      "groupId": "1fc0",
+      "usedAt": "진짜 마지막인데",
+      "cost": 500,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
       "category": "food"
     }
   ]

@@ -7,6 +7,8 @@ const router = useRouter();
 const route = useRoute();
 
 const groupId = ref(route.params.groupId);
+console.log('현재 groupId:', groupId.value);
+
 const budgetData = ref([]);
 
 const groupedData = computed(() => {
