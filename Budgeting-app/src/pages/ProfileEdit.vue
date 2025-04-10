@@ -27,11 +27,7 @@
       </div>
       <div class="flex justify-between items-center">
         <label class="text-gray-600 w-1/4">이메일</label>
-        <input
-          v-model="form.email"
-          class="border px-2 py-1 rounded w-3/4"
-          type="email"
-        />
+        <p class="w-3/4 text-sm text-gray-800">{{ form.email }}</p>
       </div>
     </InfoCard>
 
@@ -50,7 +46,16 @@
           </span>
         </div>
         <button
-          @click="leaveGroup(group.groupId)"
+          @click="
+            () => {
+              console.log(
+                '🧨 그룹 탈퇴 버튼 클릭됨:',
+                group.id,
+                group.groupName
+              );
+              leaveGroup(group.id);
+            }
+          "
           class="text-sm text-red-500 font-semibold"
         >
           ❌
@@ -95,7 +100,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/userStore';
 import axios from 'axios';
 import ProfileImage from '@/components/ProfileImage.vue';
 import InfoCard from '@/components/InfoCard.vue';
@@ -147,13 +152,21 @@ onMounted(async () => {
 
 // 그룹 탈퇴
 const leaveGroup = async (groupId) => {
-  const group = groups.value.find((g) => g.groupId === groupId);
-  if (!group) return;
+  console.log('📍 leaveGroup 진입:', groupId);
+
+  const group = groups.value.find((g) => g.id === groupId);
+  console.log('🔍 찾은 그룹:', group);
+
+  if (!group || !Array.isArray(group.groupUser)) {
+    console.warn('❌ 유효하지 않은 그룹 정보:', group);
+    return;
+  }
 
   // groupUser에서 유저 이메일 제거
   const updatedUsers = group.groupUser.filter(
     (email) => email !== userStore.user.email
   );
+  console.log('🧹 제거 후 유저 목록:', updatedUsers);
 
   try {
     await axios.patch(`http://localhost:3000/Group/${group.id}`, {
@@ -161,9 +174,15 @@ const leaveGroup = async (groupId) => {
     });
 
     console.log('탈퇴 대상 그룹:', group);
+    console.log('✅ 그룹 탈퇴 처리 완료', group.groupName);
 
     // 프론트에서도 즉시 반영
-    groups.value = groups.value.filter((g) => g.groupId !== groupId);
+    group.groupUser = updatedUsers;
+    groups.value = groups.value.filter(
+      (g) =>
+        Array.isArray(g.groupUser) && g.groupUser.includes(userStore.user.email)
+    );
+    console.log('🎯 화면 갱신 완료');
   } catch (err) {
     console.error('그룹 탈퇴 실패:', err);
     alert('그룹 탈퇴 중 문제가 발생했습니다.');
@@ -206,7 +225,7 @@ const submit = async () => {
     const updatedUser = {
       ...userToUpdate,
       username: form.name,
-      email: form.email,
+      // email: form.email,
       currency: form.currency,
     };
 

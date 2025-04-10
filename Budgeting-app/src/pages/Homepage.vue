@@ -154,10 +154,12 @@ import { useRouter } from 'vue-router';
 import { useExchangeStore } from '@/stores/exchangeStore';
 import { useGroupStore } from '@/stores/groupStore';
 import { getFlagEmoji, countryNameMap } from '@/utils/countryUtils';
+import { useUserStore } from '@/stores/userStore';
 
 const router = useRouter();
 const exchangeStore = useExchangeStore();
 const groupStore = useGroupStore();
+const userStore = useUserStore();
 
 const currentIndex = ref(0);
 
@@ -200,6 +202,21 @@ function goToGroupDetail(id) {
 }
 
 onMounted(async () => {
+  // 🌟 유저 정보 로컬스토리지에서 복원
+  await userStore.restoreUserFromLocalStorage();
+
+  // ✅ 유저 이메일이 있다면 그룹 불러오기
+  const email = userStore.user?.email;
+  if (email) {
+    await groupStore.fetchGroups(email);
+  } else {
+    router.push('/login');
+  }
+
+  // if (groupStore.groups.length === 0) {
+  //   await groupStore.fetchGroups(); // 여행 리스트 불러오기
+  // }
+
   await exchangeStore.fetchRates();
   // if (groupStore.groups.length === 0) {
   //   await groupStore.fetchGroups();

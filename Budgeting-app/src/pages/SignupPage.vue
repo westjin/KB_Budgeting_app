@@ -4,7 +4,7 @@
   >
     <!-- 뒤로가기 -->
     <div class="self-start">
-      <button @click="$router.push({ name: 'login' })" class="text-2xl">
+      <button @click="router.push({ name: 'login' })" class="text-2xl">
         &larr;
       </button>
     </div>
@@ -99,7 +99,7 @@
 import { ref, reactive, computed, watch } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/userStore';
 
 const router = useRouter();
 const userStore = useUserStore();
