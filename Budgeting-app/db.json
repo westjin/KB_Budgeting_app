@@ -373,6 +373,7 @@
       "category": "shopping"
     },
     {
+
       "id": "75e6",
       "groupId": "9b38",
       "usedAt": "ㅇㅇ",
@@ -421,71 +422,66 @@
       "결제수단": "cash",
       "usedDate": "2025-04-13",
       "category": "shopping"
-    }
-  ],
-  "transactions": [
-    {
-      "id": "2",
-      "usage": "택시",
-      "amount": 12000,
-      "currency": "KRW",
-      "payMethod": "카드",
-      "date": "2025-04-06",
-      "category": "교통수단"
     },
     {
-      "id": "3",
-      "usage": "택시비",
-      "amount": 15000,
+      "id": "f132",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
       "currency": "KRW",
-      "payMethod": "카드",
-      "date": "2025-04-08",
-      "category": "교통수단"
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "food"
     },
     {
-      "id": "2ff5",
-      "usage": "졸려",
-      "amount": 10000,
+      "id": "e017",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
       "currency": "KRW",
-      "payMethod": "현금",
-      "date": "2025-04-08",
-      "category": "숙소"
-    },
-    {
-      "id": "ba40",
-      "usage": "택시비",
-      "amount": 15000,
-      "currency": "KRW",
-      "payMethod": "카드",
-      "date": "2025-04-08",
-      "category": "교통수단"
-    },
-    {
-      "id": "685e",
-      "usage": "adsdsdsd",
-      "amount": 131212121,
-      "currency": "JPY",
-      "payMethod": "카드",
-      "date": "2025-04-10",
-      "category": "쇼핑"
-    },
-    {
-      "id": "b32c",
-      "usage": "배고파 ",
-      "amount": 12345,
-      "currency": "KRW",
-      "payMethod": "cash",
-      "date": "2025-04-10",
-      "category": "항공"
-    },
-    {
-      "id": "8aab",
-      "usage": "이탈리아 젤라또",
-      "amount": 12345,
-      "currency": "KRW",
-      "payMethod": "card",
-      "date": "2025-04-12",
+      "결제수단": "cash",
+      "usedDate": "2025-04-10",
       "category": "음식"
+    },
+    {
+      "id": "82eb",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-12",
+      "category": "shopping"
+    },
+    {
+      "id": "3af1",
+      "groupId": "31b2",
+      "usedAt": "음식 확인",
+      "cost": 1234,
+      "currency": "USD",
+      "결제수단": "cash",
+      "usedDate": "2025-04-10",
+      "category": "food"
+    },
+    {
+      "id": "5ac6",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "food"
+    },
+    {
+      "id": "a4f1",
+      "groupId": "31b2",
+      "usedAt": "테스트",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-30",
+      "category": "food"
     }
   ]
 }
