@@ -30,7 +30,7 @@
       "email": "test2@naver.com",
       "username": "kkk",
       "password": "111",
-      "currency": "KRW"
+      "currency": "USD"
     },
     {
       "id": "b089",
@@ -47,6 +47,30 @@
       "username": "어쩔티비",
       "password": "1234",
       "currency": "KRW"
+    },
+    {
+      "id": "f64b",
+      "userId": "1744247327592",
+      "email": "test@naver.com",
+      "username": "테스트",
+      "password": "111",
+      "currency": "KRW"
+    },
+    {
+      "id": "e0cb",
+      "userId": "1744247628701",
+      "email": "abc@naver.com",
+      "username": "Test7",
+      "password": "111",
+      "currency": "KRW"
+    },
+    {
+      "id": "c29f",
+      "userId": "1744247712076",
+      "email": "bbb@naver.com",
+      "username": "제발좀",
+      "password": "a",
+      "currency": "KRW"
     }
   ],
   "Group": [
@@ -54,8 +78,7 @@
       "groupId": "1",
       "groupName": "grouptest",
       "groupUser": [
-        "test@naver.com",
-        "test2@naver.com"
+        "test@naver.com"
       ],
       "place": "USA",
       "travelPeriod": "2025-04-01 ~ 2025-04-10",
@@ -96,8 +119,7 @@
       "place": "JP",
       "travelPeriod": "2025-04-08 ~ 2025-04-16",
       "groupUser": [
-        "test1@naver.com",
-        "test2@naver.com"
+        "test1@naver.com"
       ],
       "budget": 123456,
       "currency": "KRW"
@@ -113,6 +135,135 @@
       ],
       "budget": 1234,
       "currency": "JPY"
+    },
+    {
+      "id": "e3dd",
+      "groupName": "테스트그룹5",
+      "place": "JP",
+      "travelPeriod": "2025-04-10 ~ 2025-04-16",
+      "groupUser": [],
+      "budget": 500000,
+      "currency": "KRW"
+    },
+    {
+      "id": "460e",
+      "groupName": "TestSpain",
+      "place": "ES",
+      "travelPeriod": "2025-04-22 ~ 2025-04-30",
+      "groupUser": [],
+      "budget": 50505050,
+      "currency": "USD"
+    },
+    {
+      "id": "abad",
+      "groupName": "TestSpain",
+      "place": "ES",
+      "travelPeriod": "2025-04-22 ~ 2025-04-30",
+      "groupUser": [],
+      "budget": 50505050,
+      "currency": "USD"
+    },
+    {
+      "id": "3c09",
+      "groupName": "연동테스트_캐나다",
+      "place": "CA",
+      "travelPeriod": "2025-05-12 ~ 2025-05-29",
+      "groupUser": [],
+      "budget": 123,
+      "currency": "KRW"
+    },
+    {
+      "id": "4726",
+      "groupName": "test2@naver.com",
+      "place": "AU",
+      "travelPeriod": "2025-04-10 ~ 2025-04-17",
+      "groupUser": [
+        "bbb@naver.com"
+      ],
+      "budget": 123,
+      "currency": "USD"
+    },
+    {
+      "id": "b97a",
+      "groupName": "제발좀",
+      "place": "KR",
+      "travelPeriod": "2025-04-10 ~ 2025-04-11",
+      "groupUser": [
+        "bbb@naver.com"
+      ],
+      "budget": 123,
+      "currency": "JPY"
+    },
+    {
+      "id": "ecbb",
+      "groupName": "ㅎ",
+      "place": "JP",
+      "travelPeriod": "2025-04-10 ~ 2025-04-11",
+      "groupUser": [
+        "bbb@naver.com"
+      ],
+      "budget": 141414,
+      "currency": "JPY"
+    },
+    {
+      "id": "39b5",
+      "groupName": "ㅎ",
+      "place": "JP",
+      "travelPeriod": "2025-04-10 ~ 2025-04-11",
+      "groupUser": [
+        "bbb@naver.com"
+      ],
+      "budget": 141414,
+      "currency": "JPY"
+    },
+    {
+      "id": "9b38",
+      "groupName": "그룹 테스트입니다",
+      "place": "IT",
+      "travelPeriod": "2025-04-10 ~ 2025-04-25",
+      "groupUser": [
+        "hhhㅎㅎ@naver.com"
+      ],
+      "budget": 1234,
+      "currency": "KRW"
+    },
+    {
+      "id": "47ff",
+      "groupName": "프로필 화면 테스트",
+      "place": "AU",
+      "travelPeriod": "2025-04-10 ~ 2025-04-24",
+      "groupUser": [],
+      "budget": 123,
+      "currency": "JPY"
+    },
+    {
+      "id": "18f9",
+      "groupName": "반응성 테스트",
+      "place": "IT",
+      "travelPeriod": "2025-04-10 ~ 2025-04-24",
+      "groupUser": [
+        "test2@naver.com"
+      ],
+      "budget": 1414,
+      "currency": "KRW"
+    },
+    {
+      "id": "a430",
+      "groupName": "반응성 test2",
+      "place": "KR",
+      "travelPeriod": "2025-04-11 ~ 2025-04-25",
+      "groupUser": [],
+      "budget": 1224124,
+      "currency": "KRW"
+    },
+    {
+      "id": "6552",
+      "groupName": "멕시코가고싶다",
+      "place": "MX",
+      "travelPeriod": "2025-04-10 ~ 2025-04-25",
+      "groupUser": [],
+      "budget": 123,
+      "currency": "KRW"
     }
   ],
   "GroupBudgetData": [

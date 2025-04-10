@@ -65,7 +65,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/userStore';
 
 const email = ref('');
 const password = ref('');
@@ -103,7 +103,7 @@ async function login() {
       alert('로그인 성공');
       console.log('✅ 로그인 성공:', matchedUser);
       // router.push('/'); // 로그인 성공시 홈 화면으로 이동
-      router.push('/profile');
+      router.push('/home');
     } else {
       alert('로그인 실패');
       error.value = '이메일 또는 비밀번호가 틀렸습니다.';
