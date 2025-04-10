@@ -113,6 +113,15 @@
       ],
       "budget": 1234,
       "currency": "JPY"
+    },
+    {
+      "id": "fd0a",
+      "groupName": "",
+      "place": "IT",
+      "travelPeriod": "2025-04-10 ~ 2025-09-25",
+      "groupUser": [],
+      "budget": 100,
+      "currency": "KRW"
     }
   ],
   "GroupBudgetData": [
@@ -228,6 +237,15 @@
       "payMethod": "카드",
       "date": "2025-04-10",
       "category": "쇼핑"
+    },
+    {
+      "id": "b32c",
+      "usage": "배고파 ",
+      "amount": 12345,
+      "currency": "KRW",
+      "payMethod": "cash",
+      "date": "2025-04-10",
+      "category": "항공"
     }
   ]
 }
