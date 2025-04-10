@@ -3,8 +3,8 @@ import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
-const route = useRoute(); // 현재 route 정보
-const groupId = route.params.groupId || ''; // 여기서 groupId 받아옴
+const route = useRoute();
+const groupId = route.params.groupId || '';
 const showSuccess = ref(false);
 
 const usage = ref('');
@@ -12,7 +12,7 @@ const amount = ref('');
 const currency = ref('KRW');
 const payMethod = ref('');
 const date = ref('');
-const category = ref('food'); // ✅ 초기값을 'food'로 설정
+const category = ref('food'); // 기본값은 food
 
 const currencySymbol = computed(() => {
   switch (currency.value) {
@@ -46,7 +46,7 @@ async function saveTransaction() {
     currency: currency.value,
     결제수단: payMethod.value,
     usedDate: date.value,
-    category: category.value, // ✅ 영어 값으로 저장됨 (예: 'food')
+    category: category.value || 'others', // ✅ 비어 있으면 'others'로 저장
   };
 
   const res = await fetch('http://localhost:3000/GroupBudgetData', {
@@ -63,7 +63,7 @@ async function saveTransaction() {
     currency.value = 'KRW';
     payMethod.value = '';
     date.value = '';
-    category.value = 'food'; // ✅ 저장 후에도 영어 값으로 초기화
+    category.value = 'food'; // 초기화는 다시 food
 
     setTimeout(() => {
       showSuccess.value = false;
@@ -87,7 +87,6 @@ async function saveTransaction() {
         class="back-icon"
         @click="router.back()"
       />
-
       <div class="header-content">
         <img
           src="../assets/icons/YSJ_Wallet.png"

@@ -411,6 +411,26 @@
       "결제수단": "cash",
       "usedDate": "2025-04-10",
       "category": "food"
+    },
+    {
+      "id": "5ac6",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "food"
+    },
+    {
+      "id": "a4f1",
+      "groupId": "31b2",
+      "usedAt": "테스트",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-30",
+      "category": "food"
     }
   ],
   "transactions": [
