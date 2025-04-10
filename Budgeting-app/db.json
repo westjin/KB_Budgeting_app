@@ -371,6 +371,46 @@
       "결제수단": "card",
       "usedDate": "2025-04-02",
       "category": "shopping"
+    },
+    {
+      "id": "f132",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "food"
+    },
+    {
+      "id": "e017",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-10",
+      "category": "음식"
+    },
+    {
+      "id": "82eb",
+      "groupId": "31b2",
+      "usedAt": "123",
+      "cost": 123,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-12",
+      "category": "shopping"
+    },
+    {
+      "id": "3af1",
+      "groupId": "31b2",
+      "usedAt": "음식 확인",
+      "cost": 1234,
+      "currency": "USD",
+      "결제수단": "cash",
+      "usedDate": "2025-04-10",
+      "category": "food"
     }
   ],
   "transactions": [

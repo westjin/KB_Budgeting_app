@@ -12,7 +12,7 @@ const amount = ref('');
 const currency = ref('KRW');
 const payMethod = ref('');
 const date = ref('');
-const category = ref('음식');
+const category = ref('food'); // ✅ 초기값을 'food'로 설정
 
 const currencySymbol = computed(() => {
   switch (currency.value) {
@@ -40,13 +40,13 @@ async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
   const newTransaction = {
-    groupId: groupId, // ✅ 여기에 groupId 포함
+    groupId: groupId,
     usedAt: usage.value,
     cost: numericAmount,
     currency: currency.value,
     결제수단: payMethod.value,
     usedDate: date.value,
-    category: category.value,
+    category: category.value, // ✅ 영어 값으로 저장됨 (예: 'food')
   };
 
   const res = await fetch('http://localhost:3000/GroupBudgetData', {
@@ -63,11 +63,11 @@ async function saveTransaction() {
     currency.value = 'KRW';
     payMethod.value = '';
     date.value = '';
-    category.value = '음식';
+    category.value = 'food'; // ✅ 저장 후에도 영어 값으로 초기화
 
     setTimeout(() => {
       showSuccess.value = false;
-      router.push(`/TransactionCheckList/${groupId}`); // ✅ 저장 후 해당 그룹으로 이동
+      router.push(`/TransactionCheckList/${groupId}`);
     }, 1500);
   } else {
     alert('저장 실패! 😢');
@@ -88,7 +88,6 @@ async function saveTransaction() {
         @click="router.back()"
       />
 
-      <!-- 지갑 아이콘과 타이틀 묶음 (아래로 내림) -->
       <div class="header-content">
         <img
           src="../assets/icons/YSJ_Wallet.png"
@@ -216,7 +215,6 @@ async function saveTransaction() {
   cursor: pointer;
 }
 
-/* 👇 이 부분 추가 */
 .header-content {
   margin-top: 60px;
   display: flex;
