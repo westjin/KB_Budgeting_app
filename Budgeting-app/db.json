@@ -361,6 +361,16 @@
       "결제수단": "cash",
       "usedDate": "2025-04-08",
       "category": "음식"
+    },
+    {
+      "id": "c4d7",
+      "groupId": "31b2",
+      "usedAt": "hghj",
+      "cost": 7768678,
+      "currency": "KRW",
+      "결제수단": "card",
+      "usedDate": "2025-04-02",
+      "category": "shopping"
     }
   ],
   "transactions": [

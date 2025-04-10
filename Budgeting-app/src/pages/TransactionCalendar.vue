@@ -89,6 +89,7 @@ const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
 const goToSummary = () => router.push(`/TransactionSummary/${groupId.value}`);
 const goToAdd = () => router.push(`/transaction/${groupId.value}`);
 const goToProfile = () => router.push('/Profile');
+const goToHome = () => router.push('/Home');
 
 onMounted(fetchBudgetData);
 </script>
@@ -98,9 +99,18 @@ onMounted(fetchBudgetData);
     class="w-[393px] h-[852px] mx-auto bg-[#f8f8f8] text-black overflow-x-hidden pt-[44px]"
   >
     <header class="flex items-center justify-between p-4 text-xl font-bold">
-      <div>
-        <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
+      <div class="flex items-center gap-2">
+        <img
+          src="/src/assets/icons/back-icon.png"
+          alt=""
+          class="w-[10px] h-[15px] cursor-pointer"
+          @click="goToHome"
+        />
+        <span class="border-b-4 border-[#FFCC00] text-2xl font-bold">
+          Expenses
+        </span>
       </div>
+
       <img
         src="/src/assets/icons/profile-icon.png"
         alt="icon"
