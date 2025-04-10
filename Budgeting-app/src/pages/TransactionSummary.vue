@@ -1,9 +1,8 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
-
 import { Pie } from 'vue-chartjs';
-import { useRouter } from 'vue-router';
 import {
   Chart as ChartJS,
   Title,
@@ -16,8 +15,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(ChartDataLabels, Title, Tooltip, ArcElement, CategoryScale);
 
 const router = useRouter();
+const route = useRoute();
+const groupId = ref(route.params.groupId);
 
-const groupId = ref(null);
 const userCurrency = ref('KRW');
 const exchangeRates = ref({});
 const budgetData = ref([]);
@@ -26,7 +26,7 @@ const travelPeriod = ref({ start: '', end: '' });
 
 const categoryMap = {
   food: '식비',
-  transportation: '교통수단',
+  transportation: '교통',
   accommodation: '숙소',
   shopping: '쇼핑',
   flights: '항공',
@@ -46,9 +46,14 @@ const validCategories = Object.keys(categoryMap);
 
 const fetchUserCurrency = async () => {
   const res = await axios.get('http://localhost:3000/User');
-  const user = res.data.find((u) => u.email === userStore.email);
+  const user = res.data.find((u) => u);
   if (user) userCurrency.value = user.currency;
 };
+
+const userCurrencySymbol = computed(() => {
+  const map = { KRW: '₩', USD: '$', JPY: '￥' };
+  return map[userCurrency.value] || '';
+});
 
 const fetchExchangeRates = async () => {
   const res = await axios.get(
@@ -66,32 +71,31 @@ const convertToUserCurrency = (amount, fromCurrency) => {
   return rate ? parseFloat((amount / rate).toFixed(2)) : 0;
 };
 
-const userCurrencySymbol = computed(() => {
-  const map = { KRW: '₩', USD: '$', JPY: '￥' };
-  return map[userCurrency.value] || '';
-});
-
 const fetchGroupInfo = async () => {
   const res = await axios.get('http://localhost:3000/Group');
-  const group = res.data.find((g) => g.groupUser.includes(userStore.email));
+  const group = res.data.find((g) => g.id === groupId.value);
+
   if (group) {
-    groupId.value = parseInt(group.groupId);
     totalBudget.value =
-      group.currency && group.currency !== userCurrency.value
+      group.currency !== userCurrency.value
         ? convertToUserCurrency(group.budget, group.currency)
         : group.budget;
 
     const [start, end] = group.travelPeriod.split(' ~ ');
-    travelPeriod.value = { start: new Date(start), end: new Date(end) };
+    travelPeriod.value = {
+      start: new Date(start),
+      end: new Date(end),
+    };
   }
 };
 
+// 5. 그룹 예산 데이터 불러오기
 const loadBudgetData = async () => {
   const res = await axios.get('http://localhost:3000/GroupBudgetData');
   const filtered = res.data.filter((item) => {
     const usedDate = new Date(item.usedDate);
     return (
-      parseInt(item.groupId) === groupId.value &&
+      item.groupId === groupId.value &&
       !isNaN(usedDate) &&
       usedDate >= travelPeriod.value.start &&
       usedDate <= travelPeriod.value.end
@@ -104,10 +108,7 @@ const loadBudgetData = async () => {
   }));
 };
 
-watch([exchangeRates, groupId], ([rates, gid]) => {
-  if (rates && gid !== null) loadBudgetData();
-});
-
+// 6. 계산 관련
 const totalUsed = computed(() =>
   budgetData.value.reduce((a, b) => a + b.cost, 0)
 );
@@ -166,8 +167,8 @@ const chartOptions = {
   },
 };
 
-const goToList = () => router.push('/TransactionCheckList');
-const goToCalendar = () => router.push('/TransactionCalendar');
+const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
+const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
 const goToAdd = () => router.push('/transaction');
 const goToProfile = () => router.push('/Profile');
 
@@ -175,6 +176,7 @@ onMounted(async () => {
   await fetchUserCurrency();
   await fetchExchangeRates();
   await fetchGroupInfo();
+  await loadBudgetData();
 });
 </script>
 
@@ -190,9 +192,9 @@ onMounted(async () => {
         <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
       </div>
       <img
-        src="/src/assets/icons/character.png"
+        src="/src/assets/icons/profile-icon.png"
         alt="icon"
-        class="w-9 h-9"
+        class="w-10 h-10"
         @click="goToProfile"
       />
     </header>
