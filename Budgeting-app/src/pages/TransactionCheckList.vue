@@ -56,6 +56,8 @@ const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
 const goToSummary = () => router.push(`/TransactionSummary/${groupId.value}`);
 const goToAdd = () => router.push(`/transaction/${groupId.value}`);
 const goToProfile = () => router.push('/Profile');
+const goToDetail = (id) => router.push(`/transactionDetail/${id}`);
+const goToHome = () => router.push('/Home');
 
 onMounted(fetchBudgetData);
 </script>
@@ -68,9 +70,18 @@ onMounted(fetchBudgetData);
       <header
         class="flex items-center justify-between p-4 text-xl font-semibold"
       >
-        <span class="border-b-4 border-[#ffcc00] text-2xl font-bold"
-          >Expenses</span
-        >
+        <div class="flex items-center gap-2">
+          <img
+            src="/src/assets/icons/back-icon.png"
+            alt=""
+            class="w-[10px] h-[15px] cursor-pointer"
+            @click="goToHome"
+          />
+          <span class="border-b-4 border-[#FFCC00] text-2xl font-bold">
+            Expenses
+          </span>
+        </div>
+
         <img
           src="/src/assets/icons/profile-icon.png"
           alt="icon"
@@ -91,7 +102,8 @@ onMounted(fetchBudgetData);
         <div
           v-for="item in group"
           :key="item.groupBudgetDataId"
-          class="bg-white border border-gray-300 rounded-xl px-4 py-3 mb-3 flex justify-between items-center"
+          class="bg-white border border-gray-300 rounded-xl px-4 py-3 mb-3 flex justify-between items-center cursor-pointer hover:bg-yellow-50 transition"
+          @click="goToDetail(item.id)"
         >
           <div class="flex items-center gap-3">
             <img

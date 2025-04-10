@@ -171,6 +171,7 @@ const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
 const goToCalendar = () => router.push(`/TransactionCalendar/${groupId.value}`);
 const goToAdd = () => router.push(`/transaction/${groupId.value}`);
 const goToProfile = () => router.push('/Profile');
+const goToHome = () => router.push('/Home');
 
 onMounted(async () => {
   await fetchUserCurrency();
@@ -188,9 +189,18 @@ onMounted(async () => {
     <div style="height: 44px"></div>
 
     <header class="flex items-center justify-between p-4 text-xl font-bold">
-      <div>
-        <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
+      <div class="flex items-center gap-2">
+        <img
+          src="/src/assets/icons/back-icon.png"
+          alt=""
+          class="w-[10px] h-[15px] cursor-pointer"
+          @click="goToHome"
+        />
+        <span class="border-b-4 border-[#FFCC00] text-2xl font-bold">
+          Expenses
+        </span>
       </div>
+
       <img
         src="/src/assets/icons/profile-icon.png"
         alt="icon"
