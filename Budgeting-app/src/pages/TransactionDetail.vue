@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
@@ -12,6 +12,22 @@ const currencySymbol = {
   JPY: '¥',
 };
 
+// category 영문 → 한글 매핑 객체
+const categoryMap = {
+  food: '식비',
+  transportation: '교통수단',
+  accommodation: '숙소',
+  shopping: '쇼핑',
+  flights: '항공',
+  others: '기타',
+};
+
+// 한글로 변환된 카테고리 반환
+const translatedCategory = computed(() => {
+  return categoryMap[transaction.value?.category] || '기타';
+});
+
+// 데이터 불러오기
 onMounted(async () => {
   const id = route.params.id;
   const res = await fetch(`http://localhost:3000/GroupBudgetData/${id}`);
@@ -23,6 +39,7 @@ onMounted(async () => {
   }
 });
 
+// 삭제 기능
 async function deleteTransaction() {
   const id = route.params.id;
   const res = await fetch(`http://localhost:3000/GroupBudgetData/${id}`, {
@@ -131,7 +148,7 @@ async function deleteTransaction() {
         <input
           disabled
           type="text"
-          :value="transaction.category"
+          :value="translatedCategory"
           class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
         />
       </div>
