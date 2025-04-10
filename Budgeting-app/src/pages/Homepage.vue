@@ -81,7 +81,7 @@
 
       <div v-if="groupStore.groups.length > 0" class="space-y-3">
         <div
-          v-for="group in groupStore.groups"
+          v-for="group in pagedGroups"
           :key="group.groupId"
           class="flex items-center justify-between bg-yellow-100 rounded-xl px-4 py-3 shadow"
         >
@@ -103,6 +103,26 @@
             ➔
           </span>
         </div>
+      </div>
+      <!-- 페이지네이션 버튼 -->
+      <!-- 숫자 페이지네이션 -->
+      <div
+        v-if="totalPages > 1"
+        class="flex justify-center items-center flex-wrap gap-2 mt-3"
+      >
+        <button
+          v-for="page in totalPages"
+          :key="page"
+          @click="currentPage = page"
+          :class="[
+            'w-8 h-8 rounded-md text-sm font-medium border',
+            currentPage === page
+              ? 'bg-yellow-400 text-white border-yellow-400'
+              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100',
+          ]"
+        >
+          {{ page }}
+        </button>
       </div>
 
       <div v-else class="flex flex-col items-center text-center space-y-3">
@@ -145,6 +165,19 @@ const currentCard = computed(() =>
     ? exchangeStore.rates[currentIndex.value]
     : null
 );
+
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
+const totalPages = computed(() =>
+  Math.ceil(groupStore.groups.length / itemsPerPage)
+);
+
+const pagedGroups = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return groupStore.groups.slice(start, end);
+});
 
 function prevCard() {
   if (currentIndex.value > 0) currentIndex.value--;
