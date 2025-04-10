@@ -170,7 +170,7 @@ const chartOptions = {
 
 const goToList = () => router.push('/TransactionCheckList');
 const goToCalendar = () => router.push('/TransactionCalendar');
-const goToAdd = () => router.push('/TransactionAdd');
+const goToAdd = () => router.push('/transaction');
 const goToProfile = () => router.push('/Profile');
 
 onMounted(async () => {

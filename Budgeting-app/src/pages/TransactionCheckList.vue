@@ -66,7 +66,7 @@ const getCurrencySymbol = (currency) => {
 
 const goToCalendar = () => router.push('/TransactionCalendar');
 const goToSummary = () => router.push('/TransactionSummary');
-const goToAdd = () => router.push('/TransactionAdd');
+const goToAdd = () => router.push('/transaction');
 const goToProfile = () => router.push('/Profile');
 
 onMounted(fetchGroupId);

@@ -13,7 +13,6 @@ const router = createRouter({
       component: () => import('../pages/AboutPage.vue'),
     },
     {
-
       path: '/TransactionCheckList',
       name: 'TransactionCheckList',
       component: TransactionCheckList,
@@ -28,11 +27,11 @@ const router = createRouter({
       path: '/TransactionSummary',
       name: 'TransactionSummary',
       component: TransactionSummary,
-
+    },
+    {
       path: '/trip/add',
       name: 'trip/add',
       component: () => import('@/pages/TripAddPage.vue'),
-
     },
     {
       path: '/transaction',
@@ -58,8 +57,6 @@ const router = createRouter({
       path: '/exchangeDetail',
       name: 'exchangeDetail',
       component: () => import('@/pages/ExchangeDetail.vue'),
-
-
     },
   ],
 });

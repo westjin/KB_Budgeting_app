@@ -1,139 +1,175 @@
 {
-    "User": [
-      {
-        "userId": "1",
-        "email": "test@naver.com",
-        "username": "test",
-        "password": "test123",
-        "currency": "USD"
-      }
-    ],
-  
-    "Group": [
-      {
-        "groupId": "1",
-        "groupName": "grouptest",
-        "groupUser": ["test@naver.com", "test2@naver.com"],
-        "place": "USA",
-        "travelPeriod": "2025-04-01 ~ 2025-04-10",
-        "budget": 1000000,
-        "currency": "KRW"
-      }
-    ],
-  
-    "GroupBudgetData": [
-      {
-        "groupBudgetDataId": "1",
-        "groupId": "1",
-        "usedAt": "마라탕",
-        "cost": 90000,
-        "currency": "KRW",
-        "결제수단": "card",
-        "usedDate": "2025-04-06",
-        "category": "food"
-      },
-      {
-        "groupBudgetDataId": "2",
-        "groupId": "1",
-        "usedAt": "항공료",
-        "cost": 100,
-        "currency": "USD",
-        "결제수단": "card",
-        "usedDate": "2025-04-06",
-        "category": "flights"
-      },
-      {
-        "groupBudgetDataId": "3",
-        "groupId": "1",
-        "usedAt": "숙소",
-        "cost": 3000,
-        "currency": "JPY",
-        "결제수단": "card",
-        "usedDate": "2025-04-07",
-        "category": "accommodation"
-      },
-      {
-        "groupBudgetDataId": "4",
-        "groupId": "1",
-        "usedAt": "옷",
-        "cost": 32000,
-        "currency": "KRW",
-        "결제수단": "cash",
-        "usedDate": "2025-04-07",
-        "category": "shopping"
-      },
-      {
-        "groupBudgetDataId": "5",
-        "groupId": "1",
-        "usedAt": "버스비",
-        "cost": 20000,
-        "currency": "KRW",
-        "결제수단": "cash",
-        "usedDate": "2025-04-07",
-        "category": "transportation"
-      },
-      {
-        "groupBudgetDataId": "6",
-        "groupId": "1",
-        "usedAt": "기타",
-        "cost": 5000,
-        "currency": "KRW",
-        "결제수단": "cash",
-        "usedDate": "2025-04-09",
-        "category": "others"
-      }
-    ],
-    "profile": [ 
-      {
-        "name": "typicode"
-      }
-    ],
-    "transactions": [
-      {
-        "id": "2",
-        "usage": "택시",
-        "amount": 12000,
-        "currency": "KRW",
-        "payMethod": "카드",
-        "date": "2025-04-06",
-        "category": "교통수단"
-      },
-      {
-        "id": "3",
-        "usage": "택시비",
-        "amount": 15000,
-        "currency": "KRW",
-        "payMethod": "카드",
-        "date": "2025-04-08",
-        "category": "교통수단"
-      },
-      {
-        "id": "2ff5",
-        "usage": "졸려",
-        "amount": 10000,
-        "currency": "KRW",
-        "payMethod": "현금",
-        "date": "2025-04-08",
-        "category": "숙소"
-      },
-      {
-        "id": "ba40",
-        "usage": "택시비",
-        "amount": 15000,
-        "currency": "KRW",
-        "payMethod": "카드",
-        "date": "2025-04-08",
-        "category": "교통수단"
-      },
-      {
-        "id": "685e",
-        "usage": "adsdsdsd",
-        "amount": 131212121,
-        "currency": "JPY",
-        "payMethod": "카드",
-        "date": "2025-04-10",
-        "category": "쇼핑"
-      }
-    ]
-  }
-  
+  "User": [
+    {
+      "userId": "1",
+      "email": "test@naver.com",
+      "username": "test",
+      "password": "test123",
+      "currency": "USD",
+      "id": "5535"
+    }
+  ],
+  "Group": [
+    {
+      "groupId": "1",
+      "groupName": "grouptest",
+      "groupUser": [
+        "test@naver.com",
+        "test2@naver.com"
+      ],
+      "place": "USA",
+      "travelPeriod": "2025-04-01 ~ 2025-04-10",
+      "budget": 1000000,
+      "currency": "KRW",
+      "id": "de76"
+    }
+  ],
+  "GroupBudgetData": [
+    {
+      "groupBudgetDataId": "1",
+      "groupId": "1",
+      "usedAt": "마라탕",
+      "cost": 90000,
+      "currency": "KRW",
+      "결제수단": "card",
+      "usedDate": "2025-04-06",
+      "category": "food",
+      "id": "0c45"
+    },
+    {
+      "groupBudgetDataId": "2",
+      "groupId": "1",
+      "usedAt": "항공료",
+      "cost": 100,
+      "currency": "USD",
+      "결제수단": "card",
+      "usedDate": "2025-04-06",
+      "category": "flights",
+      "id": "7301"
+    },
+    {
+      "groupBudgetDataId": "3",
+      "groupId": "1",
+      "usedAt": "숙소",
+      "cost": 3000,
+      "currency": "JPY",
+      "결제수단": "card",
+      "usedDate": "2025-04-07",
+      "category": "accommodation",
+      "id": "0ed1"
+    },
+    {
+      "groupBudgetDataId": "4",
+      "groupId": "1",
+      "usedAt": "옷",
+      "cost": 32000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-07",
+      "category": "shopping",
+      "id": "5e99"
+    },
+    {
+      "groupBudgetDataId": "5",
+      "groupId": "1",
+      "usedAt": "버스비",
+      "cost": 20000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-07",
+      "category": "transportation",
+      "id": "cb8b"
+    },
+    {
+      "groupBudgetDataId": "6",
+      "groupId": "1",
+      "usedAt": "기타",
+      "cost": 5000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-09",
+      "category": "others",
+      "id": "1dbb"
+    }
+  ],
+  "profile": [
+    {
+      "name": "typicode",
+      "id": "c7f9"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "2",
+      "usage": "택시",
+      "amount": 12000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-06",
+      "category": "교통수단"
+    },
+    {
+      "id": "3",
+      "usage": "택시비",
+      "amount": 15000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-08",
+      "category": "교통수단"
+    },
+    {
+      "id": "2ff5",
+      "usage": "졸려",
+      "amount": 10000,
+      "currency": "KRW",
+      "payMethod": "현금",
+      "date": "2025-04-08",
+      "category": "숙소"
+    },
+    {
+      "id": "ba40",
+      "usage": "택시비",
+      "amount": 15000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-08",
+      "category": "교통수단"
+    },
+    {
+      "id": "685e",
+      "usage": "adsdsdsd",
+      "amount": 131212121,
+      "currency": "JPY",
+      "payMethod": "카드",
+      "date": "2025-04-10",
+      "category": "쇼핑"
+    },
+    {
+      "id": "b1f3",
+      "usage": "ㅇㅇ",
+      "amount": 1000,
+      "currency": "KRW",
+      "payMethod": "card",
+      "date": "2025-04-14",
+      "category": "음식"
+    },
+    {
+      "id": "dd2b",
+      "usage": "",
+      "amount": 0,
+      "currency": "KRW",
+      "payMethod": "",
+      "date": "",
+      "category": "음식"
+    },
+    {
+      "id": "8efd",
+      "usage": "",
+      "amount": 0,
+      "currency": "KRW",
+      "payMethod": "",
+      "date": "",
+      "category": "음식"
+    }
+  ]
+}
