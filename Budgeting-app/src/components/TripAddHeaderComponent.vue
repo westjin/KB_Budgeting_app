@@ -16,11 +16,25 @@
 import backIcon from '@/assets/icons/back-icon.png'
 import { useTripAddStore } from '@/stores/tripAddStore'
 import { computed } from 'vue'
+import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const store = useTripAddStore()
+const props = defineProps({
+  backToHome: {
+    type: Boolean,
+    default: false
+  }
+})
 
 function goBack() {
-  store.prevStep()
+  if (props.backToHome) {
+    store.resetSteps()
+    router.push('/') //홈으로 이동
+  } else {
+    store.prevStep()
+  }
 }
 
 // 항상 dot 4개 고정

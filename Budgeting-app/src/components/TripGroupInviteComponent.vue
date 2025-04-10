@@ -41,6 +41,8 @@
 import { ref } from 'vue'
 import { useTripAddStore } from '@/stores/tripAddStore'
 import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
+import axios from 'axios'
+
 
 const store = useTripAddStore()
 const emailInput = ref('')
@@ -53,7 +55,7 @@ function isValidEmail(email) {
   return emailRegex.test(email)
 }
 
-function handleAddEmail() {
+async function handleAddEmail() {
   const email = emailInput.value.trim()
 
   if (!email) {
@@ -71,16 +73,24 @@ function handleAddEmail() {
     return
   }
 
-  const emailExists = true // ✅ 나중에 API 사용 예정
-  if (!emailExists) {
-    errorMessage.value = '존재하지 않는 사용자입니다.'
-    return
+  try {
+    const response = await axios.get(`http://localhost:3000/User?email=${email}`)
+
+    const emailExists = response.data.length > 0
+    if (!emailExists) {
+      errorMessage.value = '존재하지 않는 사용자입니다.'
+      return
+    }
+    store.addEmail(email)
+    emailInput.value = ''
+    errorMessage.value = ''
+    showNextError.value = false //정상 추가 시 에러 해제
+  } catch (e) {
+    console.error(e)
+    errorMessage.value = '네트워크 오류가 발생했습니다.'
   }
 
-  store.addEmail(email)
-  emailInput.value = ''
-  errorMessage.value = ''
-  showNextError.value = false //정상 추가 시 에러 해제
+  
 }
 
 function handleRemoveEmail(email) {
