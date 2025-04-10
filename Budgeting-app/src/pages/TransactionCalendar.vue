@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
-
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 
-const groupId = ref(null);
+const groupId = ref(route.params.groupId); // 경로에서 groupId 받기
 const budgetData = ref([]);
 const selectedDate = ref(null);
 
@@ -18,7 +18,7 @@ const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 const groupedData = computed(() => {
   const group = {};
   budgetData.value.forEach((item) => {
-    if (parseInt(item.groupId) === groupId.value) {
+    if (item.groupId === groupId.value) {
       const dateStr = new Date(item.usedDate).toISOString().split('T')[0];
       if (!group[dateStr]) group[dateStr] = [];
       group[dateStr].push(item);
@@ -39,7 +39,7 @@ const calendarDates = computed(() => {
 
   for (let i = 1; i <= daysInMonth; i++) {
     const date = new Date(year.value, month.value, i);
-    date.setHours(date.getHours() + 9); // timezone 보정
+    date.setHours(date.getHours() + 9);
     const dateStr = date.toISOString().split('T')[0];
     dates.push({
       date: dateStr,
@@ -54,15 +54,6 @@ const calendarDates = computed(() => {
 const selectedData = computed(
   () => groupedData.value[selectedDate.value] || []
 );
-
-const fetchGroupId = async () => {
-  const res = await axios.get('http://localhost:3000/Group');
-  const group = res.data.find((g) => g.groupUser.includes(userStore.email));
-  if (group) {
-    groupId.value = parseInt(group.groupId);
-    await fetchBudgetData();
-  }
-};
 
 const fetchBudgetData = async () => {
   const res = await axios.get('http://localhost:3000/GroupBudgetData');
@@ -94,12 +85,12 @@ const selectDate = (date) => {
   if (date) selectedDate.value = date;
 };
 
-const goToList = () => router.push('/TransactionCheckList');
-const goToSummary = () => router.push('/TransactionSummary');
+const goToList = () => router.push(`/TransactionCheckList/${groupId.value}`);
+const goToSummary = () => router.push(`/TransactionSummary/${groupId.value}`);
 const goToAdd = () => router.push('/transaction');
 const goToProfile = () => router.push('/Profile');
 
-onMounted(fetchGroupId);
+onMounted(fetchBudgetData);
 </script>
 
 <template>
@@ -111,9 +102,9 @@ onMounted(fetchGroupId);
         <span class="border-b-4 border-[#ffcc00] text-2xl">Expenses</span>
       </div>
       <img
-        src="/src/assets/icons/character.png"
+        src="/src/assets/icons/profile-icon.png"
         alt="icon"
-        class="w-9 h-9"
+        class="w-10 h-10"
         @click="goToProfile"
       />
     </header>
@@ -124,14 +115,12 @@ onMounted(fetchGroupId);
       <button @click="goToSummary" class="px-8 py-1">요약</button>
     </div>
 
-    <!-- 월 이동 버튼 -->
     <div class="flex justify-between items-center px-6 mt-4">
       <button @click="changeMonth(-1)">‹</button>
       <div class="text-lg font-semibold">{{ year }}년 {{ month + 1 }}월</div>
       <button @click="changeMonth(1)">›</button>
     </div>
 
-    <!-- 캘린더 -->
     <div class="bg-white m-4 p-4 rounded-xl border-1 border-gray-300">
       <div class="grid grid-cols-7 gap-2 text-center text-sm">
         <div v-for="(day, idx) in days" :key="idx" class="text-gray-500">
@@ -152,7 +141,6 @@ onMounted(fetchGroupId);
       </div>
     </div>
 
-    <!-- 선택된 날짜 지출 내역 리스트-->
     <div
       v-if="selectedData.length"
       class="bg-white mx-4 mb-6 p-4 rounded-xl border-1 border-gray-300"

@@ -18,13 +18,13 @@ const router = createRouter({
       component: TransactionCheckList,
     },
     {
-      path: '/TransactionCalendar',
+      path: '/TransactionCalendar/:groupId',
       name: 'TransactionCalendar',
       component: TransactionCalendar,
     },
 
     {
-      path: '/TransactionSummary',
+      path: '/TransactionSummary/:groupId',
       name: 'TransactionSummary',
       component: TransactionSummary,
     },
