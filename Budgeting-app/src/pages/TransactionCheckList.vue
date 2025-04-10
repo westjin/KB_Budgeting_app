@@ -19,7 +19,15 @@ const groupedData = computed(() => {
       group[item.usedDate].push(item);
     }
   });
-  return group;
+
+  const sortedGroup = {};
+  Object.keys(group)
+    .sort((a, b) => new Date(b) - new Date(a))
+    .forEach((date) => {
+      sortedGroup[date] = group[date];
+    });
+
+  return sortedGroup;
 });
 
 const fetchBudgetData = async () => {
