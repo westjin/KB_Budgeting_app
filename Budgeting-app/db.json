@@ -85,9 +85,7 @@
     {
       "groupId": "1",
       "groupName": "grouptest",
-      "groupUser": [
-        "test@naver.com"
-      ],
+      "groupUser": ["test@naver.com"],
       "place": "USA",
       "travelPeriod": "2025-04-01 ~ 2025-04-10",
       "budget": 1000000,
@@ -126,9 +124,7 @@
       "groupName": "너무졸려요..",
       "place": "JP",
       "travelPeriod": "2025-04-08 ~ 2025-04-16",
-      "groupUser": [
-        "test1@naver.com"
-      ],
+      "groupUser": ["test1@naver.com"],
       "budget": 123456,
       "currency": "KRW"
     },
@@ -137,10 +133,7 @@
       "groupName": "dd",
       "place": "JP",
       "travelPeriod": "2025-04-09 ~ 2025-05-02",
-      "groupUser": [
-        "test333333@naver.com",
-        "xyz@aaa.bbb"
-      ],
+      "groupUser": ["test333333@naver.com", "xyz@aaa.bbb"],
       "budget": 1234,
       "currency": "JPY"
     },
@@ -185,9 +178,7 @@
       "groupName": "test2@naver.com",
       "place": "AU",
       "travelPeriod": "2025-04-10 ~ 2025-04-17",
-      "groupUser": [
-        "bbb@naver.com"
-      ],
+      "groupUser": ["bbb@naver.com"],
       "budget": 123,
       "currency": "USD"
     },
@@ -196,9 +187,7 @@
       "groupName": "제발좀",
       "place": "KR",
       "travelPeriod": "2025-04-10 ~ 2025-04-11",
-      "groupUser": [
-        "bbb@naver.com"
-      ],
+      "groupUser": ["bbb@naver.com"],
       "budget": 123,
       "currency": "JPY"
     },
@@ -207,9 +196,7 @@
       "groupName": "ㅎ",
       "place": "JP",
       "travelPeriod": "2025-04-10 ~ 2025-04-11",
-      "groupUser": [
-        "bbb@naver.com"
-      ],
+      "groupUser": ["bbb@naver.com"],
       "budget": 141414,
       "currency": "JPY"
     },
@@ -218,9 +205,7 @@
       "groupName": "ㅎ",
       "place": "JP",
       "travelPeriod": "2025-04-10 ~ 2025-04-11",
-      "groupUser": [
-        "bbb@naver.com"
-      ],
+      "groupUser": ["bbb@naver.com"],
       "budget": 141414,
       "currency": "JPY"
     },
@@ -229,9 +214,7 @@
       "groupName": "그룹 테스트입니다",
       "place": "IT",
       "travelPeriod": "2025-04-10 ~ 2025-04-25",
-      "groupUser": [
-        "hhhㅎㅎ@naver.com"
-      ],
+      "groupUser": ["hhhㅎㅎ@naver.com"],
       "budget": 1234,
       "currency": "KRW"
     },
@@ -249,9 +232,7 @@
       "groupName": "반응성 테스트",
       "place": "IT",
       "travelPeriod": "2025-04-10 ~ 2025-04-24",
-      "groupUser": [
-        "test2@naver.com"
-      ],
+      "groupUser": ["test2@naver.com"],
       "budget": 1414,
       "currency": "KRW"
     },
@@ -278,9 +259,7 @@
       "groupName": "22",
       "place": "KR",
       "travelPeriod": "2025-04-04 ~ 2025-04-12",
-      "groupUser": [
-        "seojin@naver.com"
-      ],
+      "groupUser": ["seojin@naver.com"],
       "budget": 11,
       "currency": "KRW"
     }
@@ -373,6 +352,67 @@
       "category": "shopping"
     },
     {
+      "id": "75e6",
+      "groupId": "9b38",
+      "usedAt": "ㅇㅇ",
+      "cost": 1000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-10",
+      "category": "food"
+    },
+    {
+      "id": "9850",
+      "groupId": "9b38",
+      "usedAt": "ㅅㄳ",
+      "cost": 1000,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-11",
+      "category": "accommodation"
+    },
+    {
+      "id": "29e9",
+      "groupId": "9b38",
+      "usedAt": "ㅁㅁ",
+      "cost": 1,
+      "currency": "KRW",
+      "결제수단": "card",
+      "usedDate": "2025-04-12",
+      "category": "food"
+    },
+    {
+      "id": "cff0",
+      "groupId": "9b38",
+      "usedAt": "ㅇㅇ",
+      "cost": 500,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-13",
+      "category": "transportation"
+    },
+    {
+      "id": "b695",
+      "groupId": "9b38",
+      "usedAt": "ㅇㅇ",
+      "cost": 100,
+      "currency": "KRW",
+      "결제수단": "cash",
+      "usedDate": "2025-04-13",
+      "category": "shopping"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "2",
+      "usage": "택시",
+      "amount": 12000,
+      "currency": "KRW",
+      "payMethod": "카드",
+      "date": "2025-04-06",
+      "category": "교통수단"
+    },
+    {
       "id": "f132",
       "groupId": "31b2",
       "usedAt": "123",
@@ -431,71 +471,6 @@
       "결제수단": "cash",
       "usedDate": "2025-04-30",
       "category": "food"
-    }
-  ],
-  "transactions": [
-    {
-      "id": "2",
-      "usage": "택시",
-      "amount": 12000,
-      "currency": "KRW",
-      "payMethod": "카드",
-      "date": "2025-04-06",
-      "category": "교통수단"
-    },
-    {
-      "id": "3",
-      "usage": "택시비",
-      "amount": 15000,
-      "currency": "KRW",
-      "payMethod": "카드",
-      "date": "2025-04-08",
-      "category": "교통수단"
-    },
-    {
-      "id": "2ff5",
-      "usage": "졸려",
-      "amount": 10000,
-      "currency": "KRW",
-      "payMethod": "현금",
-      "date": "2025-04-08",
-      "category": "숙소"
-    },
-    {
-      "id": "ba40",
-      "usage": "택시비",
-      "amount": 15000,
-      "currency": "KRW",
-      "payMethod": "카드",
-      "date": "2025-04-08",
-      "category": "교통수단"
-    },
-    {
-      "id": "685e",
-      "usage": "adsdsdsd",
-      "amount": 131212121,
-      "currency": "JPY",
-      "payMethod": "카드",
-      "date": "2025-04-10",
-      "category": "쇼핑"
-    },
-    {
-      "id": "b32c",
-      "usage": "배고파 ",
-      "amount": 12345,
-      "currency": "KRW",
-      "payMethod": "cash",
-      "date": "2025-04-10",
-      "category": "항공"
-    },
-    {
-      "id": "8aab",
-      "usage": "이탈리아 젤라또",
-      "amount": 12345,
-      "currency": "KRW",
-      "payMethod": "card",
-      "date": "2025-04-12",
-      "category": "음식"
     }
   ]
 }
