@@ -141,7 +141,7 @@
       <!-- 여행 추가 버튼 -->
       <div class="flex justify-center mt-6">
         <button
-          class="bg-yellow-400 text-white font-bold px-6 py-2 rounded-full"
+          class="bg-yellow-400 text-black font-bold px-6 py-2 rounded-full"
           @click="goToAddTrip"
         >
           여행 추가

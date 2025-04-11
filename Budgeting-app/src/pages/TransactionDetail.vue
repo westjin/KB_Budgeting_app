@@ -158,7 +158,7 @@ async function deleteTransaction() {
     <div class="mt-10">
       <button
         @click="deleteTransaction"
-        class="w-full py-3 rounded bg-yellow-400 text-white font-bold"
+        class="w-full py-3 rounded bg-yellow-400 text-black font-bold"
       >
         사용 내역 삭제
       </button>
