@@ -29,21 +29,20 @@
 </template>
 
 <script setup>
-import { useTripAddStore } from '@/stores/tripAddStore'
-import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
-import { ref } from 'vue'
-import axios from 'axios'
+import { useTripAddStore } from '@/stores/tripAddStore';
+import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue';
+import { ref } from 'vue';
+import axios from 'axios';
 
-
-const store = useTripAddStore()
-const showError = ref(false)
+const store = useTripAddStore();
+const showError = ref(false);
 
 async function handleNext() {
   if (!store.tripData.budget.trim()) {
-    showError.value = true
-    return
+    showError.value = true;
+    return;
   }
-  showError.value = false
+  showError.value = false;
 
   const groupData = {
     groupName: store.tripData.groupName,
@@ -51,15 +50,18 @@ async function handleNext() {
     travelPeriod: `${store.tripData.startDate} ~ ${store.tripData.endDate}`,
     groupUser: store.tripData.invitedEmails,
     budget: Number(store.tripData.budget),
-    currency: store.tripData.currency
-  }
+    currency: store.tripData.currency,
+  };
 
   try {
-    await axios.post('http://localhost:3000/Group', groupData)
-    store.nextStep()
+    await axios.post(
+      'https://json-server-render-y383.onrender.com/Group',
+      groupData
+    );
+    store.nextStep();
   } catch (error) {
-    console.error('그룹 생성 실패:', error)
-    alert('저장 중 오류가 발생했어요.')
+    console.error('그룹 생성 실패:', error);
+    alert('저장 중 오류가 발생했어요.');
   }
 }
 </script>
@@ -84,7 +86,9 @@ async function handleNext() {
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* 가운데 정렬 → 위쪽 정렬로 변경 */
-  margin-top: calc(100vh / 6); /* 화면의 1/6 정도 내려오게 (1/3 아래보단 위 느낌) */
+  margin-top: calc(
+    100vh / 6
+  ); /* 화면의 1/6 정도 내려오게 (1/3 아래보단 위 느낌) */
 }
 
 .question {

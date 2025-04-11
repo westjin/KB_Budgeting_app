@@ -23,9 +23,12 @@ export const useUserStore = defineStore('user', {
       if (!authId) return;
 
       try {
-        const res = await axios.get('http://localhost:3000/User', {
-          params: { userId: authId },
-        });
+        const res = await axios.get(
+          'https://json-server-render-y383.onrender.com/User',
+          {
+            params: { userId: authId },
+          }
+        );
 
         if (res.data.length > 0) {
           this.user = res.data[0];

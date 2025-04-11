@@ -56,7 +56,9 @@ const selectedData = computed(
 );
 
 const fetchBudgetData = async () => {
-  const res = await axios.get('http://localhost:3000/GroupBudgetData');
+  const res = await axios.get(
+    'https://json-server-render-y383.onrender.com/GroupBudgetData'
+  );
   budgetData.value = res.data;
 };
 

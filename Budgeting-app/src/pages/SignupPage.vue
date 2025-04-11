@@ -140,9 +140,12 @@ watch(
 
     isCheckingEmail.value = true;
     try {
-      const res = await axios.get('http://localhost:3000/User', {
-        params: { email: trimmed },
-      });
+      const res = await axios.get(
+        'https://json-server-render-y383.onrender.com/User',
+        {
+          params: { email: trimmed },
+        }
+      );
       if (res.data.length > 0) {
         emailError.value = '이미 가입된 이메일입니다.';
         isEmailDuplicate.value = true;
@@ -189,7 +192,10 @@ async function submit() {
       currency: 'KRW',
     };
 
-    const res = await axios.post('http://localhost:3000/User', newUser);
+    const res = await axios.post(
+      'https://json-server-render-y383.onrender.com/User',
+      newUser
+    );
 
     // userStore.login(res.data); // 회원가입 후 자동 로그인
     alert('회원가입 및 로그인 성공!');

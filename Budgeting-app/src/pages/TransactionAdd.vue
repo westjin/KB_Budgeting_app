@@ -39,7 +39,9 @@ function onAmountInput(e) {
 onMounted(async () => {
   if (!groupId) return;
   try {
-    const res = await fetch(`http://localhost:3000/Group?id=${groupId}`);
+    const res = await fetch(
+      `https://json-server-render-y383.onrender.com/Group?id=${groupId}`
+    );
     const data = await res.json();
     if (data.length > 0) {
       groupPeriod.value = data[0].travelPeriod;
@@ -97,11 +99,14 @@ async function saveTransaction() {
     category: category.value || 'others',
   };
 
-  const res = await fetch('http://localhost:3000/GroupBudgetData', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newTransaction),
-  });
+  const res = await fetch(
+    'https://json-server-render-y383.onrender.com/GroupBudgetData',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newTransaction),
+    }
+  );
 
   if (res.ok) {
     showSuccess.value = true;

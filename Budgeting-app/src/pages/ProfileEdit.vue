@@ -129,9 +129,12 @@ onMounted(async () => {
   }
 
   // 유저 정보 로딩
-  const res = await axios.get('http://localhost:3000/User', {
-    params: { userId: authId },
-  });
+  const res = await axios.get(
+    'https://json-server-render-y383.onrender.com/User',
+    {
+      params: { userId: authId },
+    }
+  );
 
   if (res.data.length > 0) {
     const user = res.data[0];
@@ -142,7 +145,9 @@ onMounted(async () => {
     form.currency = user.currency;
 
     // 그룹 목록 로딩
-    const groupRes = await axios.get('http://localhost:3000/Group');
+    const groupRes = await axios.get(
+      'https://json-server-render-y383.onrender.com/Group'
+    );
     groups.value = groupRes.data.filter((group) =>
       group.groupUser.some(
         (email) =>
@@ -174,9 +179,12 @@ const leaveGroup = async (groupId) => {
   console.log('🧹 제거 후 유저 목록:', updatedUsers);
 
   try {
-    await axios.patch(`http://localhost:3000/Group/${group.id}`, {
-      groupUser: updatedUsers,
-    });
+    await axios.patch(
+      `https://json-server-render-y383.onrender.com/Group/${group.id}`,
+      {
+        groupUser: updatedUsers,
+      }
+    );
 
     console.log('탈퇴 대상 그룹:', group);
     console.log('✅ 그룹 탈퇴 처리 완료', group.groupName);
@@ -214,9 +222,12 @@ const submit = async () => {
 
   try {
     // 1️⃣ userId로 유저 검색
-    const res = await axios.get('http://localhost:3000/User', {
-      params: { userId: authId },
-    });
+    const res = await axios.get(
+      'https://json-server-render-y383.onrender.com/User',
+      {
+        params: { userId: authId },
+      }
+    );
 
     if (res.data.length === 0) {
       alert('유저를 찾을 수 없습니다.');
@@ -236,7 +247,7 @@ const submit = async () => {
 
     // 3️⃣ PATCH 요청
     const patchRes = await axios.patch(
-      `http://localhost:3000/User/${internalId}`,
+      `https://json-server-render-y383.onrender.com/User/${internalId}`,
       updatedUser
     );
 

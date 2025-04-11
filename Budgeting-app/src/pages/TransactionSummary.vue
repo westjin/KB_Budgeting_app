@@ -45,7 +45,9 @@ const categoryColors = {
 const validCategories = Object.keys(categoryMap);
 
 const fetchUserCurrency = async () => {
-  const res = await axios.get('http://localhost:3000/User');
+  const res = await axios.get(
+    'https://json-server-render-y383.onrender.com/User'
+  );
   const user = res.data.find((u) => u);
   if (user) userCurrency.value = user.currency;
 };
@@ -72,7 +74,9 @@ const convertToUserCurrency = (amount, fromCurrency) => {
 };
 
 const fetchGroupInfo = async () => {
-  const res = await axios.get('http://localhost:3000/Group');
+  const res = await axios.get(
+    'https://json-server-render-y383.onrender.com/Group'
+  );
   const group = res.data.find((g) => g.id === groupId.value);
 
   if (group) {
@@ -90,7 +94,9 @@ const fetchGroupInfo = async () => {
 };
 
 const loadBudgetData = async () => {
-  const res = await axios.get('http://localhost:3000/GroupBudgetData');
+  const res = await axios.get(
+    'https://json-server-render-y383.onrender.com/GroupBudgetData'
+  );
   const filtered = res.data.filter((item) => {
     const usedDate = new Date(item.usedDate);
     return (
