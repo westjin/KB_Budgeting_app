@@ -54,3 +54,30 @@
 - 커밋 메시지는 **한 줄 요약**으로 간결하게 작성해주세요.
 - **작업 중 커밋은 `TEMP`**를 사용하고, **최종 커밋은 TYPE을 지정하여 푸시**해주세요.
 - **PR 생성 시 커밋 메시지가 컨벤션에 맞는지 꼭 확인**해주세요!
+
+
+---
+
+### 🍀 결과물
+
+![3](https://github.com/user-attachments/assets/cc4c7992-0066-448d-b827-f1e9c650d2c4)
+![4](https://github.com/user-attachments/assets/d2f0ff68-3ec7-42b3-865b-d0fcf4c564dd)
+![5](https://github.com/user-attachments/assets/9549af4d-0c70-4847-8617-83f86be2647b)
+![6](https://github.com/user-attachments/assets/008ef9a4-ea07-4047-8b04-b14dcbe06fac)
+![7](https://github.com/user-attachments/assets/2805fca1-cd66-4d2d-aa30-0556a097441e)
+![8](https://github.com/user-attachments/assets/1a9eb75e-d869-4eba-917c-c2e52c4f0224)
+![9](https://github.com/user-attachments/assets/f939c244-2c09-4073-8d8f-739a5acf5c73)
+![10](https://github.com/user-attachments/assets/ed05f88b-22ab-4530-a2e1-de47a239c8ca)
+![11](https://github.com/user-attachments/assets/039aba13-c060-4a40-aa47-27af527ae03c)
+![12](https://github.com/user-attachments/assets/93d39cf4-6112-4ea9-ab9a-a8cbd340f6b2)
+
+
+
+
+
+
+
+
+
+
+
