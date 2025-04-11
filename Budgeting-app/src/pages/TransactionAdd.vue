@@ -1,19 +1,19 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
+const groupId = route.params.groupId || '';
 const showSuccess = ref(false);
-
-// 입력값 상태
 const usage = ref('');
 const amount = ref('');
 const currency = ref('KRW');
 const payMethod = ref('');
 const date = ref('');
-const category = ref('음식');
+const category = ref('food'); // 기본값은 food
+const groupPeriod = ref('');
 
-// 통화 심볼 계산
 const currencySymbol = computed(() => {
   switch (currency.value) {
     case 'KRW':
@@ -27,31 +27,77 @@ const currencySymbol = computed(() => {
   }
 });
 
-// 표시용: 3자리마다 콤마
 const formattedAmount = computed(() => {
   const raw = amount.value.replace(/[^\d]/g, '');
   return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 });
 
-// 입력 시 숫자만 반영
 function onAmountInput(e) {
   amount.value = e.target.value.replace(/[^\d]/g, '');
 }
 
-// 저장
+onMounted(async () => {
+  if (!groupId) return;
+  try {
+    const res = await fetch(`http://localhost:3000/Group?id=${groupId}`);
+    const data = await res.json();
+    if (data.length > 0) {
+      groupPeriod.value = data[0].travelPeriod;
+    }
+  } catch (e) {
+    console.error('그룹 정보를 불러오는 데 실패했습니다.', e);
+  }
+});
+
+function isWithinPeriod(inputDate, period) {
+  const [startStr, endStr] = period.split('~').map((str) => str.trim());
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+  const selected = new Date(inputDate);
+  return selected >= start && selected <= end;
+}
+
 async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
-  const newTransaction = {
-    usage: usage.value,
-    amount: numericAmount,
-    currency: currency.value,
-    payMethod: payMethod.value,
-    date: date.value,
-    category: category.value,
+  // 유효성 검사
+  if (!usage.value || !numericAmount || !payMethod.value || !date.value) {
+    alert('모든 필드를 입력해주세요.');
+    return;
+  }
+
+  // 통화별 최소 금액 조건
+  const minAmounts = {
+    KRW: 500,
+    USD: 1,
+    JPY: 100,
   };
 
-  const res = await fetch('http://localhost:3000/transactions', {
+  if (numericAmount < minAmounts[currency.value]) {
+    alert(
+      `${currency.value} 통화는 최소 ${minAmounts[
+        currency.value
+      ].toLocaleString()} ${currencySymbol.value} 이상 입력해야 합니다.`
+    );
+    return;
+  }
+
+  if (groupPeriod.value && !isWithinPeriod(date.value, groupPeriod.value)) {
+    alert(`여행 기간 (${groupPeriod.value}) 내의 날짜를 선택해주세요.`);
+    return;
+  }
+
+  const newTransaction = {
+    groupId: groupId,
+    usedAt: usage.value,
+    cost: numericAmount,
+    currency: currency.value,
+    결제수단: payMethod.value,
+    usedDate: date.value,
+    category: category.value || 'others',
+  };
+
+  const res = await fetch('http://localhost:3000/GroupBudgetData', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newTransaction),
@@ -59,18 +105,17 @@ async function saveTransaction() {
 
   if (res.ok) {
     showSuccess.value = true;
-
-    // 입력 초기화
     usage.value = '';
     amount.value = '';
     currency.value = 'KRW';
     payMethod.value = '';
     date.value = '';
-    category.value = '음식';
+    category.value = 'food';
 
     setTimeout(() => {
       showSuccess.value = false;
-    }, 2000);
+      router.push(`/TransactionCheckList/${groupId}`);
+    }, 1500);
   } else {
     alert('저장 실패! 😢');
   }
@@ -79,7 +124,7 @@ async function saveTransaction() {
 
 <template>
   <div
-    class="flex flex-col w-[393px] h-[852px] mx-auto bg-[#F8F8F8] px-6 pt-6 pb-24"
+    class="flex flex-col w-[393px] h-[852px] mx-auto bg-[#F8F8F8] px-6 pt-6 pt-[44px] pb-24"
   >
     <!-- 상단 헤더 -->
     <div class="header-container">
@@ -89,8 +134,6 @@ async function saveTransaction() {
         class="back-icon"
         @click="router.back()"
       />
-
-      <!-- 지갑 아이콘과 타이틀 묶음 (아래로 내림) -->
       <div class="header-content">
         <img
           src="../assets/icons/YSJ_Wallet.png"
@@ -117,9 +160,8 @@ async function saveTransaction() {
         <div class="relative">
           <span
             class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"
+            >{{ currencySymbol }}</span
           >
-            {{ currencySymbol }}
-          </span>
           <input
             type="text"
             :value="formattedAmount"
@@ -171,12 +213,12 @@ async function saveTransaction() {
           v-model="category"
           class="w-full border border-gray-300 rounded px-3 py-2"
         >
-          <option>음식</option>
-          <option>교통수단</option>
-          <option>숙소</option>
-          <option>쇼핑</option>
-          <option>항공</option>
-          <option>기타</option>
+          <option value="food">음식</option>
+          <option value="transportation">교통수단</option>
+          <option value="accommodation">숙소</option>
+          <option value="shopping">쇼핑</option>
+          <option value="flights">항공</option>
+          <option value="others">기타</option>
         </select>
       </div>
     </form>
@@ -185,7 +227,7 @@ async function saveTransaction() {
     <div class="mt-8">
       <button
         @click.prevent="saveTransaction"
-        class="w-full py-3 rounded bg-yellow-400 text-white font-bold"
+        class="w-full py-3 rounded bg-yellow-400 text-black font-bold"
       >
         사용 내역 추가
       </button>
@@ -208,7 +250,6 @@ async function saveTransaction() {
   z-index: 10;
   padding-bottom: 12px;
 }
-
 .back-icon {
   position: absolute;
   left: 16px;
@@ -217,8 +258,6 @@ async function saveTransaction() {
   height: 15px;
   cursor: pointer;
 }
-
-/* 👇 이 부분 추가 */
 .header-content {
   margin-top: 60px;
   display: flex;

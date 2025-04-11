@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
@@ -12,26 +12,42 @@ const currencySymbol = {
   JPY: '¥',
 };
 
-// id 가져와서 API 호출
+// category 영문 → 한글 매핑 객체
+const categoryMap = {
+  food: '식비',
+  transportation: '교통수단',
+  accommodation: '숙소',
+  shopping: '쇼핑',
+  flights: '항공',
+  others: '기타',
+};
+
+// 한글로 변환된 카테고리 반환
+const translatedCategory = computed(() => {
+  return categoryMap[transaction.value?.category] || '기타';
+});
+
+// 데이터 불러오기
 onMounted(async () => {
   const id = route.params.id;
-  const res = await fetch(`http://localhost:3000/transactions/${id}`);
+  const res = await fetch(`http://localhost:3000/GroupBudgetData/${id}`);
   if (res.ok) {
     transaction.value = await res.json();
   } else {
     alert('거래 내역을 불러오는 데 실패했습니다.');
-    router.push('/transactionList');
+    router.back();
   }
 });
 
+// 삭제 기능
 async function deleteTransaction() {
   const id = route.params.id;
-  const res = await fetch(`http://localhost:3000/transactions/${id}`, {
+  const res = await fetch(`http://localhost:3000/GroupBudgetData/${id}`, {
     method: 'DELETE',
   });
   if (res.ok) {
     alert('삭제되었습니다!');
-    router.push('/transactionList');
+    router.back();
   } else {
     alert('삭제에 실패했습니다.');
   }
@@ -40,51 +56,59 @@ async function deleteTransaction() {
 
 <template>
   <div
-    class="w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pb-24"
     v-if="transaction"
+    class="w-[393px] h-[852px] mx-auto bg-white px-6 pt-6 pt-[44px] pb-24"
   >
-    <!-- 상단 아이콘 및 타이틀 -->
-    <div class="header-container mb-6">
-      <!-- 뒤로가기 아이콘 (고정 위치) -->
+    <!-- 상단 -->
+    <div class="header-container mb-8">
       <img
         src="@/assets/icons/back-icon.png"
         alt="뒤로가기"
         class="back-icon"
         @click="router.back()"
       />
-
-      <!-- 👇 아래로 내릴 요소들 -->
       <div class="header-content">
         <img
           src="@/assets/icons/YSJ_Wallet.png"
           alt="지갑"
-          class="w-20 h-20 mb-2"
+          class="w-20 h-20 mb-3"
         />
         <h1 class="text-xl font-bold">거래내역</h1>
       </div>
     </div>
 
-    <!-- 내용 표시 -->
-    <div class="space-y-4">
+    <!-- 내용 -->
+    <div class="space-y-5">
       <div>
         <label class="text-sm font-medium">사용 내역</label>
-        <p class="mt-1 border border-gray-300 rounded px-3 py-2">
-          {{ transaction.usage }}
-        </p>
+        <input
+          disabled
+          type="text"
+          :value="transaction.usedAt"
+          class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+        />
       </div>
 
       <div>
         <label class="text-sm font-medium">금액</label>
-        <p class="mt-1 border border-gray-300 rounded px-3 py-2">
-          {{ Number(transaction.amount).toLocaleString() }}
-        </p>
+        <input
+          disabled
+          type="text"
+          :value="Number(transaction.cost).toLocaleString()"
+          class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+        />
       </div>
 
       <div>
         <label class="text-sm font-medium">결제 통화</label>
-        <p class="mt-1 border border-gray-300 rounded px-3 py-2">
-          {{ currencySymbol[transaction.currency] }} {{ transaction.currency }}
-        </p>
+        <input
+          disabled
+          type="text"
+          :value="
+            currencySymbol[transaction.currency] + ' ' + transaction.currency
+          "
+          class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+        />
       </div>
 
       <div>
@@ -94,7 +118,7 @@ async function deleteTransaction() {
             <input
               type="radio"
               disabled
-              :checked="transaction.payMethod === '카드'"
+              :checked="transaction.결제수단 === 'card'"
             />
             <span>카드</span>
           </label>
@@ -102,7 +126,7 @@ async function deleteTransaction() {
             <input
               type="radio"
               disabled
-              :checked="transaction.payMethod === '현금'"
+              :checked="transaction.결제수단 === 'cash'"
             />
             <span>현금</span>
           </label>
@@ -111,16 +135,22 @@ async function deleteTransaction() {
 
       <div>
         <label class="text-sm font-medium">날짜</label>
-        <p class="mt-1 border border-gray-300 rounded px-3 py-2">
-          {{ transaction.date }}
-        </p>
+        <input
+          disabled
+          type="text"
+          :value="transaction.usedDate"
+          class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+        />
       </div>
 
       <div>
         <label class="text-sm font-medium">카테고리</label>
-        <p class="mt-1 border border-gray-300 rounded px-3 py-2">
-          {{ transaction.category }}
-        </p>
+        <input
+          disabled
+          type="text"
+          :value="translatedCategory"
+          class="w-full border border-gray-300 rounded px-3 py-2 mt-1"
+        />
       </div>
     </div>
 
@@ -128,7 +158,7 @@ async function deleteTransaction() {
     <div class="mt-10">
       <button
         @click="deleteTransaction"
-        class="w-full py-3 rounded bg-yellow-400 text-white font-bold"
+        class="w-full py-3 rounded bg-yellow-400 text-black font-bold"
       >
         사용 내역 삭제
       </button>

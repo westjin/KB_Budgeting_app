@@ -3,9 +3,18 @@ export const countryNameMap = {
   JP: 'Japan',
   AU: 'Australia',
   KR: 'South Korea',
+  GB: 'United Kingdom',
   FR: 'France',
   DE: 'Germany',
+  CA: 'Canada',
   CN: 'China',
+  IT: 'Italy',
+  ES: 'Spain',
+  TH: 'Thailand',
+  VN: 'Vietnam',
+  MX: 'Mexico',
+  IN: 'India',
+  BR: 'Brazil',
   // 필요한 국가 추가
 };
 

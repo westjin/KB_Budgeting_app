@@ -1,35 +1,36 @@
 <template>
-    <div class="trip-wrapper">
-      <div class="header">
-        <ScheduleHeaderComponent />
-      </div>
-  
-      <div class="main-content">
-        <p class="done-text">완료됐어요!</p>
-        <img :src="finishIcon" al t="finish" class="finish-icon" />
-      </div>
-  
-      <div class="footer">
-        <button class="next-button" @click="goToHome">완료</button>
-      </div>
+  <div class="trip-wrapper">
+    <div class="header">
+      <ScheduleHeaderComponent />
     </div>
-  </template>
-  
-  <script setup>
-  import finishIcon from '@/assets/icons/finish-icon.png'
-  import { useTripAddStore } from '@/stores/tripAddStore'
-  import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue'
-  import { useRouter } from 'vue-router' 
 
-  const store = useTripAddStore()
-  const router = useRouter()
+    <div class="main-content">
+      <p class="done-text">완료됐어요!</p>
+      <img :src="finishIcon" al t="finish" class="finish-icon" />
+    </div>
 
-  function goToHome() {
-    router.push('/') // ✅ 홈으로 이동
-  }
-  </script>
-  
-  <style scoped>
+    <div class="footer">
+      <button class="next-button" @click="goToHome">완료</button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import finishIcon from '@/assets/icons/finish-icon.png';
+import { useTripAddStore } from '@/stores/tripAddStore';
+import ScheduleHeaderComponent from '@/components/TripAddHeaderComponent.vue';
+import { useRouter } from 'vue-router';
+
+const store = useTripAddStore();
+const router = useRouter();
+
+function goToHome() {
+  store.resetSteps();
+  router.push('/home'); // ✅ 홈으로 이동
+}
+</script>
+
+<style scoped>
 .trip-wrapper {
   max-width: 393px;
   width: 100%;

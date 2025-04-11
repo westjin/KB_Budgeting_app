@@ -13,51 +13,51 @@
 </template>
 
 <script setup>
-import backIcon from '@/assets/icons/back-icon.png'
-import { useTripAddStore } from '@/stores/tripAddStore'
-import { computed } from 'vue'
-import { defineProps } from 'vue'
-import { useRouter } from 'vue-router'
+import backIcon from '@/assets/icons/back-icon.png';
+import { useTripAddStore } from '@/stores/tripAddStore';
+import { computed } from 'vue';
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 
-const router = useRouter()
-const store = useTripAddStore()
+const router = useRouter();
+const store = useTripAddStore();
 const props = defineProps({
   backToHome: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 function goBack() {
   if (props.backToHome) {
-    store.resetSteps()
-    router.push('/') //홈으로 이동
+    store.resetSteps();
+    router.push('/home'); //홈으로 이동
   } else {
-    store.prevStep()
+    store.prevStep();
   }
 }
 
 // 항상 dot 4개 고정
-const totalDots = 4
+const totalDots = 4;
 
 const activeDotCount = computed(() => {
-  const step = store.currentStep
-  const isGroup = store.tripData.companion === 'group'
+  const step = store.currentStep;
+  const isGroup = store.tripData.companion === 'group';
 
   //완료 페이지에서는 항상 4개 다 색칠
-  if ((isGroup && step === 7) || (!isGroup && step === 5) )return 4
+  if ((isGroup && step === 7) || (!isGroup && step === 5)) return 4;
 
   // 예산 입력단계(혼자든 그룹이든 마지막 단계)
   if ((isGroup && step === 6) || (!isGroup && step === 4)) {
-    return 4
+    return 4;
   }
 
   // 그룹이면 최대 3개까지만 칠함
-  if (isGroup) return Math.min(step, 3)
+  if (isGroup) return Math.min(step, 3);
 
   // 혼자면 현재 단계 그대로
-  return step
-})
+  return step;
+});
 </script>
 
 <style scoped>

@@ -33,10 +33,11 @@
         </div>
         <p class="text-base font-bold">
           {{
+            '₩ ' +
             rate.value.toLocaleString(undefined, {
               maximumFractionDigits: 2,
             })
-          }}₩
+          }}
         </p>
       </div>
     </div>
