@@ -89,7 +89,6 @@ const fetchGroupInfo = async () => {
   }
 };
 
-// 5. 그룹 예산 데이터 불러오기
 const loadBudgetData = async () => {
   const res = await axios.get('http://localhost:3000/GroupBudgetData');
   const filtered = res.data.filter((item) => {
@@ -108,7 +107,6 @@ const loadBudgetData = async () => {
   }));
 };
 
-// 6. 계산 관련
 const totalUsed = computed(() =>
   budgetData.value.reduce((a, b) => a + b.cost, 0)
 );

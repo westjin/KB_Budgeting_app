@@ -1,8 +1,13 @@
 <template>
-  <div class="min-h-screen bg-white p-4 flex flex-col gap-6 text-sm">
+  <div class="min-h-screen p-4 flex flex-col gap-6 text-sm">
     <!-- 상단 헤더 -->
     <div class="flex items-center">
-      <button @click="goBack" class="text-xl mr-2">&larr;</button>
+      <img
+        src="/src/assets/icons/back-icon.png"
+        alt=""
+        class="w-[10px] h-[15px] cursor-pointer mr-[10px]"
+        @click="router.back()"
+      />
       <h1 class="text-2xl font-bold relative inline-block">
         Profile
         <span
