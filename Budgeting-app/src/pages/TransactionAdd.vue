@@ -227,7 +227,7 @@ async function saveTransaction() {
     <div class="mt-8">
       <button
         @click.prevent="saveTransaction"
-        class="w-full py-3 rounded bg-yellow-400 text-white font-bold"
+        class="w-full py-3 rounded bg-yellow-400 text-black font-bold"
       >
         사용 내역 추가
       </button>
