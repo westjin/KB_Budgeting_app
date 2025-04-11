@@ -54,10 +54,7 @@ async function handleNext() {
   };
 
   try {
-    await axios.post(
-      'https://json-server-render-y383.onrender.com/Group',
-      groupData
-    );
+    await axios.post('/apiGroup', groupData);
     store.nextStep();
   } catch (error) {
     console.error('그룹 생성 실패:', error);

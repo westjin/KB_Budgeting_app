@@ -99,12 +99,9 @@ const fetchUserAndGroups = async () => {
   }
 
   // 유저 로딩
-  const res = await axios.get(
-    'https://json-server-render-y383.onrender.com/User',
-    {
-      params: { userId: authId },
-    }
-  );
+  const res = await axios.get('/apiUser', {
+    params: { userId: authId },
+  });
 
   if (res.data.length > 0) {
     userStore.login(res.data[0]);
@@ -112,9 +109,7 @@ const fetchUserAndGroups = async () => {
     console.log('✅ 현재 유저 이메일:', userStore.user.email); // 여기만 사용 가능
 
     // 그룹 연동
-    const groupRes = await axios.get(
-      'https://json-server-render-y383.onrender.com/Group'
-    );
+    const groupRes = await axios.get('/apiGroup');
     groups.value = groupRes.data.filter(
       (group) =>
         Array.isArray(group.groupUser) &&

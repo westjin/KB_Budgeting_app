@@ -15,9 +15,7 @@ export const useGroupStore = defineStore('group', {
       }
 
       try {
-        const res = await axios.get(
-          'https://json-server-render-y383.onrender.com/Group'
-        );
+        const res = await axios.get('/apiGroup');
 
         if (!res?.data || !Array.isArray(res.data)) {
           console.error('❌ Group 응답 이상:', res);

@@ -83,15 +83,12 @@ async function login() {
   }
 
   try {
-    const res = await axios.get(
-      'https://json-server-render-y383.onrender.com/User',
-      {
-        params: {
-          email: trimmedEmail,
-          password: trimmedPassword,
-        },
-      }
-    );
+    const res = await axios.get('/apiUser', {
+      params: {
+        email: trimmedEmail,
+        password: trimmedPassword,
+      },
+    });
 
     const matchedUser = res.data.find(
       (user) => user.email === trimmedEmail && user.password === trimmedPassword

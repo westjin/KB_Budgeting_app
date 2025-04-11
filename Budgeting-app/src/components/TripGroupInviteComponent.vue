@@ -80,9 +80,7 @@ async function handleAddEmail() {
   }
 
   try {
-    const response = await axios.get(
-      `https://json-server-render-y383.onrender.com/User?email=${email}`
-    );
+    const response = await axios.get(`/apiUser?email=${email}`);
 
     const emailExists = response.data.length > 0;
     if (!emailExists) {
@@ -119,12 +117,9 @@ onMounted(async () => {
   if (!userId) return;
 
   try {
-    const res = await axios.get(
-      'https://json-server-render-y383.onrender.com/User',
-      {
-        params: { userId },
-      }
-    );
+    const res = await axios.get('/apiUser', {
+      params: { userId },
+    });
 
     if (res.data.length > 0) {
       const currentUserEmail = res.data[0].email;

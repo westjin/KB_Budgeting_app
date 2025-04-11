@@ -31,9 +31,7 @@ const groupedData = computed(() => {
 });
 
 const fetchBudgetData = async () => {
-  const res = await axios.get(
-    'https://json-server-render-y383.onrender.com/GroupBudgetData'
-  );
+  const res = await axios.get('/apiGroupBudgetData');
   budgetData.value = res.data;
 };
 

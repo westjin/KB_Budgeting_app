@@ -30,9 +30,7 @@ const translatedCategory = computed(() => {
 // 데이터 불러오기
 onMounted(async () => {
   const id = route.params.id;
-  const res = await fetch(
-    `https://json-server-render-y383.onrender.com/GroupBudgetData/${id}`
-  );
+  const res = await fetch(`/apiGroupBudgetData/${id}`);
   if (res.ok) {
     transaction.value = await res.json();
   } else {
@@ -44,12 +42,9 @@ onMounted(async () => {
 // 삭제 기능
 async function deleteTransaction() {
   const id = route.params.id;
-  const res = await fetch(
-    `https://json-server-render-y383.onrender.com/GroupBudgetData/${id}`,
-    {
-      method: 'DELETE',
-    }
-  );
+  const res = await fetch(`/apiGroupBudgetData/${id}`, {
+    method: 'DELETE',
+  });
   if (res.ok) {
     alert('삭제되었습니다!');
     router.back();
