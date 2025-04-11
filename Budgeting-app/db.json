@@ -20,48 +20,113 @@
       ],
       "budget": 1000000,
       "currency": "KRW"
+    },
+    {
+      "id": "de5d",
+      "groupName": "혼자 여행 (2025년 4월 11일)",
+      "place": "ES",
+      "travelPeriod": "2025-02-24 ~ 2025-03-04",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "budget": 2500000,
+      "currency": "KRW"
+    },
+    {
+      "id": "f23b",
+      "groupName": "혼자 여행 (2025년 4월 11일)",
+      "place": "VN",
+      "travelPeriod": "2024-12-11 ~ 2024-12-16",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "budget": 1000000,
+      "currency": "KRW"
+    },
+    {
+      "id": "7ddd",
+      "groupName": "혼자 여행 (2025년 4월 11일)",
+      "place": "MX",
+      "travelPeriod": "2024-10-29 ~ 2024-11-08",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "budget": 2000000,
+      "currency": "KRW"
+    },
+    {
+      "id": "5a9b",
+      "groupName": "혼자 여행 (2025년 4월 11일)",
+      "place": "IT",
+      "travelPeriod": "2024-07-11 ~ 2024-07-23",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "budget": 300000,
+      "currency": "KRW"
+    },
+    {
+      "id": "eeea",
+      "groupName": "혼자 여행 (2025년 4월 11일)",
+      "place": "AU",
+      "travelPeriod": "2025-09-03 ~ 2025-09-13",
+      "groupUser": [
+        "test@naver.com"
+      ],
+      "budget": 1500000,
+      "currency": "KRW"
     }
   ],
   "GroupBudgetData": [
     {
-      "id": "dfe0",
+      "id": "5f35",
       "groupId": "bee8",
       "usedAt": "계란 샌드위치",
-      "cost": 1400,
-      "currency": "KRW",
-      "결제수단": "cash",
-      "usedDate": "2025-04-13",
+      "cost": 140,
+      "currency": "JPY",
+      "결제수단": "card",
+      "usedDate": "2025-04-11",
       "category": "food"
     },
     {
-      "id": "e86d",
+      "id": "bb1e",
       "groupId": "bee8",
-      "usedAt": "대한항공",
-      "cost": 1000,
-      "currency": "USD",
-      "결제수단": "card",
-      "usedDate": "2025-04-11",
-      "category": "flights"
-    },
-    {
-      "id": "8957",
-      "groupId": "bee8",
-      "usedAt": "123",
-      "cost": 1,
-      "currency": "USD",
+      "usedAt": "장어덮밥",
+      "cost": 1980,
+      "currency": "JPY",
       "결제수단": "cash",
       "usedDate": "2025-04-12",
       "category": "food"
     },
     {
-      "id": "f823",
+      "id": "7601",
       "groupId": "bee8",
-      "usedAt": "123",
+      "usedAt": "택시비",
+      "cost": 810,
+      "currency": "JPY",
+      "결제수단": "card",
+      "usedDate": "2025-04-11",
+      "category": "transportation"
+    },
+    {
+      "id": "ebe9",
+      "groupId": "bee8",
+      "usedAt": "호텔 어메니티 추가",
       "cost": 100,
       "currency": "JPY",
       "결제수단": "cash",
-      "usedDate": "2025-04-14",
-      "category": "food"
+      "usedDate": "2025-04-11",
+      "category": "others"
+    },
+    {
+      "id": "c229",
+      "groupId": "bee8",
+      "usedAt": "BAPE",
+      "cost": 6900,
+      "currency": "JPY",
+      "결제수단": "cash",
+      "usedDate": "2025-04-12",
+      "category": "shopping"
     }
   ]
 }
