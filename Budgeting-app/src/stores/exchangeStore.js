@@ -17,7 +17,7 @@ export const useExchangeStore = defineStore('exchange', {
     async fetchRates() {
       try {
         const res = await fetch(
-          `https://api/.currencyfreaks.com/latest?apikey=f5e4204e10914c9bad64b9a1560238b8&symbols=USD,JPY,EUR,KRW`
+          `https:/http://localhost:3000/.currencyfreaks.com/latest?apikey=f5e4204e10914c9bad64b9a1560238b8&symbols=USD,JPY,EUR,KRW`
         );
         const json = await res.json();
 

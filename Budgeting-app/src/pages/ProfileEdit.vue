@@ -129,7 +129,7 @@ onMounted(async () => {
   }
 
   // 유저 정보 로딩
-  const res = await axios.get('/api/User', {
+  const res = await axios.get('http://localhost:3000/User', {
     params: { userId: authId },
   });
 
@@ -142,7 +142,7 @@ onMounted(async () => {
     form.currency = user.currency;
 
     // 그룹 목록 로딩
-    const groupRes = await axios.get('/api/Group');
+    const groupRes = await axios.get('http://localhost:3000/Group');
     groups.value = groupRes.data.filter((group) =>
       group.groupUser.some(
         (email) =>
@@ -174,7 +174,7 @@ const leaveGroup = async (groupId) => {
   console.log('🧹 제거 후 유저 목록:', updatedUsers);
 
   try {
-    await axios.patch(`/api/Group/${group.id}`, {
+    await axios.patch(`http://localhost:3000/Group/${group.id}`, {
       groupUser: updatedUsers,
     });
 
@@ -214,7 +214,7 @@ const submit = async () => {
 
   try {
     // 1️⃣ userId로 유저 검색
-    const res = await axios.get('/api/User', {
+    const res = await axios.get('http://localhost:3000/User', {
       params: { userId: authId },
     });
 
@@ -235,7 +235,10 @@ const submit = async () => {
     };
 
     // 3️⃣ PATCH 요청
-    const patchRes = await axios.patch(`/api/User/${internalId}`, updatedUser);
+    const patchRes = await axios.patch(
+      `http://localhost:3000/User/${internalId}`,
+      updatedUser
+    );
 
     // 4️⃣ Pinia 반영
     userStore.user = patchRes.data;

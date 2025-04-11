@@ -99,7 +99,7 @@ const fetchUserAndGroups = async () => {
   }
 
   // 유저 로딩
-  const res = await axios.get('/api/User', {
+  const res = await axios.get('http://localhost:3000/User', {
     params: { userId: authId },
   });
 
@@ -109,7 +109,7 @@ const fetchUserAndGroups = async () => {
     console.log('✅ 현재 유저 이메일:', userStore.user.email); // 여기만 사용 가능
 
     // 그룹 연동
-    const groupRes = await axios.get('/api/Group');
+    const groupRes = await axios.get('http://localhost:3000/Group');
     groups.value = groupRes.data.filter(
       (group) =>
         Array.isArray(group.groupUser) &&

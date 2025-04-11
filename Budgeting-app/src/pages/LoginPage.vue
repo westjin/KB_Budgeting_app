@@ -83,7 +83,7 @@ async function login() {
   }
 
   try {
-    const res = await axios.get('/api/User', {
+    const res = await axios.get('http://localhost:3000/User', {
       params: {
         email: trimmedEmail,
         password: trimmedPassword,

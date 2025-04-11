@@ -45,7 +45,7 @@ const categoryColors = {
 const validCategories = Object.keys(categoryMap);
 
 const fetchUserCurrency = async () => {
-  const res = await axios.get('/api/User');
+  const res = await axios.get('http://localhost:3000/User');
   const user = res.data.find((u) => u);
   if (user) userCurrency.value = user.currency;
 };
@@ -72,7 +72,7 @@ const convertToUserCurrency = (amount, fromCurrency) => {
 };
 
 const fetchGroupInfo = async () => {
-  const res = await axios.get('/api/Group');
+  const res = await axios.get('http://localhost:3000/Group');
   const group = res.data.find((g) => g.id === groupId.value);
 
   if (group) {
@@ -90,7 +90,7 @@ const fetchGroupInfo = async () => {
 };
 
 const loadBudgetData = async () => {
-  const res = await axios.get('/api/GroupBudgetData');
+  const res = await axios.get('http://localhost:3000/GroupBudgetData');
   const filtered = res.data.filter((item) => {
     const usedDate = new Date(item.usedDate);
     return (
