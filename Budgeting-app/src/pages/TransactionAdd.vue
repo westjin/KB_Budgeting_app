@@ -60,14 +60,25 @@ function isWithinPeriod(inputDate, period) {
 async function saveTransaction() {
   const numericAmount = Number(amount.value.replace(/,/g, ''));
 
-  // ✅ 유효성 검사
+  // 유효성 검사
   if (!usage.value || !numericAmount || !payMethod.value || !date.value) {
     alert('모든 필드를 입력해주세요.');
     return;
   }
 
-  if (numericAmount < 500) {
-    alert('금액은 최소 500원 이상이어야 합니다.');
+  // 통화별 최소 금액 조건
+  const minAmounts = {
+    KRW: 500,
+    USD: 1,
+    JPY: 100,
+  };
+
+  if (numericAmount < minAmounts[currency.value]) {
+    alert(
+      `${currency.value} 통화는 최소 ${minAmounts[
+        currency.value
+      ].toLocaleString()} ${currencySymbol.value} 이상 입력해야 합니다.`
+    );
     return;
   }
 
@@ -100,6 +111,7 @@ async function saveTransaction() {
     payMethod.value = '';
     date.value = '';
     category.value = 'food';
+
     setTimeout(() => {
       showSuccess.value = false;
       router.push(`/TransactionCheckList/${groupId}`);
