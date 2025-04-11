@@ -30,7 +30,7 @@ const translatedCategory = computed(() => {
 // 데이터 불러오기
 onMounted(async () => {
   const id = route.params.id;
-  const res = await fetch(`/apiGroupBudgetData/${id}`);
+  const res = await fetch(`/api/GroupBudgetData/${id}`);
   if (res.ok) {
     transaction.value = await res.json();
   } else {
@@ -42,7 +42,7 @@ onMounted(async () => {
 // 삭제 기능
 async function deleteTransaction() {
   const id = route.params.id;
-  const res = await fetch(`/apiGroupBudgetData/${id}`, {
+  const res = await fetch(`/api/GroupBudgetData/${id}`, {
     method: 'DELETE',
   });
   if (res.ok) {

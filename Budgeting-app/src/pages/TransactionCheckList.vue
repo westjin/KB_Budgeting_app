@@ -31,7 +31,7 @@ const groupedData = computed(() => {
 });
 
 const fetchBudgetData = async () => {
-  const res = await axios.get('/apiGroupBudgetData');
+  const res = await axios.get('/api/GroupBudgetData');
   budgetData.value = res.data;
 };
 

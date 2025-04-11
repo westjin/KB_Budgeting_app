@@ -80,7 +80,7 @@ async function handleAddEmail() {
   }
 
   try {
-    const response = await axios.get(`/apiUser?email=${email}`);
+    const response = await axios.get(`/api/User?email=${email}`);
 
     const emailExists = response.data.length > 0;
     if (!emailExists) {
@@ -117,7 +117,7 @@ onMounted(async () => {
   if (!userId) return;
 
   try {
-    const res = await axios.get('/apiUser', {
+    const res = await axios.get('/api/User', {
       params: { userId },
     });
 

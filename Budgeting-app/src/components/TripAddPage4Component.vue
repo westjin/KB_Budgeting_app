@@ -54,7 +54,7 @@ async function handleNext() {
   };
 
   try {
-    await axios.post('/apiGroup', groupData);
+    await axios.post('/api/Group', groupData);
     store.nextStep();
   } catch (error) {
     console.error('그룹 생성 실패:', error);

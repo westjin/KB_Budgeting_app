@@ -140,7 +140,7 @@ watch(
 
     isCheckingEmail.value = true;
     try {
-      const res = await axios.get('/apiUser', {
+      const res = await axios.get('/api/User', {
         params: { email: trimmed },
       });
       if (res.data.length > 0) {
@@ -189,7 +189,7 @@ async function submit() {
       currency: 'KRW',
     };
 
-    const res = await axios.post('/apiUser', newUser);
+    const res = await axios.post('/api/User', newUser);
 
     // userStore.login(res.data); // 회원가입 후 자동 로그인
     alert('회원가입 및 로그인 성공!');

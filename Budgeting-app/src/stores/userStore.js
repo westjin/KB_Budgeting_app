@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', {
       if (!authId) return;
 
       try {
-        const res = await axios.get('/apiUser', {
+        const res = await axios.get('/api/User', {
           params: { userId: authId },
         });
 

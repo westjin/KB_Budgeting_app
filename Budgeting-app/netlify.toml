@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/api/*"
+  from = "/api//*"
   to = "https://json-server-render-aj7a.onrender.com/:splat"
   status = 200
   force = true
